@@ -122,11 +122,12 @@ DATABASE_URL=mysql+pymysql://root:sua_senha@localhost:3306/agrorisk
 ```
 ## Rotas da API
 Método | Rota | Descrição
-|GET   |`/usuarios`|	Lista todos os usuários|
-|GET   |`/usuarios/<id>`|	Busca usuário pelo id|
-|POST	|`/usuarios`|	Cadastra usuário|
-|PUT	|`/usuarios/<id>`|	Atualiza usuário|
-|DELETE	|`/usuarios/<id>`|	Remove usuário|
+|---|---|---|
+|GET   | `/usuarios` |	Lista todos os usuários|
+|GET   | `/usuarios/<id>` |	Busca usuário pelo id|
+|POST	| `/usuarios` |	Cadastra usuário|
+|PUT	| `/usuarios/<id>` |	Atualiza usuário|
+|DELETE	| `/usuarios/<id>` |	Remove usuário|
 
 
 
