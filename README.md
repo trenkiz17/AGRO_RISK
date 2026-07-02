@@ -5,6 +5,7 @@ Produtores rurais de médio porte enfrentam dificuldades no planejamento da safr
 O AgroRisk nasce para resolver esse problema: um sistema que centraliza e organiza os dados da propriedade rural, permitindo o registro de usuários, fazendas, safras e produções, além de fornecer uma base estruturada para análise de produtividade e apoio à tomada de decisão no campo.
 
 ## Estrutura do projeto
+```text
 AgroRisk/
 ├── frontend/
 └── backend/
@@ -26,7 +27,9 @@ AgroRisk/
     │   └── README.md
     └── database/
         └── create_database.sql
+```
 ## Arquitetura usada
+```text
 Frontend
    ↓
 Controller
@@ -36,6 +39,7 @@ Repository
 Model
    ↓
 Banco de Dados
+```
 
 Cada camada tem uma responsabilidade única: o Controller recebe a requisição HTTP e devolve a resposta, o Repository contém consultas mais avançadas do sistema, e o Model concentra o acesso ao banco (herdando de db.Model) e o CRUD básico das entidades.
 
@@ -43,12 +47,12 @@ Cada camada tem uma responsabilidade única: o Controller recebe a requisição 
 
 CRUD do sistema AgroRisk:
 
-Cadastrar usuário, fazenda, safra e produção
-Listar todos os registros
-Buscar registros por id
-Atualizar dados
-Excluir registros
-Como a produção é organizada
+- Cadastrar usuário, fazenda, safra e produção
+- Listar todos os registros
+- Buscar registros por id
+- Atualizar dados
+- Excluir registros
+- Como a produção é organizada
 
 
  ### A produção agrícola (principalmente silagem de milho) é registrada com base na fazenda e safra, permitindo controle histórico de produtividade e análise de desempenho ao longo do tempo.
