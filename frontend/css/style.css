@@ -1,0 +1,1552 @@
+/*==================================================
+                GOOGLE FONT
+==================================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/*==================================================
+                    RESET
+==================================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#F8FAFC;
+    color:#1E293B;
+    overflow-x:hidden;
+    line-height:1.6;
+}
+
+a{
+    text-decoration:none;
+}
+
+ul{
+    list-style:none;
+    padding:0;
+}
+
+img{
+    max-width:100%;
+}
+
+/*==================================================
+                    VARIÁVEIS
+==================================================*/
+
+:root{
+
+    --azul:#2563EB;
+    --azulEscuro:#1E40AF;
+
+    --verde:#22C55E;
+    --verdeEscuro:#16A34A;
+
+    --amarelo:#FACC15;
+
+    --cinza:#64748B;
+
+    --claro:#F8FAFC;
+
+    --escuro:#0F172A;
+
+    --branco:#FFFFFF;
+
+}
+
+/*==================================================
+                NAVBAR
+==================================================*/
+
+.navbar{
+
+    background:rgba(15,23,42,.90);
+
+    backdrop-filter:blur(15px);
+
+    padding:18px 0;
+
+    transition:.4s;
+
+    position:fixed;
+
+    width:100%;
+
+    z-index:999;
+
+}
+
+.navbar-brand{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:var(--verde)!important;
+
+}
+
+.navbar-brand span{
+
+    color:white;
+
+}
+
+.nav-link{
+
+    color:white!important;
+
+    margin-left:18px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+.nav-link:hover{
+
+    color:var(--verde)!important;
+
+}
+
+.btn-login{
+
+    border:2px solid white;
+
+    color:white;
+
+    border-radius:30px;
+
+    padding:10px 24px;
+
+    transition:.3s;
+
+    margin-right:15px;
+
+}
+
+.btn-login:hover{
+
+    background:white;
+
+    color:var(--azul);
+
+}
+
+.btn-conta{
+
+    background:linear-gradient(90deg,var(--azul),var(--verde));
+
+    color:white;
+
+    border-radius:30px;
+
+    padding:10px 28px;
+
+    font-weight:600;
+
+    transition:.4s;
+
+}
+
+.btn-conta:hover{
+
+    color:white;
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 30px rgba(37,99,235,.35);
+
+}
+
+/*==================================================
+                    HERO
+==================================================*/
+
+.hero{
+
+    position:relative;
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    background:url("../img/fazenda.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+}
+
+.overlay{
+
+    position:absolute;
+
+    width:100%;
+
+    height:100%;
+
+    background:linear-gradient(
+
+    rgba(15,23,42,.88),
+
+    rgba(37,99,235,.55)
+
+    );
+
+}
+
+.hero .container{
+
+    position:relative;
+
+    z-index:5;
+
+}
+
+.hero-text{
+
+    color:white;
+
+}
+
+.hero-badge{
+
+    background:rgba(34,197,94,.15);
+
+    color:#A7F3D0;
+
+    border:1px solid rgba(34,197,94,.4);
+
+    padding:10px 22px;
+
+    border-radius:50px;
+
+    display:inline-block;
+
+    margin-bottom:30px;
+
+}
+
+.hero h1{
+
+    font-size:64px;
+
+    font-weight:800;
+
+    line-height:78px;
+
+    margin-bottom:30px;
+
+}
+
+.hero p{
+
+    font-size:19px;
+
+    color:#E2E8F0;
+
+    margin-bottom:40px;
+
+    max-width:620px;
+
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+}
+
+.hero-buttons .btn{
+
+    padding:16px 38px;
+
+    border-radius:40px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.hero-buttons .btn-success{
+
+    background:var(--verde);
+
+    border:none;
+
+}
+
+.hero-buttons .btn-success:hover{
+
+    background:var(--verdeEscuro);
+
+    transform:translateY(-4px);
+
+}
+
+.hero-buttons .btn-outline-light:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.hero-dashboard{
+
+    border-radius:18px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+
+    animation:flutuar 4s ease-in-out infinite;
+
+}
+
+/*==================================================
+                ANIMAÇÃO HERO
+==================================================*/
+
+@keyframes flutuar{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-12px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes aparecer{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(60px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.hero-text{
+
+    animation:aparecer 1s ease;
+
+}
+
+.hero-dashboard{
+
+    animation:aparecer 1.2s ease;
+
+}
+
+/*==================================================
+                TÍTULOS
+==================================================*/
+
+.section-title{
+
+    color:var(--verde);
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+}
+
+section{
+
+    padding:110px 0;
+
+}
+
+section h2{
+
+    font-size:46px;
+
+    font-weight:700;
+
+    color:var(--escuro);
+
+    margin:20px 0;
+
+}
+
+section p{
+
+    color:var(--cinza);
+
+    font-size:18px;
+
+}
+/*==================================================
+                    ESTATÍSTICAS
+==================================================*/
+
+.stats{
+
+    margin-top:-70px;
+
+    position:relative;
+
+    z-index:20;
+
+}
+
+.stats .container{
+
+    background:white;
+
+    border-radius:25px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+    padding:45px;
+
+}
+
+.stats h2{
+
+    color:var(--azul);
+
+    font-size:52px;
+
+    font-weight:700;
+
+}
+
+.stats p{
+
+    margin-top:10px;
+
+    color:var(--cinza);
+
+    font-size:18px;
+
+}
+
+.stats .col-md-3{
+
+    transition:.35s;
+
+}
+
+.stats .col-md-3:hover{
+
+    transform:translateY(-8px);
+
+}
+
+/*==================================================
+                    SOBRE
+==================================================*/
+
+.sobre{
+
+    background:#ffffff;
+
+}
+
+.sobre img{
+
+    border-radius:20px;
+
+    box-shadow:0 25px 50px rgba(0,0,0,.12);
+
+    transition:.4s;
+
+}
+
+.sobre img:hover{
+
+    transform:scale(1.02);
+
+}
+
+.about-item{
+
+    background:#F8FAFC;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    margin-bottom:18px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+.about-item i{
+
+    color:var(--verde);
+
+    margin-right:10px;
+
+}
+
+.about-item:hover{
+
+    background:var(--verde);
+
+    color:white;
+
+    transform:translateX(8px);
+
+}
+
+.about-item:hover i{
+
+    color:white;
+
+}
+
+/*==================================================
+                FUNCIONALIDADES
+==================================================*/
+
+.funcionalidades{
+
+    background:#F8FAFC;
+
+}
+
+.card-funcao{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    height:100%;
+
+    text-align:center;
+
+    transition:.4s;
+
+    border:1px solid #E2E8F0;
+
+}
+
+.card-funcao:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.12);
+
+    border-color:var(--verde);
+
+}
+
+.card-funcao i{
+
+    width:80px;
+
+    height:80px;
+
+    background:linear-gradient(135deg,var(--azul),var(--verde));
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin:auto;
+
+    color:white;
+
+    font-size:34px;
+
+    margin-bottom:25px;
+
+    transition:.4s;
+
+}
+
+.card-funcao:hover i{
+
+    transform:rotate(8deg) scale(1.1);
+
+}
+
+.card-funcao h4{
+
+    margin-bottom:18px;
+
+    font-size:24px;
+
+    color:var(--escuro);
+
+}
+
+.card-funcao p{
+
+    color:var(--cinza);
+
+}
+
+/*==================================================
+            COMO FUNCIONA
+==================================================*/
+
+.passos{
+
+    background:linear-gradient(135deg,#0F172A,#1E293B);
+
+    color:white;
+
+}
+
+.passos h2{
+
+    color:white;
+
+}
+
+.passo{
+
+    background:white;
+
+    color:#0F172A;
+
+    border-radius:18px;
+
+    padding:35px;
+
+    text-align:center;
+
+    height:100%;
+
+    transition:.4s;
+
+}
+
+.passo:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.passo span{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,var(--azul),var(--verde));
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+.passo h5{
+
+    font-size:20px;
+
+}
+
+/*==================================================
+        DASHBOARD PREVIEW
+==================================================*/
+
+.dashboard-preview{
+
+    background:white;
+
+}
+
+.dashboard-preview img{
+
+    border-radius:20px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.18);
+
+    transition:.5s;
+
+}
+
+.dashboard-preview img:hover{
+
+    transform:scale(1.03);
+
+}
+
+.dashboard-preview ul{
+
+    margin-top:30px;
+
+}
+
+.dashboard-preview li{
+
+    margin-bottom:18px;
+
+    font-size:18px;
+
+    color:var(--cinza);
+
+}
+
+.dashboard-preview li::before{
+
+    content:"✓ ";
+
+    color:var(--verde);
+
+    font-weight:bold;
+
+}
+
+
+/* ================= DASHBOARD BASE ================= */
+
+
+/* FUNDO */
+.dashboard-body {
+    background: linear-gradient(135deg, #0f2d1e, #145c3a);
+    color: white;
+}
+
+/* HEADER */
+.dash-header {
+    margin-top: 40px;
+}
+
+/* RESUMO */
+.dash-summary {
+    margin-top: 15px;
+    padding: 18px;
+    background: rgba(255,255,255,0.08);
+    border-left: 5px solid #2ecc71;
+    border-radius: 12px;
+}
+
+/* CARDS */
+.dash-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.dash-card:hover {
+    transform: translateY(-5px);
+}
+
+/* BOTÕES */
+.dash-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.dash-action {
+    flex: 1;
+    min-width: 220px;
+
+    text-align: center;
+    background: #2ecc71;
+    color: white;
+
+    padding: 16px;
+    border-radius: 14px;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.dash-action:hover {
+    background: #27ae60;
+    transform: translateY(-5px);
+}
+
+/* CLIMA */
+.weather-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 12px;
+}
+
+/*==================================================
+                BENEFÍCIOS
+==================================================*/
+
+.beneficios{
+
+    background:#F8FAFC;
+
+}
+
+.card-beneficio{
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    height:100%;
+
+    transition:.35s;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+}
+
+.card-beneficio:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.card-beneficio i{
+
+    font-size:42px;
+
+    color:var(--verde);
+
+    margin-bottom:20px;
+
+}
+
+.card-beneficio h4{
+
+    margin-bottom:15px;
+
+}
+
+.card-beneficio p{
+
+    color:var(--cinza);
+
+}
+/*==================================================
+                DIFERENCIAIS
+==================================================*/
+
+.diferenciais{
+
+    background:#FFFFFF;
+
+}
+
+.lista-diferenciais{
+
+    margin-top:40px;
+
+}
+
+.lista-diferenciais li{
+
+    font-size:18px;
+
+    margin-bottom:25px;
+
+    padding:18px 25px;
+
+    border-radius:15px;
+
+    background:#F8FAFC;
+
+    transition:.35s;
+
+    color:var(--escuro);
+
+}
+
+.lista-diferenciais li i{
+
+    color:var(--verde);
+
+    margin-right:12px;
+
+}
+
+.lista-diferenciais li:hover{
+
+    background:linear-gradient(90deg,var(--azul),var(--verde));
+
+    color:white;
+
+    transform:translateX(10px);
+
+}
+
+.lista-diferenciais li:hover i{
+
+    color:white;
+
+}
+
+.diferenciais img{
+
+    border-radius:20px;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+
+}
+
+/*==================================================
+                    FAQ
+==================================================*/
+
+.faq{
+
+    background:#F8FAFC;
+
+}
+
+.accordion-item{
+
+    border:none;
+
+    margin-bottom:20px;
+
+    border-radius:18px !important;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.accordion-button{
+
+    padding:25px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:var(--escuro);
+
+    background:white;
+
+}
+
+.accordion-button:not(.collapsed){
+
+    background:linear-gradient(90deg,var(--azul),var(--verde));
+
+    color:white;
+
+}
+
+.accordion-button:focus{
+
+    box-shadow:none;
+
+}
+
+.accordion-body{
+
+    padding:25px;
+
+    font-size:17px;
+
+    color:var(--cinza);
+
+}
+
+/*==================================================
+                    CTA
+==================================================*/
+
+.cta{
+
+    background:linear-gradient(135deg,var(--azul),var(--verde));
+
+    color:white;
+
+    text-align:center;
+
+}
+
+.cta h2{
+
+    color:white;
+
+    font-size:52px;
+
+}
+
+.cta p{
+
+    color:white;
+
+    max-width:700px;
+
+    margin:auto;
+
+    margin-bottom:40px;
+
+}
+
+.cta .btn-success{
+
+    background:white;
+
+    color:var(--azul);
+
+    border:none;
+
+    font-weight:600;
+
+}
+
+.cta .btn-success:hover{
+
+    background:#FACC15;
+
+    color:#0F172A;
+
+}
+
+.cta .btn-outline-light:hover{
+
+    color:#2563EB;
+
+}
+
+/*==================================================
+                    FOOTER
+==================================================*/
+
+footer{
+
+    background:#0F172A;
+
+    color:white;
+
+    padding:80px 0 30px;
+
+}
+
+footer h4{
+
+    margin-bottom:20px;
+
+    color:white;
+
+}
+
+footer p{
+
+    color:#CBD5E1;
+
+}
+
+footer ul{
+
+    padding:0;
+
+}
+
+footer li{
+
+    margin-bottom:12px;
+
+}
+
+footer a{
+
+    color:#CBD5E1;
+
+    transition:.3s;
+
+}
+
+footer a:hover{
+
+    color:var(--verde);
+
+}
+
+.footer-bottom{
+
+    margin-top:50px;
+
+    padding-top:25px;
+
+    border-top:1px solid rgba(255,255,255,.1);
+
+    text-align:center;
+
+    color:#94A3B8;
+
+}
+
+/*==================================================
+                BOTÃO TOPO
+==================================================*/
+
+.topo{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    background:var(--verde);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    box-shadow:0 15px 30px rgba(0,0,0,.25);
+
+    transition:.35s;
+
+    z-index:999;
+
+}
+
+.topo:hover{
+
+    background:var(--azul);
+
+    transform:translateY(-5px);
+
+}
+
+/*==================================================
+                SCROLLBAR
+==================================================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#E2E8F0;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:linear-gradient(var(--azul),var(--verde));
+
+    border-radius:20px;
+
+}
+
+/*==================================================
+                RESPONSIVIDADE
+==================================================*/
+
+@media(max-width:991px){
+
+.hero{
+
+    padding:160px 0 80px;
+
+    text-align:center;
+
+}
+
+.hero h1{
+
+    font-size:46px;
+
+    line-height:58px;
+
+}
+
+.hero-dashboard{
+
+    margin-top:50px;
+
+}
+
+.stats{
+
+    margin-top:0;
+
+}
+
+section{
+
+    padding:80px 0;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.hero h1{
+
+    font-size:36px;
+
+    line-height:46px;
+
+}
+
+.hero-buttons{
+
+    flex-direction:column;
+
+}
+
+.hero-buttons .btn{
+
+    width:100%;
+
+}
+
+section h2{
+
+    font-size:34px;
+
+}
+
+.card-funcao{
+
+    margin-bottom:20px;
+
+}
+
+.card-beneficio{
+
+    margin-bottom:20px;
+
+}
+
+.passo{
+
+    margin-bottom:20px;
+
+}
+
+footer{
+
+    text-align:center;
+
+}
+
+}
+
+/*==================================================
+            ANIMAÇÕES DOS CARDS
+==================================================*/
+
+.card-funcao,
+.card-beneficio,
+.passo,
+.about-item{
+
+    transition:all .35s ease;
+
+}
+
+.card-funcao:hover,
+.card-beneficio:hover,
+.passo:hover{
+
+    transform:translateY(-8px);
+
+}
+
+/*==================================================
+            SOMBRA GERAL
+==================================================*/
+
+.shadow-lg{
+
+    box-shadow:0 20px 60px rgba(0,0,0,.18)!important;
+
+}
+
+
+/* ================= LOGIN ================= */
+
+.login-section{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    background:linear-gradient(135deg, var(--escuro), var(--azul));
+    padding:120px 0;
+}
+
+.login-card{
+    background:white;
+    padding:50px;
+    border-radius:25px;
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+    text-align:center;
+}
+
+.login-card h2{
+    font-size:32px;
+    color:var(--escuro);
+    margin-bottom:10px;
+}
+
+.login-card p{
+    color:var(--cinza);
+    margin-bottom:30px;
+}
+
+.login-card label{
+    display:block;
+    text-align:left;
+    margin-bottom:8px;
+    font-weight:500;
+    color:var(--escuro);
+}
+
+.login-card .form-control{
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #E2E8F0;
+    transition:.3s;
+}
+
+.login-card .form-control:focus{
+    border-color:var(--verde);
+    box-shadow:none;
+}
+
+.login-card .btn-success{
+    padding:14px;
+    border-radius:12px;
+    font-weight:600;
+    margin-top:10px;
+    transition:.3s;
+}
+
+.login-card .btn-success:hover{
+    background:var(--verdeEscuro);
+    transform:translateY(-3px);
+}
+
+.login-footer{
+    margin-top:20px;
+    font-size:14px;
+}
+
+.login-footer a{
+    color:var(--verde);
+    font-weight:600;
+}
+
+/* ================= DASHBOARD PRO ================= */
+
+.dashboard{
+    padding:120px 0;
+    background:#F8FAFC;
+}
+
+.dash-header h2{
+    font-size:38px;
+    color:var(--escuro);
+}
+
+.dash-header p{
+    color:var(--cinza);
+}
+
+.dash-card{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+    text-align:center;
+    transition:.3s;
+}
+
+.dash-card:hover{
+    transform:translateY(-10px);
+}
+
+.dash-card h3{
+    font-size:34px;
+    color:var(--verde);
+}
+
+.dash-card p{
+    color:var(--cinza);
+}
+
+.dash-action{
+    display:block;
+    padding:25px;
+    border-radius:18px;
+    background:linear-gradient(135deg,var(--azul),var(--verde));
+    color:white;
+    text-align:center;
+    font-weight:600;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.dash-action:hover{
+    transform:translateY(-8px);
+    color:white;
+}
+
+.weather-box{
+    margin-top:30px;
+    padding:25px;
+    background:white;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+/* ================= PÁGINAS INTERNAS ================= */
+
+.page{
+    padding:120px 0;
+    background:#F8FAFC;
+}
+
+.card-simple{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.card-simple:hover{
+    transform:translateY(-8px);
+}
+
+.report-box{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.info-card{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.info-card h2{
+    color:#198754;
+    font-size:35px;
+    font-weight:bold;
+}
+
+.propriedade-card{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.propriedade-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+
+.propriedade-card img{
+    height:220px;
+    object-fit:cover;
+}
+
+.propriedade-card h4{
+    color:#14532d;
+    font-weight:bold;
+}
+
+.propriedade-card p{
+    color:#666;
+    margin-bottom:10px;
+}
+
+.propriedade-card .btn{
+    border-radius:12px;
+}

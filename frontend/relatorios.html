@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgroRisk | Relatórios</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<section class="page py-5">
+
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h1 class="fw-bold">
+
+                    Relatórios
+
+                </h1>
+
+                <p class="text-muted">
+
+                    Visualize indicadores e análises da sua produção.
+
+                </p>
+
+            </div>
+
+            <button class="btn btn-success" id="btnGerar">
+
+                <i class="fa-solid fa-file-pdf"></i>
+
+                Gerar Relatório
+
+            </button>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow border-0 rounded-4">
+
+                    <div class="card-body text-center">
+
+                        <i class="fa-solid fa-seedling fa-2x text-success mb-3"></i>
+
+                        <h3 id="produtividade">92%</h3>
+
+                        <p>Produtividade Média</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow border-0 rounded-4">
+
+                    <div class="card-body text-center">
+
+                        <i class="fa-solid fa-money-bill-wave fa-2x text-primary mb-3"></i>
+
+                        <h3 id="custo">R$ 1.200</h3>
+
+                        <p>Custo por Hectare</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow border-0 rounded-4">
+
+                    <div class="card-body text-center">
+
+                        <i class="fa-solid fa-chart-column fa-2x text-warning mb-3"></i>
+
+                        <h3 id="safras">5</h3>
+
+                        <p>Safras Ativas</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card shadow border-0 rounded-4 mt-4">
+
+            <div class="card-header bg-success text-white">
+
+                Resumo Geral
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-striped">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Indicador</th>
+
+                            <th>Valor</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tabelaRelatorio">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/api.js"></script>
+
+<script src="js/relatorios.js"></script>
+
+</body>
+
+</html>
