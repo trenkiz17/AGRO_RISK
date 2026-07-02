@@ -1,178 +1,141 @@
-# AgroLogic
+# AgroRisk
 
-Produtores rurais de médio porte enfrentam dificuldade para definir o preço justo de venda da sua produção quando negociam com compradores locais sem acesso a referências atualizadas de mercado, o que resulta em margens reduzidas e perda recorrente de receita.
+Produtores rurais de médio porte enfrentam dificuldades no planejamento da safra devido à forte dependência do clima, à falta de organização dos dados e à ausência de registros históricos confiáveis, o que resulta em baixa previsibilidade de produtividade, dificuldade no controle de custos e maior risco de perdas na produção.
 
-O AgroLogic nasce para resolver esse problema: uma calculadora que estima o preço do gado o mais próximo possível do valor praticado no mercado atual, a partir de dados como peso, categoria e valor da arroba na praça, dando ao produtor uma referência confiável antes de fechar negócio.
+O AgroRisk nasce para resolver esse problema: um sistema que centraliza e organiza os dados da propriedade rural, permitindo o registro de usuários, fazendas, safras e produções, além de fornecer uma base estruturada para análise de produtividade e apoio à tomada de decisão no campo.
 
 ## Estrutura do projeto
-
-```text
-AgroLogic1/
+AgroRisk/
 ├── frontend/
 └── backend/
     ├── app.py
     ├── requirements.txt
     ├── .env.example
     ├── controllers/
-    │   └── boi_controller.py
+    │   ├── usuario_controller.py
+    │   ├── fazenda_controller.py
+    │   ├── safra_controller.py
+    │   └── producao_controller.py
     ├── models/
     │   ├── database.py
-    │   └── boi_model.py
+    │   ├── usuario_model.py
+    │   ├── fazenda_model.py
+    │   ├── safra_model.py
+    │   └── producao_model.py
     ├── repositories/
     │   └── README.md
-    ├── services/
-    │   ├── criar_boi_service.py
-    │   ├── listar_bois_service.py
-    │   ├── buscar_boi_por_id_service.py
-    │   ├── atualizar_boi_service.py
-    │   └── deletar_boi_service.py
     └── database/
         └── create_database.sql
-```
-
 ## Arquitetura usada
-
-```text
 Frontend
    ↓
 Controller
    ↓
-Service
+Repository
    ↓
 Model
    ↓
 Banco de Dados
-```
 
-Cada camada tem uma responsabilidade única: o **Controller** recebe a requisição HTTP e devolve a resposta, o **Service** contém a regra de negócio de cada caso de uso, e a **Model** concentra o acesso ao banco (herdando de `db.Model`) e o cálculo de preço do boi.
+Cada camada tem uma responsabilidade única: o Controller recebe a requisição HTTP e devolve a resposta, o Repository contém consultas mais avançadas do sistema, e o Model concentra o acesso ao banco (herdando de db.Model) e o CRUD básico das entidades.
 
 ## Funcionalidades implementadas (backend)
 
-CRUD de Bois:
+CRUD do sistema AgroRisk:
 
-- Cadastrar um boi, informando raça, categoria, peso, idade e valor da arroba (o preço é calculado automaticamente);
-- Listar todos os bois cadastrados;
-- Buscar um boi pelo id;
-- Atualizar os dados de um boi (o preço estimado é recalculado quando peso ou valor da arroba mudam);
-- Excluir um boi.
+Cadastrar usuário, fazenda, safra e produção
+Listar todos os registros
+Buscar registros por id
+Atualizar dados
+Excluir registros
+Como a produção é organizada
 
-### Como o preço é calculado
 
-O valor estimado segue a lógica usada no mercado pecuário: o peso do animal é convertido de quilos para arrobas (1 arroba = 15 kg) e multiplicado pelo valor da arroba informado.
-
-```text
-preço_estimado = (peso_kg / 15) * valor_arroba
-```
+ ### A produção agrícola (principalmente silagem de milho) é registrada com base na fazenda e safra, permitindo controle histórico de produtividade e análise de desempenho ao longo do tempo.
 
 ## Como executar o backend
 
 Entre na pasta do backend:
 
-```bash
 cd backend
-```
 
 Crie o ambiente virtual:
 
-```bash
-python -m venv .venv
-```
+python -m venv venv
 
-Ative o ambiente virtual.
+Ative o ambiente virtual:
 
-No Windows:
+Windows:
 
-```bash
-.venv\Scripts\activate
-```
+venv\Scripts\activate
 
-No Linux ou macOS:
+Linux ou macOS:
 
-```bash
-source .venv/bin/activate
-```
+source venv/bin/activate
 
 Instale as dependências:
 
-```bash
 pip install -r requirements.txt
-```
 
-Crie o arquivo `.env` com base no exemplo:
+Crie o arquivo .env com base no exemplo:
 
-```bash
 cp .env.example .env
-```
 
 Execute o backend:
 
-```bash
 python app.py
-```
 
 A API ficará disponível em:
 
-```text
 http://127.0.0.1:5000
-```
-
 ## Banco de dados
 
 Por padrão, o projeto usa SQLite para facilitar o teste local:
 
-```text
-DATABASE_URL=sqlite:///agrologic.db
-```
+DATABASE_URL=sqlite:///agrorisk.db
 
 Para usar MySQL, execute o script:
 
-```text
 backend/database/create_database.sql
-```
 
-Depois altere o `.env` para:
+Depois altere o .env para:
 
-```text
-DATABASE_URL=mysql+pymysql://root:sua_senha@localhost:3306/agrologic
-```
-
+DATABASE_URL=mysql+pymysql://root:sua_senha@localhost:3306/agrorisk
 ## Rotas da API
+Método	Rota	Descrição
+GET	/usuarios	Lista todos os usuários
+GET	/usuarios/<id>	Busca usuário pelo id
+POST	/usuarios	Cadastra usuário
+PUT	/usuarios/<id>	Atualiza usuário
+DELETE	/usuarios/<id>	Remove usuário
 
-| Método | Rota | Descrição |
-|---|---|---|
-| GET | `/bois` | Lista todos os bois cadastrados |
-| GET | `/bois/<id>` | Busca um boi pelo id |
-| POST | `/bois` | Cadastra um boi e calcula o preço estimado |
-| PUT | `/bois/<id>` | Atualiza um boi e recalcula o preço quando necessário |
-| DELETE | `/bois/<id>` | Remove um boi |
+| GET | /fazendas | Lista todas as fazendas |
+| GET | /fazendas/<id> | Busca fazenda pelo id |
+| POST | /fazendas | Cadastra fazenda |
+| PUT | /fazendas/<id> | Atualiza fazenda |
+| DELETE | /fazendas/<id> | Remove fazenda |
+
+| GET | /safras | Lista todas as safras |
+| GET | /safras/<id> | Busca safra pelo id |
+| POST | /safras | Cadastra safra |
+| PUT | /safras/<id> | Atualiza safra |
+| DELETE | /safras/<id> | Remove safra |
+
+| GET | /producao | Lista produções |
+| GET | /producao/<id> | Busca produção pelo id |
+| POST | /producao | Registra produção |
+| PUT | /producao/<id> | Atualiza produção |
+| DELETE | /producao/<id> | Remove produção |
+
 
 ## Exemplo de JSON para cadastrar
-
-```json
 {
-  "raca": "Nelore",
-  "categoria": "Boi Gordo",
-  "peso_kg": 480,
-  "idade_meses": 36,
-  "valor_arroba": 300.00
+  "nome": "Fazenda São João",
+  "localizacao": "Interior",
+  "area_hectares": 120
 }
-```
-
-## Resposta esperada
-
-```json
-{
-  "id": 1,
-  "raca": "Nelore",
-  "categoria": "Boi Gordo",
-  "peso_kg": 480,
-  "idade_meses": 36,
-  "valor_arroba": 300.0,
-  "preco_estimado": 9600.0,
-  "data_avaliacao": "2026-07-01T12:00:00"
-}
-```
-
 ## Status atual do projeto
 
-Esta etapa cobre apenas o backend: models, controllers, services e persistência no banco. A camada de frontend (telas de cadastro, listagem, edição e exclusão consumindo essas rotas) faz parte da próxima etapa do trabalho.
+Esta etapa cobre apenas o backend: models, controllers, repositories e persistência no banco de dados.
+
+A camada de frontend (telas de cadastro, listagem, edição e exclusão consumindo essas rotas) faz parte da próxima etapa do trabalho.
