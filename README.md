@@ -121,30 +121,13 @@ Depois altere o `.env` para:
 DATABASE_URL=mysql+pymysql://root:sua_senha@localhost:3306/agrorisk
 ```
 ## Rotas da API
-Método	Rota	Descrição
-GET	`/usuarios`	Lista todos os usuários
-GET	`/usuarios/<id>`	Busca usuário pelo id
-POST	`/usuarios`	Cadastra usuário
-PUT	`/usuarios/<id>`	Atualiza usuário
-DELETE	`/usuarios/<id>`	Remove usuário
+Método | Rota | Descrição
+|GET   |`/usuarios`|	Lista todos os usuários|
+|GET   |`/usuarios/<id>`|	Busca usuário pelo id|
+|POST	|`/usuarios`|	Cadastra usuário|
+|PUT	|`/usuarios/<id>`|	Atualiza usuário|
+|DELETE	|`/usuarios/<id>`|	Remove usuário|
 
-| GET | `/fazendas` | Lista todas as fazendas |
-| GET | `/fazendas/<id>` | Busca fazenda pelo id |
-| POST | `/fazendas` | Cadastra fazenda |
-| PUT | `/fazendas/<id>` | Atualiza fazenda |
-| DELETE | `/fazendas/<id>` | Remove fazenda |
-
-| GET | `/safras` | Lista todas as safras |
-| GET | `/safras/<id>` | Busca safra pelo id |
-| POST | `/safras` | Cadastra safra |
-| PUT | `/safras/<id>` | Atualiza safra |
-| DELETE | /safras/<id>` | Remove safra |
-`
-| GET | `/producao` | Lista produções |
-| GET | `/producao/<id>` | Busca produção pelo id |
-| POST | /`producao` | Registra produção |
-| PUT | `/producao/<id>` | Atualiza produção |
-| DELETE | `/producao/<id>` | Remove produção |
 
 
 ## Exemplo de JSON para cadastrar
