@@ -61,83 +61,100 @@ CRUD do sistema AgroRisk:
 
 Entre na pasta do backend:
 
+```bash
 cd backend
+```
 
 Crie o ambiente virtual:
 
-python -m venv venv
+```bash
+python -m venv .venv
+```
 
-Ative o ambiente virtual:
+Ative o ambiente virtual.
 
-Windows:
+No Windows:
 
-venv\Scripts\activate
+```bash
+.venv\Scripts\activate
+```
 
-Linux ou macOS:
+No Linux ou macOS:
 
-source venv/bin/activate
+```bash
+source .venv/bin/activate
+```
 
 Instale as dependências:
 
+```bash
 pip install -r requirements.txt
+```
 
-Crie o arquivo .env com base no exemplo:
+Crie o arquivo `.env` com base no exemplo:
 
+```bash
 cp .env.example .env
-
+```
 Execute o backend:
-
+```bash
 python app.py
-
+```
 A API ficará disponível em:
-
+```text
 http://127.0.0.1:5000
+```
 ## Banco de dados
 
 Por padrão, o projeto usa SQLite para facilitar o teste local:
-
+```text
 DATABASE_URL=sqlite:///agrorisk.db
-
+```
+```text
 Para usar MySQL, execute o script:
-
+```
+```text
 backend/database/create_database.sql
-
-Depois altere o .env para:
-
+```
+Depois altere o `.env` para:
+```text
 DATABASE_URL=mysql+pymysql://root:sua_senha@localhost:3306/agrorisk
+```
 ## Rotas da API
 Método	Rota	Descrição
-GET	/usuarios	Lista todos os usuários
-GET	/usuarios/<id>	Busca usuário pelo id
-POST	/usuarios	Cadastra usuário
-PUT	/usuarios/<id>	Atualiza usuário
-DELETE	/usuarios/<id>	Remove usuário
+GET	`/usuarios`	Lista todos os usuários
+GET	`/usuarios/<id>`	Busca usuário pelo id
+POST	`/usuarios`	Cadastra usuário
+PUT	`/usuarios/<id>`	Atualiza usuário
+DELETE	`/usuarios/<id>`	Remove usuário
 
-| GET | /fazendas | Lista todas as fazendas |
-| GET | /fazendas/<id> | Busca fazenda pelo id |
-| POST | /fazendas | Cadastra fazenda |
-| PUT | /fazendas/<id> | Atualiza fazenda |
-| DELETE | /fazendas/<id> | Remove fazenda |
+| GET | `/fazendas` | Lista todas as fazendas |
+| GET | `/fazendas/<id>` | Busca fazenda pelo id |
+| POST | `/fazendas` | Cadastra fazenda |
+| PUT | `/fazendas/<id>` | Atualiza fazenda |
+| DELETE | `/fazendas/<id>` | Remove fazenda |
 
-| GET | /safras | Lista todas as safras |
-| GET | /safras/<id> | Busca safra pelo id |
-| POST | /safras | Cadastra safra |
-| PUT | /safras/<id> | Atualiza safra |
-| DELETE | /safras/<id> | Remove safra |
-
-| GET | /producao | Lista produções |
-| GET | /producao/<id> | Busca produção pelo id |
-| POST | /producao | Registra produção |
-| PUT | /producao/<id> | Atualiza produção |
-| DELETE | /producao/<id> | Remove produção |
+| GET | `/safras` | Lista todas as safras |
+| GET | `/safras/<id>` | Busca safra pelo id |
+| POST | `/safras` | Cadastra safra |
+| PUT | `/safras/<id>` | Atualiza safra |
+| DELETE | /safras/<id>` | Remove safra |
+`
+| GET | `/producao` | Lista produções |
+| GET | `/producao/<id>` | Busca produção pelo id |
+| POST | /`producao` | Registra produção |
+| PUT | `/producao/<id>` | Atualiza produção |
+| DELETE | `/producao/<id>` | Remove produção |
 
 
 ## Exemplo de JSON para cadastrar
+```json
 {
   "nome": "Fazenda São João",
   "localizacao": "Interior",
   "area_hectares": 120
 }
+```
 ## Status atual do projeto
 
 Esta etapa cobre apenas o backend: models, controllers, repositories e persistência no banco de dados.
