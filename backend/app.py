@@ -4,7 +4,10 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 from models.database import db
+
 from controllers.usuario_controller import usuario_controller
+from controllers.propriedade_controller import propriedade_controller
+from controllers.safra_controller import safra_controller
 
 
 def create_app():
@@ -22,18 +25,41 @@ def create_app():
 
     db.init_app(app)
 
+    # Controllers
     app.register_blueprint(usuario_controller)
+    app.register_blueprint(propriedade_controller)
+    app.register_blueprint(safra_controller)
 
     @app.get("/")
     def home():
         return jsonify({
             "mensagem": "API AgroRisk funcionando.",
             "rotas": {
-                "listar_usuarios": "GET /usuarios",
-                "buscar_usuario": "GET /usuarios/<id>",
-                "criar_usuario": "POST /usuarios",
-                "atualizar_usuario": "PUT /usuarios/<id>",
-                "deletar_usuario": "DELETE /usuarios/<id>"
+
+                "USUÁRIOS": {
+                    "listar": "GET /usuarios",
+                    "buscar": "GET /usuarios/<id>",
+                    "criar": "POST /usuarios",
+                    "atualizar": "PUT /usuarios/<id>",
+                    "deletar": "DELETE /usuarios/<id>"
+                },
+
+                "PROPRIEDADES": {
+                    "listar": "GET /propriedades",
+                    "buscar": "GET /propriedades/<id>",
+                    "criar": "POST /propriedades",
+                    "atualizar": "PUT /propriedades/<id>",
+                    "deletar": "DELETE /propriedades/<id>"
+                },
+
+                "SAFRAS": {
+                    "listar": "GET /safras",
+                    "buscar": "GET /safras/<id>",
+                    "criar": "POST /safras",
+                    "atualizar": "PUT /safras/<id>",
+                    "deletar": "DELETE /safras/<id>"
+                }
+
             }
         })
 
