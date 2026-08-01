@@ -1,10 +1,11 @@
 # AgroRisk
 
-Produtores rurais de médio porte enfrentam dificuldades no planejamento da safra devido à forte dependência do clima, à falta de organização dos dados e à ausência de registros históricos confiáveis, o que resulta em baixa previsibilidade de produtividade, dificuldade no controle de custos e maior risco de perdas na produção.
+Pequenos e médios produtores rurais enfrentam dificuldades para centralizar e organizar as informações das suas propriedades, safras e produções, o que dificulta o acompanhamento da produtividade, o planejamento agrícola e a tomada de decisões.
 
-O AgroRisk nasce para resolver esse problema: um sistema que centraliza e organiza os dados da propriedade rural, permitindo o registro de usuários, fazendas, safras e produções, além de fornecer uma base estruturada para análise de produtividade e apoio à tomada de decisão no campo.
+O **AgroRisk** foi desenvolvido para resolver esse problema, oferecendo uma plataforma de gerenciamento rural que permite cadastrar usuários, propriedades e safras, reunindo todas as informações em um único sistema e facilitando o controle das atividades agrícolas.
 
 ## Estrutura do projeto
+
 ```text
 AgroRisk/
 ├── frontend/
@@ -13,49 +14,47 @@ AgroRisk/
     ├── requirements.txt
     ├── .env.example
     ├── controllers/
-    │   ├── usuario_controller.py
-    │   ├── fazenda_controller.py
-    │   ├── safra_controller.py
-    │   └── producao_controller.py
+    │   └── usuario_controller.py
     ├── models/
     │   ├── database.py
-    │   ├── usuario_model.py
-    │   ├── fazenda_model.py
-    │   ├── safra_model.py
-    │   └── producao_model.py
+    │   └── usuario.py
     ├── repositories/
     │   └── README.md
+    ├── services/
+    │   ├── criar_usuario_service.py
+    │   ├── listar_usuarios_service.py
+    │   ├── buscar_usuario_por_id_service.py
+    │   ├── atualizar_usuario_service.py
+    │   └── deletar_usuario_service.py
     └── database/
         └── create_database.sql
 ```
-## Arquitetura usada
+
+## Arquitetura utilizada
+
 ```text
 Frontend
    ↓
 Controller
    ↓
-Repository
+Service
    ↓
 Model
    ↓
 Banco de Dados
 ```
 
-Cada camada tem uma responsabilidade única: o Controller recebe a requisição HTTP e devolve a resposta, o Repository contém consultas mais avançadas do sistema, e o Model concentra o acesso ao banco (herdando de db.Model) e o CRUD básico das entidades.
+Cada camada possui uma responsabilidade específica. O **Controller** recebe as requisições HTTP e retorna as respostas da API. O **Service** concentra as regras de negócio de cada funcionalidade. Já a **Model** representa as tabelas do banco de dados utilizando o SQLAlchemy (`db.Model`) e realiza as operações de persistência.
 
 ## Funcionalidades implementadas (backend)
 
-CRUD do sistema AgroRisk:
+CRUD de Usuários:
 
-- Cadastrar usuário, fazenda, safra e produção
-- Listar todos os registros
-- Buscar registros por id
-- Atualizar dados
-- Excluir registros
-- Como a produção é organizada
-
-
- ### A produção agrícola (principalmente silagem de milho) é registrada com base na fazenda e safra, permitindo controle histórico de produtividade e análise de desempenho ao longo do tempo.
+- Cadastrar um usuário;
+- Listar todos os usuários cadastrados;
+- Buscar um usuário pelo id;
+- Atualizar os dados de um usuário;
+- Excluir um usuário.
 
 ## Como executar o backend
 
@@ -68,7 +67,7 @@ cd backend
 Crie o ambiente virtual:
 
 ```bash
-python -m venv .venv
+python -m venv venv
 ```
 
 Ative o ambiente virtual.
@@ -76,13 +75,13 @@ Ative o ambiente virtual.
 No Windows:
 
 ```bash
-.venv\Scripts\activate
+venv\Scripts\activate
 ```
 
 No Linux ou macOS:
 
 ```bash
-source .venv/bin/activate
+source venv/bin/activate
 ```
 
 Instale as dependências:
@@ -96,51 +95,89 @@ Crie o arquivo `.env` com base no exemplo:
 ```bash
 cp .env.example .env
 ```
-Execute o backend:
+
+Configure a conexão com o banco de dados no arquivo `.env`.
+
+Execute a aplicação:
+
 ```bash
 python app.py
 ```
+
 A API ficará disponível em:
+
 ```text
 http://127.0.0.1:5000
 ```
+
 ## Banco de dados
 
-Por padrão, o projeto usa SQLite para facilitar o teste local:
-```text
-DATABASE_URL=sqlite:///agrorisk.db
-```
-```text
-Para usar MySQL, execute o script:
-```
+O projeto utiliza **MySQL** como banco de dados.
+
+Execute o script localizado em:
+
 ```text
 backend/database/create_database.sql
 ```
-Depois altere o `.env` para:
+
+Configure o arquivo `.env` com sua conexão:
+
 ```text
-DATABASE_URL=mysql+pymysql://root:sua_senha@localhost:3306/agrorisk
+DATABASE_URL=mysql+pymysql://root:@localhost/agrorisk
 ```
+
+Caso seu usuário possua senha:
+
+```text
+DATABASE_URL=mysql+pymysql://root:sua_senha@localhost/agrorisk
+```
+
 ## Rotas da API
-Método | Rota | Descrição
-|---|---|---|
-|GET   | `/usuarios` |	Lista todos os usuários|
-|GET   | `/usuarios/<id>` |	Busca usuário pelo id|
-|POST	| `/usuarios` |	Cadastra usuário|
-|PUT	| `/usuarios/<id>` |	Atualiza usuário|
-|DELETE	| `/usuarios/<id>` |	Remove usuário|
 
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/usuarios` | Lista todos os usuários |
+| GET | `/usuarios/<id>` | Busca um usuário pelo id |
+| POST | `/usuarios` | Cadastra um novo usuário |
+| PUT | `/usuarios/<id>` | Atualiza os dados de um usuário |
+| DELETE | `/usuarios/<id>` | Remove um usuário |
 
+## Exemplo de JSON para cadastro
 
-## Exemplo de JSON para cadastrar
 ```json
 {
-  "nome": "Fazenda São João",
-  "localizacao": "Interior",
-  "area_hectares": 120
+    "nome": "Leonardo Silva",
+    "email": "leonardo@email.com",
+    "senha": "123456"
 }
 ```
+
+## Resposta esperada
+
+```json
+{
+    "id": 1,
+    "nome": "Leonardo Silva",
+    "email": "leonardo@email.com",
+    "senha": "123456"
+}
+```
+
+## Tecnologias utilizadas
+
+- Python
+- Flask
+- Flask SQLAlchemy
+- SQLAlchemy
+- Flask CORS
+- MySQL
+- PyMySQL
+- Python Dotenv
+
 ## Status atual do projeto
 
-Esta etapa cobre apenas o backend: models, controllers, repositories e persistência no banco de dados.
+Nesta etapa foi implementada a arquitetura do backend utilizando Flask e SQLAlchemy, seguindo o padrão Controller → Service → Model apresentado em aula.
 
-A camada de frontend (telas de cadastro, listagem, edição e exclusão consumindo essas rotas) faz parte da próxima etapa do trabalho.
+Até o momento foi desenvolvido o CRUD completo da Model **Usuário**, incluindo cadastro, listagem, busca por id, atualização e exclusão de registros no banco de dados MySQL.
+
+As próximas etapas do projeto contemplam a implementação das Models **Propriedade** e **Safra**, além da integração completa com o frontend do sistema AgroRisk.
