@@ -306,15 +306,7 @@ img{
 
 }
 
-.hero-dashboard{
 
-    border-radius:18px;
-
-    box-shadow:0 25px 60px rgba(0,0,0,.35);
-
-    animation:flutuar 4s ease-in-out infinite;
-
-}
 
 /*==================================================
                 ANIMAÇÃO HERO
@@ -758,80 +750,6 @@ section p{
 }
 
 
-/* ================= DASHBOARD BASE ================= */
-
-
-/* FUNDO */
-.dashboard-body {
-    background: linear-gradient(135deg, #0f2d1e, #145c3a);
-    color: white;
-}
-
-/* HEADER */
-.dash-header {
-    margin-top: 40px;
-}
-
-/* RESUMO */
-.dash-summary {
-    margin-top: 15px;
-    padding: 18px;
-    background: rgba(255,255,255,0.08);
-    border-left: 5px solid #2ecc71;
-    border-radius: 12px;
-}
-
-/* CARDS */
-.dash-card {
-    background: rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 25px;
-    text-align: center;
-    transition: 0.3s;
-    backdrop-filter: blur(10px);
-}
-
-.dash-card:hover {
-    transform: translateY(-5px);
-}
-
-/* BOTÕES */
-.dash-actions {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 25px;
-}
-
-.dash-action {
-    flex: 1;
-    min-width: 220px;
-
-    text-align: center;
-    background: #2ecc71;
-    color: white;
-
-    padding: 16px;
-    border-radius: 14px;
-
-    text-decoration: none;
-    font-weight: 600;
-
-    transition: 0.3s;
-}
-
-.dash-action:hover {
-    background: #27ae60;
-    transform: translateY(-5px);
-}
-
-/* CLIMA */
-.weather-box {
-    margin-top: 25px;
-    padding: 20px;
-    background: rgba(0,0,0,0.25);
-    border-radius: 12px;
-}
 
 /*==================================================
                 BENEFÍCIOS
@@ -1416,142 +1334,11 @@ footer{
     font-weight:600;
 }
 
-/* ================= DASHBOARD PRO ================= */
 
-.dashboard{
-    padding:120px 0;
-    background:#F8FAFC;
-}
 
-.dash-header h2{
-    font-size:38px;
-    color:var(--escuro);
-}
 
-.dash-header p{
-    color:var(--cinza);
-}
 
-.dash-card{
-    background:white;
-    padding:30px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.06);
-    text-align:center;
-    transition:.3s;
-}
-
-.dash-card:hover{
-    transform:translateY(-10px);
-}
-
-.dash-card h3{
-    font-size:34px;
-    color:var(--verde);
-}
-
-.dash-card p{
-    color:var(--cinza);
-}
-
-.dash-action{
-    display:block;
-    padding:25px;
-    border-radius:18px;
-    background:linear-gradient(135deg,var(--azul),var(--verde));
-    color:white;
-    text-align:center;
-    font-weight:600;
-    text-decoration:none;
-    transition:.3s;
-}
-
-.dash-action:hover{
-    transform:translateY(-8px);
-    color:white;
-}
-
-.weather-box{
-    margin-top:30px;
-    padding:25px;
-    background:white;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.06);
-}
-
-/* ================= PÁGINAS INTERNAS ================= */
-
-.page{
-    padding:120px 0;
-    background:#F8FAFC;
-}
-
-.card-simple{
-    background:white;
-    padding:25px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.06);
-    transition:.3s;
-}
-
-.card-simple:hover{
-    transform:translateY(-8px);
-}
-
-.report-box{
-    background:white;
-    padding:30px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.06);
-}
-
-.info-card{
-    background:#fff;
-    border-radius:20px;
-    padding:25px;
-    text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-    margin-bottom:20px;
-}
-
-.info-card h2{
-    color:#198754;
-    font-size:35px;
-    font-weight:bold;
-}
-
-.propriedade-card{
-    border:none;
-    border-radius:20px;
-    overflow:hidden;
-    transition:.3s;
-}
-
-.propriedade-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 40px rgba(0,0,0,.15);
-}
-
-.propriedade-card img{
-    height:220px;
-    object-fit:cover;
-}
-
-.propriedade-card h4{
-    color:#14532d;
-    font-weight:bold;
-}
-
-.propriedade-card p{
-    color:#666;
-    margin-bottom:10px;
-}
-
-.propriedade-card .btn{
-    border-radius:12px;
-}
-
-s================================
+/* ==================================================
                 DASHBOARD AGRORISK
 ==================================================*/
 
