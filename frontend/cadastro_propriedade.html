@@ -4,7 +4,6 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AgroRisk | Nova Propriedade</title>
@@ -25,209 +24,276 @@
 
 </head>
 
-<body>
+<body class="property-body">
 
-<section class="container py-5">
+<div class="property-header">
 
-    <div class="text-center mb-5">
+    <div class="container">
 
-        <h1 class="fw-bold">
-            Cadastro da Propriedade
-        </h1>
+        <div class="header-content">
 
-        <p class="text-muted">
-            Informe os dados da fazenda e desenhe seus limites no mapa.
-        </p>
+            <div>
 
-    </div>
+                <h1>
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    Nova Propriedade
+                </h1>
 
-    <div class="row">
-
-        <!-- FORMULÁRIO -->
-
-        <div class="col-lg-4">
-
-            <div class="card shadow rounded-4 p-4">
-
-                <h4 class="mb-4">
-                    Informações
-                </h4>
-
-                <form id="formPropriedade">
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Nome da propriedade
-                        </label>
-
-                        <input
-                            type="text"
-                            id="nome"
-                            class="form-control"
-                            placeholder="Ex.: Fazenda Boa Vista">
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Estado
-                        </label>
-
-                        <input
-                            type="text"
-                            id="estado"
-                            class="form-control">
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Cidade
-                        </label>
-
-                        <input
-                            type="text"
-                            id="cidade"
-                            class="form-control">
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Cultura Principal
-                        </label>
-
-                        <select
-                            id="cultura"
-                            class="form-select">
-
-                            <option>Soja</option>
-
-                            <option>Milho</option>
-
-                            <option>Café</option>
-
-                            <option>Algodão</option>
-
-                            <option>Cana-de-açúcar</option>
-
-                        </select>
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Observações
-                        </label>
-
-                        <textarea
-                            id="observacao"
-                            rows="4"
-                            class="form-control"></textarea>
-
-                    </div>
-
-                </form>
+                <p>
+                    Cadastre sua fazenda e delimite sua área para iniciar o
+                    monitoramento inteligente da produção.
+                </p>
 
             </div>
 
+            <a href="dashboard.html" class="btn-voltar">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Dashboard
+
+            </a>
+
         </div>
 
-        <!-- MAPA -->
+    </div>
 
-        <div class="col-lg-8">
+</div>
 
-            <div class="card shadow rounded-4 p-4">
+<section class="property-page">
 
-                <div class="d-flex justify-content-between">
+<div class="container">
 
-                    <h4>
+<div class="row g-4">
+
+    <!-- MAPA -->
+
+    <div class="col-lg-8">
+
+        <div class="map-card">
+
+            <div class="map-top">
+
+                <div>
+
+                    <h3>
+
+                        <i class="fa-solid fa-earth-americas"></i>
 
                         Delimite sua propriedade
 
-                    </h4>
+                    </h3>
 
-                    <button
-                        class="btn btn-outline-success"
-                        id="btnPesquisar">
+                    <span>
 
-                        Pesquisar Local
+                        Desenhe os limites da fazenda diretamente no mapa.
 
-                    </button>
+                    </span>
 
                 </div>
 
-                <div
-                    id="map"
-                    style="height:600px;margin-top:20px;border-radius:15px;">
-                </div>
+                <button
+                    class="btn-search"
+                    id="btnPesquisar">
 
-                <div class="row mt-4">
+                    <i class="fa-solid fa-magnifying-glass-location"></i>
 
-                    <div class="col-md-6">
+                    Pesquisar Local
 
-                        <div class="alert alert-success">
+                </button>
 
-                            <strong>Área</strong>
+            </div>
 
-                            <br>
+            <div id="map"></div>
 
-                            <span id="area">
-                                Ainda não calculada
-                            </span>
+        </div>
 
-                        </div>
+    </div>
 
-                    </div>
+    <!-- PAINEL LATERAL -->
 
-                    <div class="col-md-6">
+    <div class="col-lg-4">
 
-                        <div class="alert alert-primary">
+        <div class="side-panel">
 
-                            <strong>Perímetro</strong>
+            <h3>
 
-                            <br>
+                <i class="fa-solid fa-tractor"></i>
 
-                            <span id="perimetro">
-                                Ainda não calculado
-                            </span>
+                Informações
 
-                        </div>
+            </h3>
 
-                    </div>
+            <form id="formPropriedade">
 
-                </div>
+                <div class="mb-3">
 
-                <div class="text-end">
+                    <label>
 
-                    <button
-                        class="btn btn-danger"
-                        id="limparMapa">
+                        Nome da propriedade
 
-                        Limpar
+                    </label>
 
-                    </button>
-
-                    <button
-                        class="btn btn-success"
-                        id="salvar">
-
-                        Salvar Propriedade
-
-                    </button>
+                    <input
+                        type="text"
+                        id="nome"
+                        class="form-control"
+                        placeholder="Ex.: Fazenda Boa Vista">
 
                 </div>
+
+                <div class="mb-3">
+
+                    <label>
+
+                        Estado
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="estado"
+                        class="form-control">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>
+
+                        Cidade
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="cidade"
+                        class="form-control">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>
+
+                        Cultura Principal
+
+                    </label>
+
+                    <select
+                        id="cultura"
+                        class="form-select">
+
+                        <option>Soja</option>
+                        <option>Milho</option>
+                        <option>Café</option>
+                        <option>Algodão</option>
+                        <option>Cana-de-açúcar</option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label>
+
+                        Observações
+
+                    </label>
+
+                    <textarea
+                        rows="4"
+                        id="observacao"
+                        class="form-control"
+                        placeholder="Escreva alguma observação..."></textarea>
+
+                </div>
+
+            </form>
+
+            <div class="info-cards">
+
+                <div class="mini-card">
+
+                    <i class="fa-solid fa-vector-square"></i>
+
+                    <h5>Área</h5>
+
+                    <span id="area">
+
+                        Ainda não calculada
+
+                    </span>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <i class="fa-solid fa-ruler-combined"></i>
+
+                    <h5>Perímetro</h5>
+
+                    <span id="perimetro">
+
+                        Ainda não calculado
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="weather-card">
+
+                <h5>
+
+                    <i class="fa-solid fa-cloud-sun"></i>
+
+                    Clima
+
+                </h5>
+
+                <p>
+
+                    Após desenhar a propriedade,
+                    o AgroRisk mostrará o clima da região.
+
+                </p>
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    id="limparMapa"
+                    class="btn-clear">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Limpar
+
+                </button>
+
+                <button
+                    id="salvar"
+                    class="btn-save">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Salvar Propriedade
+
+                </button>
 
             </div>
 
         </div>
 
     </div>
+
+</div>
+
+</div>
 
 </section>
 

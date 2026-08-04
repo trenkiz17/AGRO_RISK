@@ -12,106 +12,418 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css">
 
 </head>
 
-<body class="dashboard-body">
+<body>
 
-<section class="dashboard">
+    <!-- SIDEBAR -->
 
-    <div class="container">
+    <aside class="sidebar">
 
-        <!-- HEADER -->
-        <div class="dash-header">
-            <h2>Olá, <span id="usuario">Usuário</span> 👋</h2>
-            <p>Painel de controle da sua propriedade</p>
+        <div class="logo">
+
+            <i class="fa-solid fa-seedling"></i>
+
+            <span>AgroRisk</span>
+
         </div>
 
-        <!-- RESUMO -->
-        <div class="dash-summary">
-            <h5>Resumo rápido</h5>
-            <p>Acompanhe aqui os principais indicadores da sua fazenda em tempo real.</p>
+        <ul>
+
+            <li class="active">
+                <a href="dashboard.html">
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="cadastro_propriedade.html">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    Propriedades
+                </a>
+            </li>
+
+            <li>
+                <a href="propriedades.html">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                    Monitoramento
+                </a>
+            </li>
+
+            <li>
+                <a href="relatorios.html">
+                    <i class="fa-solid fa-chart-column"></i>
+                    Relatórios
+                </a>
+            </li>
+
+            <li>
+                <a href="perfil.html">
+                    <i class="fa-solid fa-user"></i>
+                    Perfil
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="sidebar-footer">
+
+            <a href="index.html">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Sair
+
+            </a>
+
         </div>
+
+    </aside>
+
+    <!-- CONTEÚDO -->
+
+    <main class="main-content">
+
+        <!-- TOPO -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h2>Dashboard</h2>
+
+                <span>Bem-vindo ao AgroRisk</span>
+
+            </div>
+
+            <div class="perfil-topo">
+
+                <img src="img/user.png">
+
+                <div>
+
+                    <strong id="usuario">Leonardo</strong>
+
+                    <small>Administrador</small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- HERO -->
+
+        <section class="hero-dashboard">
+
+            <div>
+
+                <h1>
+
+                    Bem-vindo de volta,
+
+                    <span id="usuario2">Leonardo</span>
+
+                    👋
+
+                </h1>
+
+                <p>
+
+                    Gerencie propriedades, acompanhe suas safras
+                    e visualize previsões climáticas em tempo real.
+
+                </p>
+
+            </div>
+
+            <div class="hero-icon">
+
+                <i class="fa-solid fa-tractor"></i>
+
+            </div>
+
+        </section>
 
         <!-- CARDS -->
-        <div class="row mt-4 g-4">
 
-            <div class="col-lg-3 col-md-6">
-                <div class="dash-card">
-                    <h3>3</h3>
-                    <p>Fazendas</p>
+        <section class="cards-dashboard">
+
+            <div class="card-info">
+
+                <div>
+
+                    <small>Propriedades</small>
+
+                    <h2 id="totalPropriedades">0</h2>
+
                 </div>
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
             </div>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="dash-card">
-                    <h3>12</h3>
-                    <p>Talhões</p>
+            <div class="card-info">
+
+                <div>
+
+                    <small>Safras</small>
+
+                    <h2 id="totalSafras">0</h2>
+
                 </div>
+
+                <i class="fa-solid fa-wheat-awn"></i>
+
             </div>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="dash-card">
-                    <h3 id="temp">--</h3>
-                    <p>Temperatura</p>
+            <div class="card-info">
+
+                <div>
+
+                    <small>Temperatura</small>
+
+                    <h2 id="temperatura">--°</h2>
+
                 </div>
+
+                <i class="fa-solid fa-cloud-sun"></i>
+
             </div>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="dash-card">
-                    <h3>92%</h3>
-                    <p>Produtividade</p>
+            <div class="card-info">
+
+                <div>
+
+                    <small>Produtividade</small>
+
+                    <h2>92%</h2>
+
                 </div>
+
+                <i class="fa-solid fa-chart-line"></i>
+
             </div>
 
-        </div>
+        </section>
 
-        <!-- BOTÕES -->
-        <div class="dash-actions">
+        <!-- ACESSO RÁPIDO -->
 
-            <a href="cadastro_propriedade.html" class="dash-action">
-                ➕ Cadastrar Propriedade
+        <h3 class="titulo-secao">
+
+            Acesso rápido
+
+        </h3>
+
+        <section class="acoes-grid">
+
+            <a href="propriedades.html" class="acao-card">
+
+                <div class="icone">
+
+                    <i class="fa-solid fa-map-location-dot"></i>
+
+                </div>
+
+                <h4>Propriedades</h4>
+
+                <p>
+
+                    Cadastre novas propriedades,
+                    visualize todas e marque
+                    a área diretamente no mapa.
+
+                </p>
+
+                <span>
+
+                    Entrar
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
             </a>
 
+            <a href="monitoramento.html" class="acao-card">
 
-            <a href="propriedades.html" class="dash-action">
-                🌾 Minhas Propriedades
+                <div class="icone">
+
+                    <i class="fa-solid fa-wheat-awn"></i>
+
+                </div>
+
+                <h4>Monitoramento</h4>
+
+                <p>
+
+                    Consulte clima,
+                    previsão do tempo,
+                    produtividade e safras.
+
+                </p>
+
+                <span>
+
+                    Entrar
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
             </a>
 
-            
+            <a href="relatorios.html" class="acao-card">
 
-            <a href="relatorios.html" class="dash-action">
-                📊 Relatórios
+                <div class="icone">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </div>
+
+                <h4>Relatórios</h4>
+
+                <p>
+
+                    Gere análises completas
+                    sobre produção,
+                    produtividade e histórico.
+
+                </p>
+
+                <span>
+
+                    Entrar
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
             </a>
 
-        </div>
+        </section>
 
-        <!-- CLIMA -->
-        <div class="weather-box mt-4">
+        <!-- PAINÉIS -->
 
-            <h4>Clima Atual</h4>
+        <section class="painel-grid">
 
-            <p id="desc">Carregando...</p>
+            <div class="painel">
 
-        </div>
+                <h4>
 
-        <!-- LOGOUT -->
-        <div class="mt-4">
-            <a href="index.html" class="btn btn-danger">
-                Sair do sistema
-            </a>
-        </div>
+                    <i class="fa-solid fa-cloud-sun"></i>
 
-    </div>
+                    Clima Atual
 
-</section>
+                </h4>
 
-<script src="js/api.js"></script>
-<script src="js/dashboard.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+                <div class="weather">
+
+                    <h1 id="tempGrande">--°</h1>
+
+                    <p id="descricao">
+
+                        Carregando...
+
+                    </p>
+
+                    <hr>
+
+                    <div class="weather-info">
+
+                        <div>
+
+                            <strong>Umidade</strong>
+
+                            <span id="umidade">--%</span>
+
+                        </div>
+
+                        <div>
+
+                            <strong>Vento</strong>
+
+                            <span id="vento">-- km/h</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="painel">
+
+                <h4>
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Últimas Atividades
+
+                </h4>
+
+                <ul class="timeline">
+
+                    <li>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Fazenda cadastrada
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Safra criada
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Relatório gerado
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Login realizado
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+        <!-- RODAPÉ -->
+
+        <footer class="dashboard-footer">
+
+            © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
+
+        </footer>
+
+    </main>
+
+    <script src="js/api.js"></script>
+
+    <script src="js/dashboard.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

@@ -1550,3 +1550,830 @@ footer{
 .propriedade-card .btn{
     border-radius:12px;
 }
+
+s================================
+                DASHBOARD AGRORISK
+==================================================*/
+
+body{
+    margin:0;
+    background:#eef3f8;
+    font-family:'Poppins',sans-serif;
+}
+
+/*==========================
+        SIDEBAR
+===========================*/
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:270px;
+    height:100vh;
+
+    background:linear-gradient(180deg,#0F172A,#1d3557);
+
+    color:white;
+
+    padding:35px 25px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    box-shadow:8px 0 30px rgba(0,0,0,.12);
+
+}
+
+.logo{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#22C55E;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:50px;
+
+}
+
+.sidebar ul{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.sidebar li{
+
+    margin-bottom:18px;
+
+}
+
+.sidebar a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:16px 18px;
+
+    color:#dbeafe;
+
+    border-radius:15px;
+
+    transition:.35s;
+
+    font-weight:500;
+
+}
+
+.sidebar a:hover{
+
+    background:#2563EB;
+
+    color:white;
+
+    transform:translateX(8px);
+
+}
+
+.sidebar .active a{
+
+    background:#22C55E;
+
+    color:white;
+
+}
+
+.sidebar-footer a{
+
+    background:#dc2626;
+
+    color:white;
+
+    justify-content:center;
+
+}
+
+.sidebar-footer a:hover{
+
+    background:#b91c1c;
+
+}
+
+/*==========================
+        CONTEÚDO
+===========================*/
+
+.main-content{
+
+    margin-left:270px;
+
+    padding:40px;
+
+}
+
+/*==========================
+        TOPBAR
+===========================*/
+
+.topbar{
+
+    background:white;
+
+    padding:20px 35px;
+
+    border-radius:20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
+
+}
+
+.topbar h2{
+
+    margin:0;
+
+    font-weight:700;
+
+}
+
+.topbar span{
+
+    color:#64748B;
+
+}
+
+.perfil-topo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.perfil-topo img{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid #22C55E;
+
+}
+
+.perfil-topo strong{
+
+    display:block;
+
+    color:#0F172A;
+
+}
+
+.perfil-topo small{
+
+    color:#64748B;
+
+}
+
+/*==========================
+        HERO
+===========================*/
+
+.hero-dashboard{
+
+    margin-top:30px;
+
+    background:linear-gradient(135deg,#2563EB,#22C55E);
+
+    border-radius:25px;
+
+    padding:45px;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+.hero-dashboard::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:50%;
+
+    right:-80px;
+
+    top:-60px;
+
+}
+
+.hero-dashboard h1{
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+.hero-dashboard p{
+
+    color:#E2E8F0;
+
+    max-width:650px;
+
+}
+
+.hero-icon{
+
+    font-size:90px;
+
+    opacity:.30;
+
+}
+
+/*==========================
+        CARDS
+===========================*/
+
+.cards-dashboard{
+
+    margin-top:35px;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+.card-info{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:28px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
+
+    transition:.35s;
+
+}
+
+.card-info:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.card-info small{
+
+    color:#64748B;
+
+    font-size:15px;
+
+}
+
+.card-info h2{
+
+    margin-top:8px;
+
+    font-size:36px;
+
+    color:#0F172A;
+
+}
+
+.card-info i{
+
+    width:70px;
+
+    height:70px;
+
+    background:linear-gradient(135deg,#2563EB,#22C55E);
+
+    border-radius:20px;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:30px;
+
+}
+
+
+/*==================================================
+            TÍTULOS DAS SEÇÕES
+==================================================*/
+
+.titulo-secao{
+
+    margin-top:45px;
+    margin-bottom:20px;
+
+    font-size:26px;
+
+    font-weight:700;
+
+    color:#0F172A;
+
+}
+
+/*==================================================
+            ACESSO RÁPIDO
+==================================================*/
+
+.acoes-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:25px;
+
+}
+
+.acao-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    text-decoration:none;
+
+    color:#1E293B;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.acao-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+
+    height:180px;
+
+    background:rgba(34,197,94,.05);
+
+    border-radius:50%;
+
+    right:-60px;
+
+    top:-60px;
+
+}
+
+.acao-card:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:0 20px 45px rgba(37,99,235,.18);
+
+}
+
+.acao-card .icone{
+
+    width:70px;
+
+    height:70px;
+
+    background:linear-gradient(135deg,#2563EB,#22C55E);
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:30px;
+
+    margin-bottom:25px;
+
+}
+
+.acao-card h4{
+
+    color:#0F172A;
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+}
+
+.acao-card p{
+
+    color:#64748B;
+
+    line-height:28px;
+
+    margin-bottom:25px;
+
+}
+
+.acao-card span{
+
+    color:#22C55E;
+
+    font-weight:600;
+
+}
+
+.acao-card:hover span{
+
+    color:#2563EB;
+
+}
+
+/*==================================================
+            PAINÉIS
+==================================================*/
+
+.painel-grid{
+
+    margin-top:40px;
+
+    display:grid;
+
+    grid-template-columns:1.3fr .7fr;
+
+    gap:30px;
+
+}
+
+.painel{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
+
+}
+
+.painel h4{
+
+    font-size:24px;
+
+    color:#0F172A;
+
+    margin-bottom:25px;
+
+}
+
+.painel h4 i{
+
+    color:#22C55E;
+
+    margin-right:10px;
+
+}
+
+/*==================================================
+            CLIMA
+==================================================*/
+
+.weather{
+
+    text-align:center;
+
+}
+
+.weather h1{
+
+    font-size:70px;
+
+    color:#2563EB;
+
+    font-weight:700;
+
+}
+
+.weather p{
+
+    font-size:20px;
+
+    color:#64748B;
+
+}
+
+.weather hr{
+
+    margin:30px 0;
+
+}
+
+.weather-info{
+
+    display:flex;
+
+    justify-content:space-around;
+
+}
+
+.weather-info div{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.weather-info strong{
+
+    color:#0F172A;
+
+}
+
+.weather-info span{
+
+    color:#64748B;
+
+    margin-top:8px;
+
+}
+
+/*==================================================
+            TIMELINE
+==================================================*/
+
+.timeline{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.timeline li{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:18px 0;
+
+    border-bottom:1px solid #EDF2F7;
+
+    color:#334155;
+
+}
+
+.timeline li:last-child{
+
+    border:none;
+
+}
+
+.timeline i{
+
+    color:#22C55E;
+
+    font-size:18px;
+
+}
+
+/*==================================================
+            FOOTER
+==================================================*/
+
+.dashboard-footer{
+
+    margin-top:45px;
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    color:#64748B;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+/*==================================================
+            ANIMAÇÕES
+==================================================*/
+
+.card-info,
+.acao-card,
+.painel{
+
+    animation:fadeUp .7s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/*==================================================
+            RESPONSIVO
+==================================================*/
+
+@media(max-width:1200px){
+
+.cards-dashboard{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.acoes-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.painel-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:900px){
+
+.sidebar{
+
+    width:90px;
+
+}
+
+.sidebar span{
+
+    display:none;
+
+}
+
+.logo span{
+
+    display:none;
+
+}
+
+.main-content{
+
+    margin-left:90px;
+
+}
+
+.topbar{
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.hero-dashboard{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:30px;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.cards-dashboard{
+
+    grid-template-columns:1fr;
+
+}
+
+.main-content{
+
+    padding:20px;
+
+}
+
+.hero-dashboard h1{
+
+    font-size:30px;
+
+}
+
+.hero-icon{
+
+    font-size:60px;
+
+}
+
+.weather h1{
+
+    font-size:48px;
+
+}
+
+.weather-info{
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+}
+
+
