@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AgroRisk | Safras</title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+<body class="safras-body">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-seedling"></i>
+
+        <span>AgroRisk</span>
+
+    </div>
+
+    <ul>
+
+        <li>
+
+            <a href="dashboard.html">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="cadastro_propriedade.html">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                Propriedades
+
+            </a>
+
+        </li>
+
+        <li class="active">
+
+            <a href="safras.html">
+
+                <i class="fa-solid fa-wheat-awn"></i>
+
+                Safras
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="relatorios.html">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                Relatórios
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="perfil.html">
+
+                <i class="fa-solid fa-user"></i>
+
+                Perfil
+
+            </a>
+
+        </li>
+
+    </ul>
+
+    <div class="sidebar-footer">
+
+        <a href="index.html">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Sair
+
+        </a>
+
+    </div>
+
+</aside>
+
+<!-- ================= CONTEÚDO ================= -->
+
+<main class="main-content">
+
+<header class="topbar">
+
+    <div>
+
+        <h2>Safras</h2>
+
+        <span>Gerencie todas as safras da propriedade</span>
+
+    </div>
+
+    <a href="cadastro_safras.html"
+        class="btn btn-success">
+
+        <i class="fa-solid fa-plus"></i>
+
+        Nova Safra
+
+    </a>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero-dashboard">
+
+    <div>
+
+        <h1>
+
+            Fazenda
+
+            <span id="nomePropriedade">
+
+                Boa Vista
+
+            </span>
+
+        </h1>
+
+        <p>
+
+            Visualize todas as safras cadastradas,
+            acompanhe o andamento e acesse rapidamente
+            o monitoramento de cada uma delas.
+
+        </p>
+
+    </div>
+
+    <div class="hero-icon">
+
+        <i class="fa-solid fa-wheat-awn"></i>
+
+    </div>
+
+</section>
+
+<!-- CARDS -->
+
+<section class="cards-dashboard">
+
+<div class="card-info">
+
+<div>
+
+<small>Safras</small>
+
+<h2 id="totalSafras">
+
+3
+
+</h2>
+
+</div>
+
+<i class="fa-solid fa-seedling"></i>
+
+</div>
+
+<div class="card-info">
+
+<div>
+
+<small>Em andamento</small>
+
+<h2>
+
+1
+
+</h2>
+
+</div>
+
+<i class="fa-solid fa-clock"></i>
+
+</div>
+
+<div class="card-info">
+
+<div>
+
+<small>Finalizadas</small>
+
+<h2>
+
+2
+
+</h2>
+
+</div>
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+<div class="card-info">
+
+<div>
+
+<small>Área Plantada</small>
+
+<h2>
+
+182 ha
+
+</h2>
+
+</div>
+
+<i class="fa-solid fa-vector-square"></i>
+
+</div>
+
+</section>
+
+<!-- LISTA DAS SAFRAS -->
+
+<section class="lista-safras">
+
+<div class="titulo-secao">
+
+<h3>
+
+<i class="fa-solid fa-leaf"></i>
+
+Safras cadastradas
+
+</h3>
+
+</div>
+
+<!-- ================= CARD SAFRA 1 ================= -->
+
+<div class="safra-card">
+
+    <div class="safra-top">
+
+        <div>
+
+            <span class="badge-status andamento">
+
+                <i class="fa-solid fa-circle"></i>
+
+                Em andamento
+
+            </span>
+
+            <h3>
+
+                Safra 2025 / 2026
+
+            </h3>
+
+            <small>
+
+                Cultura: <strong>Soja</strong>
+
+            </small>
+
+        </div>
+
+        <div class="safra-icon">
+
+            <i class="fa-solid fa-seedling"></i>
+
+        </div>
+
+    </div>
+
+    <div class="safra-info">
+
+        <div>
+
+            <span>Plantio</span>
+
+            <strong>
+
+                15/10/2025
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Colheita</span>
+
+            <strong>
+
+                Março/2026
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Área</span>
+
+            <strong>
+
+                86 ha
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Produtividade</span>
+
+            <strong>
+
+                92%
+
+            </strong>
+
+        </div>
+
+    </div>
+
+    <div class="safra-buttons">
+
+        <a href="monitoramento.html" class="btn-monitorar">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Monitorar
+
+        </a>
+
+        <a href="#" class="btn-editar">
+
+            <i class="fa-solid fa-pen"></i>
+
+            Editar
+
+        </a>
+
+        <a href="relatorios.html" class="btn-relatorio">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Relatório
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= CARD SAFRA 2 ================= -->
+
+<div class="safra-card">
+
+    <div class="safra-top">
+
+        <div>
+
+            <span class="badge-status finalizada">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Finalizada
+
+            </span>
+
+            <h3>
+
+                Safra 2024 / 2025
+
+            </h3>
+
+            <small>
+
+                Cultura: <strong>Milho</strong>
+
+            </small>
+
+        </div>
+
+        <div class="safra-icon">
+
+            <i class="fa-solid fa-wheat-awn"></i>
+
+        </div>
+
+    </div>
+
+    <div class="safra-info">
+
+        <div>
+
+            <span>Plantio</span>
+
+            <strong>
+
+                Outubro/2024
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Colheita</span>
+
+            <strong>
+
+                Fevereiro/2025
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Área</span>
+
+            <strong>
+
+                74 ha
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Produtividade</span>
+
+            <strong>
+
+                89%
+
+            </strong>
+
+        </div>
+
+    </div>
+
+    <div class="safra-buttons">
+
+        <a href="monitoramento.html" class="btn-monitorar">
+
+            <i class="fa-solid fa-eye"></i>
+
+            Visualizar
+
+        </a>
+
+        <a href="#" class="btn-editar">
+
+            <i class="fa-solid fa-file-pen"></i>
+
+            Editar
+
+        </a>
+
+        <a href="relatorios.html" class="btn-relatorio">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Relatório
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= CARD SAFRA 3 ================= -->
+
+<div class="safra-card">
+
+    <div class="safra-top">
+
+        <div>
+
+            <span class="badge-status finalizada">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Finalizada
+
+            </span>
+
+            <h3>
+
+                Safra 2023 / 2024
+
+            </h3>
+
+            <small>
+
+                Cultura: <strong>Café</strong>
+
+            </small>
+
+        </div>
+
+        <div class="safra-icon">
+
+            <i class="fa-solid fa-mug-hot"></i>
+
+        </div>
+
+    </div>
+
+    <div class="safra-info">
+
+        <div>
+
+            <span>Plantio</span>
+
+            <strong>
+
+                Março/2023
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Colheita</span>
+
+            <strong>
+
+                Janeiro/2024
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Área</span>
+
+            <strong>
+
+                22 ha
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Produtividade</span>
+
+            <strong>
+
+                94%
+
+            </strong>
+
+        </div>
+
+    </div>
+
+    <div class="safra-buttons">
+
+        <a href="monitoramento.html" class="btn-monitorar">
+
+            <i class="fa-solid fa-eye"></i>
+
+            Visualizar
+
+        </a>
+
+        <a href="#" class="btn-editar">
+
+            <i class="fa-solid fa-file-pen"></i>
+
+            Editar
+
+        </a>
+
+        <a href="relatorios.html" class="btn-relatorio">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Relatório
+
+        </a>
+
+    </div>
+
+</div>
+
+</section>
+
+<footer class="dashboard-footer">
+
+    © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
+
+</footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/safras.js"></script>
+
+</body>
+
+</html>

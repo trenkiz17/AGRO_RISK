@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AgroRisk | Cadastro de Safra</title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+<body class="safra-body">
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="safra-navbar">
+
+    <div class="container">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-seedling"></i>
+
+            Agro<span>Risk</span>
+
+        </div>
+
+        <div class="menu">
+
+            <a href="dashboard.html">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+            <a href="monitoramento.html">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                Monitoramento
+
+            </a>
+
+            <a href="perfil.html">
+
+                <i class="fa-solid fa-user"></i>
+
+                Perfil
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero-safra">
+
+<div class="container">
+
+<div class="hero-content">
+
+<div>
+
+<span class="badge-safra">
+
+<i class="fa-solid fa-wheat-awn"></i>
+
+Nova Safra
+
+</span>
+
+<h1>
+
+Cadastrar uma nova safra
+
+</h1>
+
+<p>
+
+Cadastre todas as informações da produção agrícola para acompanhar clima, produtividade e relatórios inteligentes.
+
+</p>
+
+</div>
+
+<div class="hero-icon">
+
+<i class="fa-solid fa-tractor"></i>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= CONTEÚDO ================= -->
+
+<section class="cadastro-safra">
+
+<div class="container">
+
+<div class="row g-5">
+
+<!-- ================= FORMULÁRIO ================= -->
+
+<div class="col-lg-8">
+
+<div class="form-safra">
+
+<h3>
+
+<i class="fa-solid fa-file-pen"></i>
+
+Dados da Safra
+
+</h3>
+
+<form id="formSafra">
+
+<div class="row">
+
+<div class="col-md-6 mb-4">
+
+<label>
+
+Nome da Safra
+
+</label>
+
+<input
+type="text"
+class="form-control"
+id="nomeSafra"
+placeholder="Ex.: Safra Verão 2026">
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label>
+
+Propriedade
+
+</label>
+
+<select
+class="form-select"
+id="propriedade">
+
+<option>
+
+Selecione...
+
+</option>
+
+</select>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label>
+
+Cultura
+
+</label>
+
+<select
+class="form-select"
+id="cultura">
+
+<option>Soja</option>
+
+<option>Milho</option>
+
+<option>Café</option>
+
+<option>Algodão</option>
+
+<option>Cana-de-açúcar</option>
+
+</select>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label>
+
+Área Plantada (ha)
+
+</label>
+
+<input
+type="number"
+class="form-control"
+id="hectares">
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label>
+
+Data do Plantio
+
+</label>
+
+<input
+type="date"
+class="form-control"
+id="plantio">
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label>
+
+Colheita Prevista
+
+</label>
+
+<input
+type="date"
+class="form-control"
+id="colheita">
+
+</div>
+
+                    <div class="col-12 mb-4">
+
+                        <label>
+
+                            Custo Estimado (R$)
+
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="custo"
+                            placeholder="0,00">
+
+                    </div>
+
+                    <div class="col-12 mb-4">
+
+                        <label>
+
+                            Observações
+
+                        </label>
+
+                        <textarea
+                            class="form-control"
+                            id="observacoes"
+                            rows="5"
+                            placeholder="Descreva informações importantes sobre esta safra..."></textarea>
+
+                    </div>
+
+                </div>
+
+                <div class="botoes-form">
+
+                    <a
+                        href="monitoramento.html"
+                        class="btn-voltar">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Voltar
+
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn-salvar">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Cadastrar Safra
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ================= PAINEL LATERAL ================= -->
+
+    <div class="col-lg-4">
+
+        <div class="resumo-safra">
+
+            <div class="resumo-topo">
+
+                <i class="fa-solid fa-seedling"></i>
+
+                <h3>
+
+                    Resumo
+
+                </h3>
+
+            </div>
+
+            <div class="resumo-item">
+
+                <span>
+
+                    Propriedade
+
+                </span>
+
+                <strong id="rPropriedade">
+
+                    --
+
+                </strong>
+
+            </div>
+
+            <div class="resumo-item">
+
+                <span>
+
+                    Cultura
+
+                </span>
+
+                <strong id="rCultura">
+
+                    --
+
+                </strong>
+
+            </div>
+
+            <div class="resumo-item">
+
+                <span>
+
+                    Área
+
+                </span>
+
+                <strong id="rArea">
+
+                    --
+
+                </strong>
+
+            </div>
+
+            <div class="resumo-item">
+
+                <span>
+
+                    Plantio
+
+                </span>
+
+                <strong id="rPlantio">
+
+                    --
+
+                </strong>
+
+            </div>
+
+            <div class="resumo-item">
+
+                <span>
+
+                    Colheita
+
+                </span>
+
+                <strong id="rColheita">
+
+                    --
+
+                </strong>
+
+            </div>
+
+            <div class="resumo-item">
+
+                <span>
+
+                    Custo Estimado
+
+                </span>
+
+                <strong id="rCusto">
+
+                    R$ 0,00
+
+                </strong>
+
+            </div>
+
+            <hr>
+
+            <div class="status-box">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <div>
+
+                    <h5>
+
+                        Status
+
+                    </h5>
+
+                    <p>
+
+                        Em preparação para cadastro
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="info-extra">
+
+                <div>
+
+                    <i class="fa-solid fa-cloud-sun"></i>
+
+                    <span>
+
+                        Após cadastrar, o AgroRisk irá buscar automaticamente os dados climáticos desta propriedade.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="footer-safra">
+
+    <div class="container">
+
+        <p>
+
+            © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
+
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="js/api.js"></script>
+
+<script src="js/cadastroSafra.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

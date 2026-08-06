@@ -2163,4 +2163,2401 @@ body{
 
 }
 
+/*==================================================
+        NOVA PÁGINA CADASTRO PROPRIEDADE
+==================================================*/
 
+.property-body{
+
+    background:#EEF5F3;
+
+    min-height:100vh;
+
+}
+
+/*================ HEADER ================*/
+
+.property-header{
+
+    background:linear-gradient(135deg,#123D2F,#1D6B4E);
+
+    padding:45px 0;
+
+    color:#fff;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+}
+
+.header-content{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+}
+
+.property-header h1{
+
+    font-size:42px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.property-header p{
+
+    color:#DDEFE8;
+
+    margin:0;
+
+    max-width:600px;
+
+}
+
+.btn-voltar{
+
+    background:white;
+
+    color:#14532D;
+
+    padding:14px 24px;
+
+    border-radius:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-voltar:hover{
+
+    transform:translateY(-3px);
+
+    color:#14532D;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+/*================ CONTAINER ================*/
+
+.property-page{
+
+    margin-top:-30px;
+
+    padding-bottom:50px;
+
+}
+
+/*================ MAPA ================*/
+
+.map-card{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+
+}
+
+.map-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+.map-top h3{
+
+    color:#14532D;
+
+    font-size:28px;
+
+    margin-bottom:5px;
+
+}
+
+.map-top span{
+
+    color:#777;
+
+}
+
+#map{
+
+    width:100%;
+
+    height:650px;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    border:3px solid #EDF2EF;
+
+}
+
+/*================ BOTÃO MAPA ================*/
+
+.btn-search{
+
+    background:linear-gradient(135deg,#198754,#34C759);
+
+    color:white;
+
+    border:none;
+
+    padding:14px 24px;
+
+    border-radius:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-search:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 25px rgba(25,135,84,.35);
+
+}
+
+/*================ PAINEL ================*/
+
+.side-panel{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+
+    position:sticky;
+
+    top:30px;
+
+}
+
+.side-panel h3{
+
+    color:#14532D;
+
+    margin-bottom:25px;
+
+    font-weight:700;
+
+}
+
+.side-panel label{
+
+    font-weight:600;
+
+    color:#1F2937;
+
+    margin-bottom:8px;
+
+}
+
+.side-panel .form-control,
+
+.side-panel .form-select{
+
+    border-radius:14px;
+
+    padding:14px;
+
+    border:2px solid #E8ECEF;
+
+    transition:.3s;
+
+}
+
+.side-panel .form-control:focus,
+
+.side-panel .form-select:focus{
+
+    border-color:#198754;
+
+    box-shadow:none;
+
+}
+
+/*================ MINI CARDS ================*/
+
+.info-cards{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+    margin-top:30px;
+
+}
+
+.mini-card{
+
+    background:linear-gradient(135deg,#F8FCF9,#EFF8F3);
+
+    border-left:6px solid #198754;
+
+    border-radius:18px;
+
+    padding:20px;
+
+}
+
+.mini-card i{
+
+    font-size:26px;
+
+    color:#198754;
+
+    margin-bottom:12px;
+
+}
+
+.mini-card h5{
+
+    margin-bottom:10px;
+
+    color:#14532D;
+
+}
+
+.mini-card span{
+
+    color:#555;
+
+}
+
+/*==================================================
+                ÁREA / PERÍMETRO
+==================================================*/
+
+.metricas{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    margin-top:25px;
+
+}
+
+.metric-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:22px;
+
+    text-align:center;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.metric-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.metric-card i{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    margin-bottom:15px;
+
+    background:linear-gradient(135deg,#198754,#2ECC71);
+
+    color:white;
+
+    font-size:24px;
+
+}
+
+.metric-card h5{
+
+    color:#14532D;
+
+    font-weight:700;
+
+}
+
+.metric-card span{
+
+    font-size:18px;
+
+    color:#666;
+
+}
+
+/*==================================================
+                CLIMA
+==================================================*/
+
+.clima-card{
+
+    margin-top:25px;
+
+    border-radius:22px;
+
+    background:linear-gradient(135deg,#0EA5E9,#2563EB);
+
+    color:white;
+
+    padding:28px;
+
+    box-shadow:0 20px 45px rgba(37,99,235,.25);
+
+}
+
+.clima-card h4{
+
+    font-weight:700;
+
+    margin-bottom:15px;
+
+}
+
+.clima-card p{
+
+    margin:6px 0;
+
+    color:white;
+
+}
+
+.clima-temp{
+
+    font-size:52px;
+
+    font-weight:700;
+
+}
+
+.clima-desc{
+
+    font-size:18px;
+
+    opacity:.9;
+
+}
+
+/*==================================================
+                BOTÕES
+==================================================*/
+
+.actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:30px;
+
+    flex-wrap:wrap;
+
+}
+
+.btn-limpar{
+
+    border:none;
+
+    padding:15px 28px;
+
+    border-radius:15px;
+
+    background:#EF4444;
+
+    color:white;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-limpar:hover{
+
+    transform:translateY(-4px);
+
+    background:#DC2626;
+
+}
+
+.btn-salvar{
+
+    border:none;
+
+    padding:15px 30px;
+
+    border-radius:15px;
+
+    background:linear-gradient(135deg,#16A34A,#22C55E);
+
+    color:white;
+
+    font-weight:700;
+
+    transition:.35s;
+
+}
+
+.btn-salvar:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 15px 35px rgba(34,197,94,.35);
+
+}
+
+/*==================================================
+                ANIMAÇÕES
+==================================================*/
+
+.side-panel,
+.map-card,
+.metric-card,
+.clima-card{
+
+    animation:fadeUp .7s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/*==================================================
+            EFEITO INPUTS
+==================================================*/
+
+.form-control:hover,
+.form-select:hover{
+
+    border-color:#198754;
+
+}
+
+.form-control::placeholder{
+
+    color:#AAA;
+
+}
+
+textarea.form-control{
+
+    resize:none;
+
+}
+
+/*==================================================
+            SCROLLBAR MAPA
+==================================================*/
+
+.leaflet-container{
+
+    border-radius:20px;
+
+}
+
+.leaflet-bar a{
+
+    border-radius:10px !important;
+
+}
+
+/*==================================================
+            SOMBRA DOS CARDS
+==================================================*/
+
+.side-panel:hover,
+.map-card:hover{
+
+    box-shadow:0 25px 60px rgba(0,0,0,.10);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*==================================================
+            MONITORAMENTO
+==================================================*/
+
+.monitoramento-body{
+    background:#F4F7FB;
+    min-height:100vh;
+}
+
+/* ================= NAVBAR ================= */
+
+.monitor-nav{
+    background:#0F172A;
+    padding:18px 0;
+    position:sticky;
+    top:0;
+    z-index:999;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.monitor-nav .container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:700;
+    color:#22C55E;
+}
+
+.logo span{
+    color:#FFF;
+}
+
+.logo i{
+    margin-right:10px;
+}
+
+.menu{
+    display:flex;
+    gap:18px;
+}
+
+.menu a{
+    color:#FFF;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:12px;
+    transition:.3s;
+}
+
+.menu a:hover{
+    background:#1E293B;
+}
+
+/* ================= HEADER ================= */
+
+.monitor-header{
+
+    padding:60px 0;
+
+    background:linear-gradient(135deg,#2563EB,#16A34A);
+
+    color:#FFF;
+
+}
+
+.header-content{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+}
+
+.badge-monitor{
+
+    display:inline-block;
+
+    background:rgba(255,255,255,.18);
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    margin-bottom:20px;
+
+    backdrop-filter:blur(8px);
+
+}
+
+.monitor-header h1{
+
+    font-size:44px;
+
+    font-weight:700;
+
+}
+
+.monitor-header p{
+
+    font-size:18px;
+
+    margin-top:15px;
+
+}
+
+/* ================= CONTAINER ================= */
+
+.monitor-section{
+
+    margin-top:-35px;
+
+    padding-bottom:70px;
+
+}
+
+/* ================= TITULOS ================= */
+
+.titulo-box{
+
+    margin-bottom:25px;
+
+}
+
+.titulo-box h3{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#0F172A;
+
+}
+
+.titulo-box p{
+
+    color:#64748B;
+
+}
+
+/* ================= CARDS ================= */
+
+.monitor-card{
+
+    background:#FFF;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    text-align:center;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+    height:100%;
+
+}
+
+.monitor-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.12);
+
+}
+
+.monitor-card i{
+
+    font-size:42px;
+
+    color:#16A34A;
+
+    margin-bottom:18px;
+
+}
+
+.monitor-card h2{
+
+    font-size:34px;
+
+    color:#2563EB;
+
+    margin-bottom:8px;
+
+}
+
+.monitor-card p{
+
+    color:#64748B;
+
+}
+
+/* ================= MAPA ================= */
+
+.monitor-map{
+
+    background:#FFF;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    margin-top:35px;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+
+}
+
+#map{
+
+    width:100%;
+
+    height:550px;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+/* ================= AÇÕES ================= */
+
+.acoes-monitor{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:25px;
+
+}
+
+.acao-card{
+
+    background:#FFF;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-decoration:none;
+
+    color:#1E293B;
+
+    transition:.35s;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.acao-card:hover{
+
+    transform:translateY(-8px);
+
+    color:#1E293B;
+
+}
+
+.acao-card i{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563EB,#16A34A);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#FFF;
+
+    font-size:28px;
+
+    margin-bottom:20px;
+
+}
+
+.acao-card h5{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.acao-card p{
+
+    color:#64748B;
+
+}
+
+/*==================================================
+            PAINEL DO CLIMA
+==================================================*/
+
+.weather-panel{
+
+    background:#FFF;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+    height:100%;
+
+}
+
+.weather-card{
+
+    text-align:center;
+
+    background:#F8FAFC;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    transition:.35s;
+
+    border:1px solid #E2E8F0;
+
+}
+
+.weather-card:hover{
+
+    transform:translateY(-6px);
+
+    background:#FFFFFF;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.weather-card i{
+
+    font-size:36px;
+
+    color:#2563EB;
+
+    margin-bottom:15px;
+
+}
+
+.weather-card h2{
+
+    font-size:30px;
+
+    color:#16A34A;
+
+    font-weight:700;
+
+}
+
+.weather-card span{
+
+    color:#64748B;
+
+}
+
+/*==================================================
+            STATUS DA SAFRA
+==================================================*/
+
+.status-panel{
+
+    background:linear-gradient(135deg,#16A34A,#2563EB);
+
+    color:white;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    height:100%;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+}
+
+.status-panel h3{
+
+    margin-bottom:30px;
+
+    font-size:26px;
+
+}
+
+.status-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:15px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+
+.status-item:last-child{
+
+    border:none;
+
+}
+
+/*==================================================
+            GRÁFICO
+==================================================*/
+
+.grafico-box{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:35px;
+
+    margin-top:40px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+#graficoSafra{
+
+    height:350px !important;
+
+}
+
+/*==================================================
+            PREVISÃO
+==================================================*/
+
+.previsao-box{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:35px;
+
+    margin-top:40px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.forecast-card{
+
+    background:#F8FAFC;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    padding:25px;
+
+    transition:.35s;
+
+    border:1px solid #E2E8F0;
+
+}
+
+.forecast-card:hover{
+
+    transform:translateY(-8px);
+
+    background:white;
+
+    box-shadow:0 12px 25px rgba(0,0,0,.08);
+
+}
+
+.forecast-card h5{
+
+    margin-bottom:15px;
+
+}
+
+.forecast-card h3{
+
+    margin-top:15px;
+
+    color:#16A34A;
+
+}
+
+.forecast-card i{
+
+    font-size:34px;
+
+    color:#2563EB;
+
+}
+
+/*==================================================
+            HISTÓRICO
+==================================================*/
+
+.historico-box{
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:25px;
+
+    margin-top:40px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.timeline{
+
+    list-style:none;
+
+    padding-left:20px;
+
+    position:relative;
+
+}
+
+.timeline::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:8px;
+
+    top:0;
+
+    width:3px;
+
+    height:100%;
+
+    background:#16A34A;
+
+}
+
+.timeline li{
+
+    position:relative;
+
+    margin-bottom:25px;
+
+    padding-left:30px;
+
+    color:#475569;
+
+}
+
+.timeline li:last-child{
+
+    margin-bottom:0;
+
+}
+
+.dot{
+
+    position:absolute;
+
+    left:-2px;
+
+    top:5px;
+
+    width:18px;
+
+    height:18px;
+
+    background:#16A34A;
+
+    border-radius:50%;
+
+    border:4px solid white;
+
+    box-shadow:0 0 0 3px #16A34A;
+
+}
+
+/*==================================================
+            FOOTER
+==================================================*/
+
+.monitor-footer{
+
+    background:#0F172A;
+
+    color:white;
+
+    padding:30px 0;
+
+    text-align:center;
+
+    margin-top:60px;
+
+}
+
+.monitor-footer p{
+
+    margin:0;
+
+    color:#CBD5E1;
+
+}
+
+/*==================================================
+            RESPONSIVO
+==================================================*/
+
+@media(max-width:991px){
+
+.header-content{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+}
+
+.monitor-header h1{
+
+    font-size:34px;
+
+}
+
+#map{
+
+    height:400px;
+
+}
+
+.weather-card{
+
+    margin-bottom:20px;
+
+}
+
+.status-panel{
+
+    margin-top:25px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.monitor-nav .container{
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.menu{
+
+    width:100%;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+.monitor-header{
+
+    text-align:center;
+
+}
+
+.monitor-header h1{
+
+    font-size:30px;
+
+}
+
+.monitor-card{
+
+    margin-bottom:20px;
+
+}
+
+.acao-card{
+
+    text-align:center;
+
+}
+
+.weather-card{
+
+    padding:18px;
+
+}
+
+.forecast-card{
+
+    margin-bottom:20px;
+
+}
+
+#graficoSafra{
+
+    height:250px !important;
+
+}
+
+}
+
+
+/*==========================================
+            PÁGINA SAFRAS
+==========================================*/
+
+.safras-body{
+    background:#F5F8FC;
+}
+
+/* HEADER */
+
+.lista-safras{
+    margin-top:40px;
+}
+
+.lista-safras .titulo-secao{
+    margin-bottom:35px;
+}
+
+.lista-safras .titulo-secao h3{
+    font-size:28px;
+    color:#1e293b;
+    font-weight:700;
+}
+
+.lista-safras .titulo-secao i{
+    color:#22c55e;
+    margin-right:10px;
+}
+
+/* CARD */
+
+.safra-card{
+
+    background:#fff;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+    border:1px solid #edf2f7;
+
+}
+
+.safra-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 25px 60px rgba(0,0,0,.12);
+
+}
+
+/* TOPO */
+
+.safra-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.safra-top h3{
+
+    font-size:30px;
+
+    color:#0f172a;
+
+    margin-top:10px;
+
+    margin-bottom:5px;
+
+    font-weight:700;
+
+}
+
+.safra-top small{
+
+    color:#64748b;
+
+    font-size:15px;
+
+}
+
+.safra-icon{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:22px;
+
+    background:linear-gradient(135deg,#2563eb,#22c55e);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:38px;
+
+}
+
+/* STATUS */
+
+.badge-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 18px;
+
+    border-radius:40px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.badge-status i{
+
+    font-size:10px;
+
+}
+
+.andamento{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.finalizada{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+}
+
+/* INFO */
+
+.safra-info{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    margin-bottom:35px;
+
+}
+
+.safra-info div{
+
+    background:#f8fafc;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+.safra-info div:hover{
+
+    background:#eef6ff;
+
+}
+
+.safra-info span{
+
+    display:block;
+
+    color:#64748b;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+}
+
+.safra-info strong{
+
+    font-size:24px;
+
+    color:#0f172a;
+
+}/*==========================================
+            BOTÕES DAS SAFRAS
+==========================================*/
+
+.safra-buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+}
+
+.safra-buttons a{
+
+    flex:1;
+
+    min-width:180px;
+
+    text-decoration:none;
+
+    padding:15px 22px;
+
+    border-radius:14px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.btn-monitorar{
+
+    background:linear-gradient(135deg,#2563EB,#22C55E);
+
+    color:white;
+
+}
+
+.btn-monitorar:hover{
+
+    color:white;
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 35px rgba(37,99,235,.35);
+
+}
+
+.btn-editar{
+
+    background:#F8FAFC;
+
+    color:#0F172A;
+
+    border:2px solid #E2E8F0;
+
+}
+
+.btn-editar:hover{
+
+    background:#2563EB;
+
+    color:white;
+
+    border-color:#2563EB;
+
+}
+
+.btn-relatorio{
+
+    background:#0F172A;
+
+    color:white;
+
+}
+
+.btn-relatorio:hover{
+
+    color:white;
+
+    background:#1E293B;
+
+}
+
+/*==========================================
+            HERO
+==========================================*/
+
+.safras-body .hero-dashboard{
+
+    background:linear-gradient(135deg,#2563EB,#22C55E);
+
+    border-radius:25px;
+
+    padding:50px;
+
+    margin-bottom:40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    color:white;
+
+}
+
+.safras-body .hero-dashboard h1{
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+.safras-body .hero-dashboard p{
+
+    color:white;
+
+    opacity:.9;
+
+    max-width:650px;
+
+}
+
+.safras-body .hero-icon{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.15);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:60px;
+
+}
+
+/*==========================================
+            ANIMAÇÕES
+==========================================*/
+
+.safra-card{
+
+    animation:fadeSafra .6s ease;
+
+}
+
+@keyframes fadeSafra{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/*==========================================
+            RESPONSIVO
+==========================================*/
+
+@media(max-width:992px){
+
+.safra-top{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:25px;
+
+}
+
+.safra-icon{
+
+    width:80px;
+
+    height:80px;
+
+    font-size:32px;
+
+}
+
+.safra-info{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.safras-body .hero-dashboard{
+
+    padding:30px;
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:30px;
+
+}
+
+.safras-body .hero-dashboard h1{
+
+    font-size:30px;
+
+}
+
+.safra-info{
+
+    grid-template-columns:1fr;
+
+}
+
+.safra-buttons{
+
+    flex-direction:column;
+
+}
+
+.safra-buttons a{
+
+    width:100%;
+
+}
+
+.safra-top h3{
+
+    font-size:24px;
+
+}
+
+.safra-card{
+
+    padding:22px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.lista-safras .titulo-secao h3{
+
+    font-size:22px;
+
+}
+
+.safras-body .hero-dashboard{
+
+    border-radius:18px;
+
+}
+
+.safras-body .hero-icon{
+
+    width:90px;
+
+    height:90px;
+
+    font-size:42px;
+
+}
+
+.safra-top{
+
+    margin-bottom:20px;
+
+}
+
+.safra-info strong{
+
+    font-size:20px;
+
+}
+
+}
+
+/*==================================================
+            CADASTRO DE SAFRA
+==================================================*/
+
+.safra-body{
+
+    background:#F4F8FB;
+
+}
+
+/* NAVBAR */
+
+.safra-navbar{
+
+    background:#0F172A;
+
+    padding:18px 0;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:999;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+}
+
+.safra-navbar .container{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.safra-navbar .logo{
+
+    color:white;
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+.safra-navbar .logo i{
+
+    color:#22C55E;
+
+    margin-right:8px;
+
+}
+
+.safra-navbar .logo span{
+
+    color:#22C55E;
+
+}
+
+.safra-navbar .menu{
+
+    display:flex;
+
+    gap:30px;
+
+}
+
+.safra-navbar .menu a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+.safra-navbar .menu a:hover{
+
+    color:#22C55E;
+
+}
+
+/* HERO */
+
+.hero-safra{
+
+    background:linear-gradient(135deg,#0F172A,#2563EB);
+
+    color:white;
+
+    padding:70px 0;
+
+}
+
+.hero-content{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.badge-safra{
+
+    display:inline-block;
+
+    padding:10px 22px;
+
+    background:rgba(255,255,255,.12);
+
+    border-radius:40px;
+
+    margin-bottom:20px;
+
+}
+
+.hero-safra h1{
+
+    font-size:48px;
+
+    font-weight:700;
+
+}
+
+.hero-safra p{
+
+    margin-top:15px;
+
+    color:#D9E7F7;
+
+    max-width:620px;
+
+}
+
+.hero-icon{
+
+    width:160px;
+
+    height:160px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:70px;
+
+}
+
+/* CONTEÚDO */
+
+.cadastro-safra{
+
+    padding:70px 0;
+
+}
+
+/* FORM */
+
+.form-safra{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:40px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.form-safra h3{
+
+    margin-bottom:35px;
+
+    color:#0F172A;
+
+    font-weight:700;
+
+}
+
+.form-safra label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+.form-safra .form-control,
+
+.form-safra .form-select{
+
+    border-radius:14px;
+
+    padding:14px;
+
+    border:2px solid #E2E8F0;
+
+    transition:.3s;
+
+}
+
+.form-safra .form-control:focus,
+
+.form-safra .form-select:focus{
+
+    border-color:#22C55E;
+
+    box-shadow:none;
+
+}
+
+/* BOTÕES */
+
+.botoes-form{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:30px;
+
+}
+
+.btn-voltar{
+
+    background:#E2E8F0;
+
+    color:#334155;
+
+    padding:14px 30px;
+
+    border-radius:15px;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.btn-voltar:hover{
+
+    background:#CBD5E1;
+
+    color:#0F172A;
+
+}
+
+.btn-salvar{
+
+    border:none;
+
+    background:linear-gradient(135deg,#2563EB,#22C55E);
+
+    color:white;
+
+    padding:14px 40px;
+
+    border-radius:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-salvar:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 35px rgba(37,99,235,.30);
+
+}
+
+
+/*==================================================
+            PAINEL LATERAL
+==================================================*/
+
+.resumo-safra{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:35px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+    position:sticky;
+
+    top:100px;
+
+}
+
+.resumo-topo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:30px;
+
+}
+
+.resumo-topo i{
+
+    width:55px;
+
+    height:55px;
+
+    background:linear-gradient(135deg,#2563EB,#22C55E);
+
+    color:white;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:22px;
+
+}
+
+.resumo-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #E2E8F0;
+
+}
+
+.resumo-item span{
+
+    color:#64748B;
+
+}
+
+.resumo-item strong{
+
+    color:#0F172A;
+
+}
+
+.status-box{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:30px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:#F8FAFC;
+
+}
+
+.status-box i{
+
+    color:#22C55E;
+
+    font-size:30px;
+
+}
+
+.info-extra{
+
+    margin-top:30px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#2563EB,#22C55E);
+
+    color:white;
+
+}
+
+.info-extra div{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.info-extra i{
+
+    font-size:25px;
+
+}
+
+.footer-safra{
+
+    background:#0F172A;
+
+    color:white;
+
+    padding:30px;
+
+    text-align:center;
+
+    margin-top:80px;
+
+}
+
+/*==================================================
+            RESPONSIVO
+==================================================*/
+
+@media(max-width:991px){
+
+.hero-content{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:40px;
+
+}
+
+.hero-safra h1{
+
+    font-size:36px;
+
+}
+
+.hero-icon{
+
+    width:120px;
+
+    height:120px;
+
+    font-size:50px;
+
+}
+
+.resumo-safra{
+
+    position:relative;
+
+    top:0;
+
+    margin-top:35px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.safra-navbar .container{
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.safra-navbar .menu{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:15px;
+
+}
+
+.form-safra{
+
+    padding:25px;
+
+}
+
+.botoes-form{
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.btn-voltar,
+
+.btn-salvar{
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+.hero-safra{
+
+    padding:50px 0;
+
+}
+
+.hero-safra h1{
+
+    font-size:30px;
+
+}
+
+}
