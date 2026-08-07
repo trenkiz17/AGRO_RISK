@@ -6,6 +6,7 @@ from services.listar_propriedade_service import ListarPropriedadesService
 from services.buscar_propriedade_por_id_service import BuscarPropriedadePorIdService
 from services.atualizar_propriedade_service import AtualizarPropriedadeService
 from services.deletar_propriedade_service import DeletarPropriedadeService
+from services.buscar_propriedade_por_localizacao_service import BuscarPropriedadePorLocalizacaoService
 from models.database import db
 
 propriedade_controller = Blueprint("propriedade_controller", __name__)
@@ -105,3 +106,26 @@ def deletar_propriedade(propriedade_id):
         db.session.rollback()
 
         return jsonify({"erro": "Erro ao deletar propriedade no banco de dados."}), 500
+
+
+@propriedade_controller.get("/propriedades/buscar")
+def buscar_propriedade_por_localizacao():
+
+    localizacao = request.args.get("localizacao")
+
+    try:
+
+        service = BuscarPropriedadePorLocalizacaoService()
+
+        propriedades = service.executar(localizacao)
+
+        return jsonify(propriedades), 200
+
+    except ValueError as erro:
+
+        return jsonify({
+            "erro": str(erro)
+        }), 400
+
+
+    

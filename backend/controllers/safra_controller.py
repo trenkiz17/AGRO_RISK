@@ -6,6 +6,8 @@ from services.listar_safra_service import ListarSafrasService
 from services.buscar_safra_por_id_service import BuscarSafraPorIdService
 from services.atualizar_safra_service import AtualizarSafraService
 from services.deletar_safra_service import DeletarSafraService
+from services.buscar_safra_por_cultura_service import  BuscarSafraPorCulturaService
+
 from models.database import db
 
 safra_controller = Blueprint("safra_controller", __name__)
@@ -106,3 +108,23 @@ def deletar_safra(safra_id):
         db.session.rollback()
 
         return jsonify({"erro": "Erro ao deletar safra no banco de dados."}), 500
+
+
+@safra_controller.get("/safras/buscar")
+def buscar_safra_por_cultura():
+
+    cultura = request.args.get("cultura")
+
+    try:
+
+        service = BuscarSafraPorCulturaService()
+
+        safras = service.executar(cultura)
+
+        return jsonify(safras), 200
+
+    except ValueError as erro:
+
+        return jsonify({
+            "erro": str(erro)
+        }), 400

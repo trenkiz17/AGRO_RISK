@@ -6,14 +6,26 @@ from services.listar_usuario_service import ListarUsuariosService
 from services.buscar_usuario_por_id_service import BuscarUsuarioPorIdService
 from services.atualizar_usuario_service import AtualizarUsuarioService
 from services.deletar_usuario_service import DeletarUsuarioService
+from services.buscar_usuario_por_nome_service import BuscarUsuarioPorNomeService
+
 from models.database import db
 
-usuario_controller = Blueprint("usuario_controller", __name__)
 
+usuario_controller = Blueprint(
+    "usuario_controller",
+    __name__
+)
+
+
+# ==========================================
+# CRIAR USUÁRIO
+# ==========================================
 
 @usuario_controller.post("/usuarios")
 def criar_usuario():
+
     try:
+
         dados = request.get_json() or {}
 
         service = CriarUsuarioService()
@@ -24,14 +36,22 @@ def criar_usuario():
 
     except ValueError as erro:
 
-        return jsonify({"erro": str(erro)}), 400
+        return jsonify({
+            "erro": str(erro)
+        }), 400
 
     except SQLAlchemyError:
 
         db.session.rollback()
 
-        return jsonify({"erro": "Erro ao salvar usuário no banco de dados."}), 500
+        return jsonify({
+            "erro": "Erro ao salvar usuário no banco de dados."
+        }), 500
 
+
+# ==========================================
+# LISTAR USUÁRIOS
+# ==========================================
 
 @usuario_controller.get("/usuarios")
 def listar_usuarios():
@@ -43,6 +63,10 @@ def listar_usuarios():
     return jsonify(usuarios), 200
 
 
+# ==========================================
+# BUSCAR USUÁRIO POR ID
+# ==========================================
+
 @usuario_controller.get("/usuarios/<int:usuario_id>")
 def buscar_usuario_por_id(usuario_id):
 
@@ -52,10 +76,16 @@ def buscar_usuario_por_id(usuario_id):
 
     if usuario is None:
 
-        return jsonify({"erro": "Usuário não encontrado."}), 404
+        return jsonify({
+            "erro": "Usuário não encontrado."
+        }), 404
 
     return jsonify(usuario), 200
 
+
+# ==========================================
+# ATUALIZAR USUÁRIO
+# ==========================================
 
 @usuario_controller.put("/usuarios/<int:usuario_id>")
 def atualizar_usuario(usuario_id):
@@ -66,24 +96,37 @@ def atualizar_usuario(usuario_id):
 
         service = AtualizarUsuarioService()
 
-        usuario = service.executar(usuario_id, dados)
+        usuario = service.executar(
+            usuario_id,
+            dados
+        )
 
         if usuario is None:
 
-            return jsonify({"erro": "Usuário não encontrado."}), 404
+            return jsonify({
+                "erro": "Usuário não encontrado."
+            }), 404
 
         return jsonify(usuario), 200
 
     except ValueError as erro:
 
-        return jsonify({"erro": str(erro)}), 400
+        return jsonify({
+            "erro": str(erro)
+        }), 400
 
     except SQLAlchemyError:
 
         db.session.rollback()
 
-        return jsonify({"erro": "Erro ao atualizar usuário no banco de dados."}), 500
+        return jsonify({
+            "erro": "Erro ao atualizar usuário no banco de dados."
+        }), 500
 
+
+# ==========================================
+# DELETAR USUÁRIO
+# ==========================================
 
 @usuario_controller.delete("/usuarios/<int:usuario_id>")
 def deletar_usuario(usuario_id):
@@ -92,11 +135,15 @@ def deletar_usuario(usuario_id):
 
         service = DeletarUsuarioService()
 
-        usuario_deletado = service.executar(usuario_id)
+        usuario_deletado = service.executar(
+            usuario_id
+        )
 
         if usuario_deletado is False:
 
-            return jsonify({"erro": "Usuário não encontrado."}), 404
+            return jsonify({
+                "erro": "Usuário não encontrado."
+            }), 404
 
         return "", 204
 
@@ -104,4 +151,31 @@ def deletar_usuario(usuario_id):
 
         db.session.rollback()
 
-        return jsonify({"erro": "Erro ao deletar usuário no banco de dados."}), 500
+        return jsonify({
+            "erro": "Erro ao deletar usuário no banco de dados."
+        }), 500
+
+
+# ==========================================
+# BUSCAR USUÁRIO POR NOME
+# FUNCIONALIDADE ALÉM DO CRUD
+# ==========================================
+
+@usuario_controller.get("/usuarios/buscar")
+def buscar_usuario_por_nome():
+
+    nome = request.args.get("nome")
+
+    try:
+
+        service = BuscarUsuarioPorNomeService()
+
+        usuarios = service.executar(nome)
+
+        return jsonify(usuarios), 200
+
+    except ValueError as erro:
+
+        return jsonify({
+            "erro": str(erro)
+        }), 400

@@ -2,71 +2,131 @@ from models.database import db
 
 
 class Propriedade(db.Model):
+
     __tablename__ = "propriedades"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    nome = db.Column(db.String(100), nullable=False)
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
 
-    cidade = db.Column(db.String(100), nullable=False)
+    nome = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    estado = db.Column(db.String(2), nullable=False)
+    localizacao = db.Column(
+        db.String(150),
+        nullable=False
+    )
 
-    area = db.Column(db.Float, nullable=False)
+    hectares = db.Column(
+        db.Numeric(10, 2),
+        nullable=False
+    )
 
-    cultura = db.Column(db.String(100), nullable=False)
+    tipo_solo = db.Column(
+        db.String(100),
+        nullable=True
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False
+    )
+
+    # ==========================================
+    # CREATE
+    # ==========================================
 
     def salvar(self):
-        """CREATE: salva uma nova propriedade no banco."""
+
         db.session.add(self)
+
         db.session.commit()
 
-    def atualizar(self, nome=None, cidade=None, estado=None, area=None, cultura=None):
-        """UPDATE: altera apenas os campos informados."""
+    # ==========================================
+    # UPDATE
+    # ==========================================
+
+    def atualizar(
+        self,
+        nome=None,
+        localizacao=None,
+        hectares=None,
+        tipo_solo=None
+    ):
 
         if nome is not None:
             self.nome = nome
 
-        if cidade is not None:
-            self.cidade = cidade
+        if localizacao is not None:
+            self.localizacao = localizacao
 
-        if estado is not None:
-            self.estado = estado
+        if hectares is not None:
+            self.hectares = hectares
 
-        if area is not None:
-            self.area = area
-
-        if cultura is not None:
-            self.cultura = cultura
+        if tipo_solo is not None:
+            self.tipo_solo = tipo_solo
 
         db.session.commit()
+
+    # ==========================================
+    # DELETE
+    # ==========================================
 
     def deletar(self):
-        """DELETE: remove a propriedade do banco."""
 
         db.session.delete(self)
+
         db.session.commit()
+
+    # ==========================================
+    # READ
+    # ==========================================
 
     @staticmethod
     def listar_todos():
-        """READ: retorna todas as propriedades."""
 
-        return Propriedade.query.order_by(Propriedade.id.asc()).all()
+        return (
+            Propriedade.query
+            .order_by(Propriedade.id.asc())
+            .all()
+        )
 
     @staticmethod
     def buscar_por_id(id):
-        """READ: busca uma propriedade pelo id."""
 
         return Propriedade.query.get(id)
 
+    # ==========================================
+    # JSON
+    # ==========================================
+
     def to_dict(self):
-        """Converte o objeto Propriedade para dicionário/JSON."""
 
         return {
+
             "id": self.id,
+
+            "usuario_id": self.usuario_id,
+
             "nome": self.nome,
-            "cidade": self.cidade,
-            "estado": self.estado,
-            "area": self.area,
-            "cultura": self.cultura
+
+            "localizacao": self.localizacao,
+
+            "hectares": float(self.hectares),
+
+            "tipo_solo": self.tipo_solo,
+
+            "created_at":
+                self.created_at.isoformat()
+                if self.created_at else None
+
         }

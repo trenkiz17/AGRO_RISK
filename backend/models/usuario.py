@@ -1,23 +1,51 @@
 from models.database import db
 
+
 class Usuario(db.Model):
+
     __tablename__ = "usuarios"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    nome = db.Column(db.String(100), nullable=False)
+    nome = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    email = db.Column(
+        db.String(120),
+        unique=True,
+        nullable=False
+    )
 
-    senha = db.Column(db.String(255), nullable=False)
+    senha = db.Column(
+        db.String(255),
+        nullable=False
+    )
+
+    # ==========================================
+    # CREATE
+    # ==========================================
 
     def salvar(self):
-        """CREATE: salva um novo usuário no banco."""
+
         db.session.add(self)
+
         db.session.commit()
 
-    def atualizar(self, nome=None, email=None, senha=None):
-        """UPDATE: altera apenas os campos informados."""
+    # ==========================================
+    # UPDATE
+    # ==========================================
+
+    def atualizar(
+        self,
+        nome=None,
+        email=None,
+        senha=None
+    ):
 
         if nome is not None:
             self.nome = nome
@@ -30,36 +58,57 @@ class Usuario(db.Model):
 
         db.session.commit()
 
+    # ==========================================
+    # DELETE
+    # ==========================================
+
     def deletar(self):
-        """DELETE: remove o usuário do banco."""
 
         db.session.delete(self)
 
         db.session.commit()
 
+    # ==========================================
+    # READ
+    # ==========================================
+
     @staticmethod
     def listar_todos():
-        """READ: retorna todos os usuários."""
 
-        return Usuario.query.order_by(Usuario.id.asc()).all()
+        return (
+            Usuario.query
+            .order_by(Usuario.id.asc())
+            .all()
+        )
+
+    # ==========================================
 
     @staticmethod
     def buscar_por_id(id):
-        """READ: busca um usuário pelo id."""
 
         return Usuario.query.get(id)
 
+    # ==========================================
+
     @staticmethod
     def buscar_por_email(email):
-        """READ auxiliar: busca um usuário pelo e-mail."""
 
-        return Usuario.query.filter_by(email=email).first()
+        return Usuario.query.filter_by(
+            email=email
+        ).first()
+
+    # ==========================================
+    # JSON
+    # ==========================================
 
     def to_dict(self):
-        """Converte o objeto Usuario para dicionário/JSON."""
 
         return {
+
             "id": self.id,
+
             "nome": self.nome,
+
             "email": self.email
+
         }
