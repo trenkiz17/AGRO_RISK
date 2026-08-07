@@ -1,129 +1,167 @@
-// ================= URL DA API =================
+// =============================================
+// CONFIGURAÇÃO DA API
+// =============================================
 
 const API_URL = "http://localhost:5000";
 
-// ================= MÉTODOS GENÉRICOS =================
+// =============================================
+// MÉTODOS GENÉRICOS
+// =============================================
 
-// GET
-async function get(endpoint) {
+async function request(endpoint, method = "GET", dados = null) {
 
-    const resposta = await fetch(API_URL + endpoint);
-
-    return await resposta.json();
-
-}
-
-// POST
-async function post(endpoint, dados) {
-
-    const resposta = await fetch(API_URL + endpoint, {
-
-        method: "POST",
-
+    const config = {
+        method,
         headers: {
             "Content-Type": "application/json"
-        },
+        }
+    };
 
-        body: JSON.stringify(dados)
+    if (dados) {
+        config.body = JSON.stringify(dados);
+    }
 
-    });
+    try {
 
-    return await resposta.json();
+        const resposta = await fetch(API_URL + endpoint, config);
 
-}
+        if (!resposta.ok) {
+            throw new Error(`Erro ${resposta.status}`);
+        }
 
-// PUT
-async function put(endpoint, dados) {
+        return await resposta.json();
 
-    const resposta = await fetch(API_URL + endpoint, {
+    }
 
-        method: "PUT",
+    catch (erro) {
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+        console.error("Erro API:", erro);
 
-        body: JSON.stringify(dados)
+        return null;
 
-    });
-
-    return await resposta.json();
-
-}
-
-// DELETE
-async function del(endpoint) {
-
-    const resposta = await fetch(API_URL + endpoint, {
-
-        method: "DELETE"
-
-    });
-
-    return await resposta.json();
+    }
 
 }
 
-// ================= USUÁRIOS =================
+const get = (endpoint) => request(endpoint);
 
-// Login
-async function login(email, senha) {
+const post = (endpoint, dados) => request(endpoint, "POST", dados);
 
-    return await post("/login", {
+const put = (endpoint, "PUT", dados);
 
+const del = (endpoint) => request(endpoint, "DELETE");
+
+// =============================================
+// LOGIN
+// =============================================
+
+async function login(email, senha){
+
+    return await post("/login",{
         email,
         senha
-
     });
 
 }
 
-// Cadastro
-async function cadastrar(nome, email, senha) {
+async function cadastrarUsuario(usuario){
 
-    return await post("/usuarios", {
-
-        nome,
-        email,
-        senha
-
-    });
+    return await post("/usuarios",usuario);
 
 }
 
-// ================= PROPRIEDADES =================
+// =============================================
+// PROPRIEDADES
+// =============================================
 
-// Listar todas
-async function listarPropriedades() {
+async function listarPropriedades(){
 
     return await get("/propriedades");
 
 }
 
-// Buscar por ID
-async function buscarPropriedade(id) {
+async function buscarPropriedade(id){
 
     return await get(`/propriedades/${id}`);
 
 }
 
-// Cadastrar
-async function cadastrarPropriedade(propriedade) {
+async function cadastrarPropriedade(dados){
 
-    return await post("/propriedades", propriedade);
-
-}
-
-// Atualizar
-async function atualizarPropriedade(id, propriedade) {
-
-    return await put(`/propriedades/${id}`, propriedade);
+    return await post("/propriedades",dados);
 
 }
 
-// Excluir
-async function excluirPropriedade(id) {
+async function atualizarPropriedade(id,dados){
+
+    return await put(`/propriedades/${id}`,dados);
+
+}
+
+async function excluirPropriedade(id){
 
     return await del(`/propriedades/${id}`);
+
+}
+
+// =============================================
+// SAFRAS
+// =============================================
+
+async function listarSafras(){
+
+    return await get("/safras");
+
+}
+
+async function listarSafrasDaPropriedade(id){
+
+    return await get(`/propriedades/${id}/safras`);
+
+}
+
+async function cadastrarSafra(dados){
+
+    return await post("/safras",dados);
+
+}
+
+// =============================================
+// DASHBOARD
+// =============================================
+
+async function buscarDashboard(){
+
+    return await get("/dashboard");
+
+}
+
+// =============================================
+// RELATÓRIOS
+// =============================================
+
+async function buscarRelatorios(){
+
+    return await get("/relatorios");
+
+}
+
+// =============================================
+// PERFIL
+// =============================================
+
+async function buscarPerfil(id){
+
+    return await get(`/usuarios/${id}`);
+
+}
+
+// =============================================
+// CLIMA
+// =============================================
+
+async function buscarClima(lat,lon){
+
+    return await get(`/clima?lat=${lat}&lon=${lon}`);
 
 }

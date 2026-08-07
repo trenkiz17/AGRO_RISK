@@ -15,13 +15,11 @@
 
     <!-- Font Awesome -->
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- Leaflet -->
 
-    <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
     <link rel="stylesheet" href="css/style.css">
 
@@ -29,98 +27,35 @@
 
 <body class="monitoramento-body">
 
-<!-- ================= NAV ================= -->
+    <!-- ================= NAV ================= -->
 
-<nav class="monitor-nav">
+    <nav class="monitor-nav">
 
-    <div class="container">
+        <div class="container">
 
-        <div class="logo">
+            <div class="logo">
 
-            <i class="fa-solid fa-seedling"></i>
+                <i class="fa-solid fa-seedling"></i>
 
-            Agro<span>Risk</span>
-
-        </div>
-
-        <div class="menu">
-
-            <a href="dashboard.html">
-
-                <i class="fa-solid fa-house"></i>
-
-                Dashboard
-
-            </a>
-
-            <a href="perfil.html">
-
-                <i class="fa-solid fa-user"></i>
-
-                Perfil
-
-            </a>
-
-        </div>
-
-    </div>
-
-</nav>
-
-<!-- ================= HEADER ================= -->
-
-<section class="monitor-header">
-
-    <div class="container">
-
-        <div class="header-content">
-
-            <div>
-
-                <span class="badge-monitor">
-
-                    <i class="fa-solid fa-location-dot"></i>
-
-                    Propriedade Monitorada
-
-                </span>
-
-                <h1 id="nomePropriedade">
-
-                    Fazenda Boa Vista
-
-                </h1>
-
-                <p>
-
-                    <i class="fa-solid fa-location-dot"></i>
-
-                    <span id="cidade">
-
-                        Vespasiano
-
-                    </span>
-
-                    -
-
-                    <span id="estado">
-
-                        MG
-
-                    </span>
-
-                </p>
+                Agro<span>Risk</span>
 
             </div>
 
-            <div>
+            <div class="menu">
 
-                <a href="cadastro_propriedade.html"
-                    class="btn btn-success btn-lg">
+                <a href="dashboard.html">
 
-                    <i class="fa-solid fa-pen"></i>
+                    <i class="fa-solid fa-house"></i>
 
-                    Editar
+                    Dashboard
+
+                </a>
+
+                <a href="perfil.html">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Perfil
 
                 </a>
 
@@ -128,264 +63,384 @@
 
         </div>
 
-    </div>
+    </nav>
 
-</section>
+    <!-- ================= HEADER ================= -->
 
-<!-- ================= CONTEÚDO ================= -->
+    <section class="monitor-header">
 
-<section class="monitor-section">
+        <div class="container">
 
-<div class="container">
+            <div class="header-content">
 
-<!-- RESUMO -->
+                <div>
 
-<div class="row g-4 mb-4">
+                    <span class="badge-monitor">
 
-<div class="col-lg-3 col-md-6">
+                        <i class="fa-solid fa-location-dot"></i>
 
-<div class="monitor-card">
+                        Propriedade Monitorada
 
-<i class="fa-solid fa-vector-square"></i>
+                    </span>
 
-<h2 id="area">
+                    <h1 id="nomePropriedade">
 
---
+                        Fazenda Boa Vista
 
-</h2>
+                    </h1>
 
-<p>Área Total</p>
+                    <p>
 
-</div>
+                        <i class="fa-solid fa-location-dot"></i>
 
-</div>
+                        <span id="cidade">
 
-<div class="col-lg-3 col-md-6">
+                            Vespasiano
 
-<div class="monitor-card">
+                        </span>
 
-<i class="fa-solid fa-seedling"></i>
+                        -
 
-<h2 id="cultura">
+                        <span id="estado">
 
---
+                            MG
 
-</h2>
+                        </span>
 
-<p>Cultura</p>
+                    </p>
 
-</div>
+                </div>
 
-</div>
+                <div>
 
-<div class="col-lg-3 col-md-6">
+                    <a href="cadastro_propriedade.html" class="btn btn-success btn-lg">
 
-<div class="monitor-card">
+                        <i class="fa-solid fa-pen"></i>
 
-<i class="fa-solid fa-calendar-days"></i>
+                        Editar
 
-<h2 id="safra">
+                    </a>
 
---
+                </div>
 
-</h2>
+            </div>
 
-<p>Safra</p>
+        </div>
 
-</div>
+    </section>
 
-</div>
+    <!-- ================= CONTEÚDO ================= -->
 
-<div class="col-lg-3 col-md-6">
+    <section class="monitor-section">
 
-<div class="monitor-card">
+        <div class="container">
 
-<i class="fa-solid fa-chart-line"></i>
+            <!-- RESUMO -->
 
-<h2 id="produtividade">
+            <div class="row g-4 mb-4">
 
---
+                <div class="col-lg-3 col-md-6">
 
-</h2>
+                    <div class="monitor-card">
 
-<p>Produtividade</p>
+                        <i class="fa-solid fa-vector-square"></i>
 
-</div>
+                        <h2 id="area">
 
-</div>
+                            --
 
-</div>
+                        </h2>
 
-<!-- MAPA -->
+                        <p>Área Total</p>
 
-<div class="monitor-map">
+                    </div>
 
-<div class="titulo-box">
+                </div>
 
-<h3>
+                <div class="col-lg-3 col-md-6">
 
-<i class="fa-solid fa-map-location-dot"></i>
+                    <div class="monitor-card">
 
-Mapa da Propriedade
+                        <i class="fa-solid fa-seedling"></i>
 
-</h3>
+                        <h2 id="cultura">
 
-<p>
+                            --
 
-Visualize toda a área cadastrada.
+                        </h2>
 
-</p>
+                        <p>Cultura</p>
 
-</div>
+                    </div>
 
-<div id="map"></div>
+                </div>
 
-</div>
+                <div class="col-lg-3 col-md-6">
 
-<!-- BOTÕES -->
+                    <div class="monitor-card">
 
-<div class="acoes-monitor mt-4">
+                        <i class="fa-solid fa-calendar-days"></i>
 
-<a href="safras.html" class="acao-card">
+                        <h2 id="safra">
 
-<i class="fa-solid fa-seedling"></i>
+                            --
 
-<h5>Nova Safra</h5>
+                        </h2>
 
-<p>
+                        <p>Safra</p>
 
-Cadastrar uma nova safra para esta propriedade.
+                    </div>
 
-</p>
+                </div>
 
-</a>
+                <div class="col-lg-3 col-md-6">
 
-<a href="relatorios.html" class="acao-card">
+                    <div class="monitor-card">
 
-<i class="fa-solid fa-chart-column"></i>
+                        <i class="fa-solid fa-chart-line"></i>
 
-<h5>Relatórios</h5>
+                        <h2 id="produtividade">
 
-<p>
+                            --
 
-Visualizar gráficos e indicadores.
+                        </h2>
 
-</p>
+                        <p>Produtividade</p>
 
-</a>
+                    </div>
 
-<a href="#" class="acao-card">
+                </div>
 
-<i class="fa-solid fa-cloud-sun"></i>
+            </div>
 
-<h5>Atualizar Clima</h5>
+            <!-- MAPA -->
 
-<p>
+            <div class="monitor-map">
 
-Buscar dados climáticos em tempo real.
+                <div class="titulo-box">
 
-</p>
+                    <h3>
 
-</a>
+                        <i class="fa-solid fa-map-location-dot"></i>
 
-</div>
+                        Mapa da Propriedade
 
+                    </h3>
 
-<!-- ================= CLIMA ================= -->
+                    <p>
 
-<div class="row mt-5 g-4">
+                        Visualize toda a área cadastrada.
 
-    <div class="col-lg-8">
+                    </p>
 
-        <div class="weather-panel">
+                </div>
 
-            <div class="titulo-box">
+                <div id="map"></div>
 
-                <h3>
+            </div>
+
+            <!-- BOTÕES -->
+
+            <div class="acoes-monitor mt-4">
+
+                <a href="safras.html" class="acao-card">
+
+                    <i class="fa-solid fa-seedling"></i>
+
+                    <h5>Nova Safra</h5>
+
+                    <p>
+
+                        Cadastrar uma nova safra para esta propriedade.
+
+                    </p>
+
+                </a>
+
+                <a href="relatorios.html" class="acao-card">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    <h5>Relatórios</h5>
+
+                    <p>
+
+                        Visualizar gráficos e indicadores.
+
+                    </p>
+
+                </a>
+
+                <a href="#" class="acao-card">
 
                     <i class="fa-solid fa-cloud-sun"></i>
 
-                    Clima Atual
+                    <h5>Atualizar Clima</h5>
 
-                </h3>
+                    <p>
 
-                <p>
+                        Buscar dados climáticos em tempo real.
 
-                    Dados obtidos automaticamente da API meteorológica.
+                    </p>
 
-                </p>
+                </a>
 
             </div>
 
-            <div class="row g-4">
 
-                <div class="col-md-3">
+            <!-- ================= CLIMA ================= -->
 
-                    <div class="weather-card">
+            <div class="row mt-5 g-4">
 
-                        <i class="fa-solid fa-temperature-high"></i>
+                <div class="col-lg-8">
 
-                        <h2 id="temperatura">
+                    <div class="weather-panel">
 
-                            --
+                        <div class="titulo-box">
 
-                        </h2>
+                            <h3>
 
-                        <span>Temperatura</span>
+                                <i class="fa-solid fa-cloud-sun"></i>
+
+                                Clima Atual
+
+                            </h3>
+
+                            <p>
+
+                                Dados obtidos automaticamente da API meteorológica.
+
+                            </p>
+
+                        </div>
+
+                        <div class="row g-4">
+
+                            <div class="col-md-3">
+
+                                <div class="weather-card">
+
+                                    <i class="fa-solid fa-temperature-high"></i>
+
+                                    <h2 id="temperatura">
+
+                                        --
+
+                                    </h2>
+
+                                    <span>Temperatura</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <div class="weather-card">
+
+                                    <i class="fa-solid fa-droplet"></i>
+
+                                    <h2 id="umidade">
+
+                                        --
+
+                                    </h2>
+
+                                    <span>Umidade</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <div class="weather-card">
+
+                                    <i class="fa-solid fa-wind"></i>
+
+                                    <h2 id="vento">
+
+                                        --
+
+                                    </h2>
+
+                                    <span>Vento</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+
+                                <div class="weather-card">
+
+                                    <i class="fa-solid fa-cloud-rain"></i>
+
+                                    <h2 id="chuva">
+
+                                        --
+
+                                    </h2>
+
+                                    <span>Chuva</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-lg-4">
 
-                    <div class="weather-card">
+                    <div class="status-panel">
 
-                        <i class="fa-solid fa-droplet"></i>
+                        <h3>
 
-                        <h2 id="umidade">
+                            <i class="fa-solid fa-circle-check"></i>
 
-                            --
+                            Situação da Safra
 
-                        </h2>
+                        </h3>
 
-                        <span>Umidade</span>
+                        <div class="status-item">
 
-                    </div>
+                            <span>Plantio</span>
 
-                </div>
+                            <strong id="plantio">
 
-                <div class="col-md-3">
+                                --
 
-                    <div class="weather-card">
+                            </strong>
 
-                        <i class="fa-solid fa-wind"></i>
+                        </div>
 
-                        <h2 id="vento">
+                        <div class="status-item">
 
-                            --
+                            <span>Colheita Prevista</span>
 
-                        </h2>
+                            <strong id="colheita">
 
-                        <span>Vento</span>
+                                --
 
-                    </div>
+                            </strong>
 
-                </div>
+                        </div>
 
-                <div class="col-md-3">
+                        <div class="status-item">
 
-                    <div class="weather-card">
+                            <span>Status</span>
 
-                        <i class="fa-solid fa-cloud-rain"></i>
+                            <strong class="text-success">
 
-                        <h2 id="chuva">
+                                Em acompanhamento
 
-                            --
+                            </strong>
 
-                        </h2>
-
-                        <span>Chuva</span>
+                        </div>
 
                     </div>
 
@@ -393,263 +448,205 @@ Buscar dados climáticos em tempo real.
 
             </div>
 
-        </div>
+            <!-- ================= GRÁFICO ================= -->
 
-    </div>
+            <div class="grafico-box mt-5">
 
-    <div class="col-lg-4">
+                <div class="titulo-box">
 
-        <div class="status-panel">
+                    <h3>
 
-            <h3>
+                        <i class="fa-solid fa-chart-line"></i>
 
-                <i class="fa-solid fa-circle-check"></i>
+                        Evolução da Safra
 
-                Situação da Safra
+                    </h3>
 
-            </h3>
+                    <p>
 
-            <div class="status-item">
+                        Histórico dos dados cadastrados.
 
-                <span>Plantio</span>
+                    </p>
 
-                <strong id="plantio">
+                </div>
 
-                    --
-
-                </strong>
+                <canvas id="graficoSafra"></canvas>
 
             </div>
 
-            <div class="status-item">
+            <!-- ================= PREVISÃO ================= -->
 
-                <span>Colheita Prevista</span>
+            <div class="previsao-box mt-5">
 
-                <strong id="colheita">
+                <div class="titulo-box">
 
-                    --
+                    <h3>
 
-                </strong>
+                        <i class="fa-solid fa-calendar-days"></i>
 
-            </div>
+                        Próximos Dias
 
-            <div class="status-item">
+                    </h3>
 
-                <span>Status</span>
+                </div>
 
-                <strong class="text-success">
+                <div class="row g-3">
 
-                    Em acompanhamento
+                    <div class="col">
 
-                </strong>
+                        <div class="forecast-card">
 
-            </div>
+                            <h5>Hoje</h5>
 
-        </div>
+                            <i class="fa-solid fa-sun"></i>
 
-    </div>
+                            <h3 id="hojeTemp">
 
-</div>
+                                --
 
-<!-- ================= GRÁFICO ================= -->
+                            </h3>
 
-<div class="grafico-box mt-5">
+                        </div>
 
-    <div class="titulo-box">
+                    </div>
 
-        <h3>
+                    <div class="col">
 
-            <i class="fa-solid fa-chart-line"></i>
+                        <div class="forecast-card">
 
-            Evolução da Safra
+                            <h5>Amanhã</h5>
 
-        </h3>
+                            <i class="fa-solid fa-cloud-sun"></i>
 
-        <p>
+                            <h3 id="amanhaTemp">
 
-            Histórico dos dados cadastrados.
+                                --
 
-        </p>
+                            </h3>
 
-    </div>
+                        </div>
 
-    <canvas id="graficoSafra"></canvas>
+                    </div>
 
-</div>
+                    <div class="col">
 
-<!-- ================= PREVISÃO ================= -->
+                        <div class="forecast-card">
 
-<div class="previsao-box mt-5">
+                            <h5>+2 Dias</h5>
 
-    <div class="titulo-box">
+                            <i class="fa-solid fa-cloud-rain"></i>
 
-        <h3>
+                            <h3 id="dia2Temp">
 
-            <i class="fa-solid fa-calendar-days"></i>
+                                --
 
-            Próximos Dias
+                            </h3>
 
-        </h3>
+                        </div>
 
-    </div>
+                    </div>
 
-    <div class="row g-3">
+                    <div class="col">
 
-        <div class="col">
+                        <div class="forecast-card">
 
-            <div class="forecast-card">
+                            <h5>+3 Dias</h5>
 
-                <h5>Hoje</h5>
+                            <i class="fa-solid fa-cloud-showers-heavy"></i>
 
-                <i class="fa-solid fa-sun"></i>
+                            <h3 id="dia3Temp">
 
-                <h3 id="hojeTemp">
+                                --
 
-                    --
+                            </h3>
 
-                </h3>
+                        </div>
 
-            </div>
+                    </div>
 
-        </div>
-
-        <div class="col">
-
-            <div class="forecast-card">
-
-                <h5>Amanhã</h5>
-
-                <i class="fa-solid fa-cloud-sun"></i>
-
-                <h3 id="amanhaTemp">
-
-                    --
-
-                </h3>
+                </div>
 
             </div>
 
-        </div>
+            <!-- ================= HISTÓRICO ================= -->
 
-        <div class="col">
+            <div class="historico-box mt-5">
 
-            <div class="forecast-card">
+                <div class="titulo-box">
 
-                <h5>+2 Dias</h5>
+                    <h3>
 
-                <i class="fa-solid fa-cloud-rain"></i>
+                        <i class="fa-solid fa-clock-rotate-left"></i>
 
-                <h3 id="dia2Temp">
+                        Histórico
 
-                    --
+                    </h3>
 
-                </h3>
+                </div>
 
-            </div>
+                <ul class="timeline">
 
-        </div>
+                    <li>
 
-        <div class="col">
+                        <span class="dot"></span>
 
-            <div class="forecast-card">
+                        Propriedade cadastrada.
 
-                <h5>+3 Dias</h5>
+                    </li>
 
-                <i class="fa-solid fa-cloud-showers-heavy"></i>
+                    <li>
 
-                <h3 id="dia3Temp">
+                        <span class="dot"></span>
 
-                    --
+                        Safra criada.
 
-                </h3>
+                    </li>
+
+                    <li>
+
+                        <span class="dot"></span>
+
+                        Última atualização climática.
+
+                    </li>
+
+                </ul>
 
             </div>
 
         </div>
 
-    </div>
+    </section>
 
-</div>
+    <footer class="monitor-footer">
 
-<!-- ================= HISTÓRICO ================= -->
+        <div class="container">
 
-<div class="historico-box mt-5">
+            <p>
 
-    <div class="titulo-box">
+                © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
 
-        <h3>
+            </p>
 
-            <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
 
-            Histórico
+    </footer>
 
-        </h3>
+    <!-- Bootstrap -->
 
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
-    <ul class="timeline">
+    <!-- Leaflet -->
 
-        <li>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-            <span class="dot"></span>
+    <!-- Chart.js -->
 
-            Propriedade cadastrada.
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        </li>
+    <!-- JS -->
 
-        <li>
-
-            <span class="dot"></span>
-
-            Safra criada.
-
-        </li>
-
-        <li>
-
-            <span class="dot"></span>
-
-            Última atualização climática.
-
-        </li>
-
-    </ul>
-
-</div>
-
-</div>
-
-</section>
-
-<footer class="monitor-footer">
-
-    <div class="container">
-
-        <p>
-
-            © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
-
-        </p>
-
-    </div>
-
-</footer>
-
-<!-- Bootstrap -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Leaflet -->
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Chart.js -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- JS -->
-
-<script src="js/monitoramento.js"></script>
+    <script src="js/monitoramento.js"></script>
 
 </body>
 

@@ -1,38 +1,61 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const formulario = document.getElementById("loginForm");
+    document
+        .getElementById("loginForm")
+        .addEventListener("submit", realizarLogin);
 
-    formulario.addEventListener("submit", async (event) => {
+});
 
-        event.preventDefault();
+async function realizarLogin(event) {
 
-        const email = document.getElementById("email").value;
-        const senha = document.getElementById("senha").value;
+    event.preventDefault();
 
-        try {
+    const email = document.getElementById("email").value.trim();
 
-            const resposta = await login(email, senha);
+    const senha = document.getElementById("senha").value;
 
-            if (resposta.sucesso) {
+    if (email === "" || senha === "") {
 
-                alert("Login realizado com sucesso!");
+        alert("Preencha todos os campos.");
 
-                window.location.href = "dashboard.html";
+        return;
 
-            } else {
+    }
 
-                alert(resposta.mensagem);
+    try {
 
-            }
+        const resposta = await login(email, senha);
 
-        } catch (erro) {
-
-            console.error(erro);
+        if (!resposta) {
 
             alert("Erro ao conectar com a API.");
 
+            return;
+
         }
 
-    });
+        if (resposta.sucesso) {
 
-});
+            localStorage.setItem("usuario", JSON.stringify(resposta.usuario));
+
+            window.location.href = "dashboard.html";
+
+        }
+
+        else {
+
+            alert(resposta.mensagem);
+
+        }
+
+    }
+
+    catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao conectar com a API.");
+
+    }
+
+}

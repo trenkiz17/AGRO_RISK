@@ -14,18 +14,37 @@ AgroRisk/
     ├── requirements.txt
     ├── .env.example
     ├── controllers/
-    │   └── usuario_controller.py
+    │   ├── usuario_controller.py
+    │   ├── propriedade_controller.py
+    │   └── safra_controller.py
     ├── models/
     │   ├── database.py
-    │   └── usuario.py
+    │   ├── usuario.py
+    │   ├── propriedade.py
+    │   └── safra.py
     ├── repositories/
-    │   └── README.md
+    │   ├── usuario_repository.py
+    │   ├── propriedade_repository.py
+    │   └── safra_repository.py
     ├── services/
     │   ├── criar_usuario_service.py
-    │   ├── listar_usuarios_service.py
+    │   ├── listar_usuario_service.py
     │   ├── buscar_usuario_por_id_service.py
+    │   ├── buscar_usuario_por_nome_service.py
     │   ├── atualizar_usuario_service.py
-    │   └── deletar_usuario_service.py
+    │   ├── deletar_usuario_service.py
+    │   ├── criar_propriedade_service.py
+    │   ├── listar_propriedade_service.py
+    │   ├── buscar_propriedade_por_id_service.py
+    │   ├── buscar_propriedade_por_localizacao_service.py
+    │   ├── atualizar_propriedade_service.py
+    │   ├── deletar_propriedade_service.py
+    │   ├── criar_safra_service.py
+    │   ├── listar_safra_service.py
+    │   ├── buscar_safra_por_id_service.py
+    │   ├── buscar_safra_por_cultura_service.py
+    │   ├── atualizar_safra_service.py
+    │   └── deletar_safra_service.py
     └── database/
         └── create_database.sql
 ```
@@ -39,22 +58,263 @@ Controller
    ↓
 Service
    ↓
-Model
+Repository
+   ↓
+Procedure
    ↓
 Banco de Dados
 ```
 
-Cada camada possui uma responsabilidade específica. O **Controller** recebe as requisições HTTP e retorna as respostas da API. O **Service** concentra as regras de negócio de cada funcionalidade. Já a **Model** representa as tabelas do banco de dados utilizando o SQLAlchemy (`db.Model`) e realiza as operações de persistência.
+Cada camada possui uma responsabilidade específica. O **Controller** recebe as requisições HTTP e retorna as respostas da API. O **Service** concentra as regras de negócio de cada funcionalidade. A **Model** representa as entidades do domínio e realiza as operações básicas de CRUD.
+
+O **Repository** é responsável pelas consultas que vão além do CRUD básico, utilizando Stored Procedures no banco de dados para realizar filtros, buscas e ordenações específicas.
+
+As **Procedures** ficam armazenadas no MySQL e são chamadas pelos Repositories quando uma funcionalidade exige uma consulta mais complexa.
 
 ## Funcionalidades implementadas (backend)
 
+### Usuários
+
 CRUD de Usuários:
 
-- Cadastrar um usuário;
-- Listar todos os usuários cadastrados;
-- Buscar um usuário pelo id;
-- Atualizar os dados de um usuário;
-- Excluir um usuário.
+* Cadastrar um usuário;
+* Listar todos os usuários cadastrados;
+* Buscar um usuário pelo id;
+* Atualizar os dados de um usuário;
+* Excluir um usuário.
+
+Funcionalidade além do CRUD:
+
+* Buscar usuários pelo nome;
+* Permitir busca parcial utilizando `LIKE`;
+* Ordenar os resultados pelo nome.
+
+### Propriedades
+
+CRUD de Propriedades:
+
+* Cadastrar uma propriedade;
+* Listar todas as propriedades cadastradas;
+* Buscar uma propriedade pelo id;
+* Atualizar os dados de uma propriedade;
+* Excluir uma propriedade.
+
+Funcionalidade além do CRUD:
+
+* Buscar propriedades pela localização;
+* Filtrar os resultados utilizando `WHERE`;
+* Ordenar os resultados.
+
+### Safras
+
+CRUD de Safras:
+
+* Cadastrar uma safra;
+* Listar todas as safras cadastradas;
+* Buscar uma safra pelo id;
+* Atualizar os dados de uma safra;
+* Excluir uma safra.
+
+Funcionalidade além do CRUD:
+
+* Buscar safras pela cultura;
+* Filtrar os resultados utilizando `WHERE`;
+* Ordenar as safras pelo ano.
+
+## Repositories utilizados
+
+Os Repositories foram criados para encapsular as consultas que vão além do CRUD básico.
+
+### UsuarioRepository
+
+Arquivo:
+
+```text
+backend/repositories/usuario_repository.py
+```
+
+Funcionalidade implementada:
+
+```text
+buscar_por_nome(nome)
+```
+
+Utiliza a Stored Procedure:
+
+```text
+sp_buscar_usuario_nome
+```
+
+A consulta permite encontrar usuários pelo nome, inclusive quando apenas parte do nome é informada.
+
+### PropriedadeRepository
+
+Arquivo:
+
+```text
+backend/repositories/propriedade_repository.py
+```
+
+Funcionalidade implementada:
+
+```text
+buscar_por_localizacao(localizacao)
+```
+
+Utiliza uma Stored Procedure para realizar a busca das propriedades de acordo com a localização.
+
+### SafraRepository
+
+Arquivo:
+
+```text
+backend/repositories/safra_repository.py
+```
+
+Funcionalidade implementada:
+
+```text
+buscar_por_cultura(cultura)
+```
+
+Utiliza a Stored Procedure:
+
+```text
+sp_buscar_safras_cultura
+```
+
+A consulta retorna as safras de acordo com a cultura informada e realiza a ordenação dos resultados.
+
+## Procedures criadas
+
+As consultas que vão além do CRUD básico foram implementadas por meio de Stored Procedures no MySQL.
+
+### Usuários
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE sp_buscar_usuario_nome(IN p_nome VARCHAR(100))
+BEGIN
+
+    SELECT *
+    FROM usuarios
+    WHERE nome LIKE CONCAT('%', p_nome, '%')
+    ORDER BY nome;
+
+END $$
+
+DELIMITER ;
+```
+
+### Propriedades
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE sp_buscar_propriedades_localizacao(IN p_localizacao VARCHAR(150))
+BEGIN
+
+    SELECT *
+    FROM propriedades
+    WHERE localizacao LIKE CONCAT('%', p_localizacao, '%')
+    ORDER BY nome;
+
+END $$
+
+DELIMITER ;
+```
+
+### Safras
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE sp_buscar_safras_cultura(IN p_cultura VARCHAR(100))
+BEGIN
+
+    SELECT *
+    FROM safras
+    WHERE cultura = p_cultura
+    ORDER BY ano_safra DESC;
+
+END $$
+
+DELIMITER ;
+```
+
+## Rotas da API
+
+### Usuários
+
+| Método | Rota                        | Descrição                       |
+| ------ | --------------------------- | ------------------------------- |
+| GET    | `/usuarios`                 | Lista todos os usuários         |
+| GET    | `/usuarios/<id>`            | Busca um usuário pelo id        |
+| GET    | `/usuarios/buscar?nome=...` | Busca usuários pelo nome        |
+| POST   | `/usuarios`                 | Cadastra um novo usuário        |
+| PUT    | `/usuarios/<id>`            | Atualiza os dados de um usuário |
+| DELETE | `/usuarios/<id>`            | Remove um usuário               |
+
+### Propriedades
+
+| Método | Rota                       | Descrição                            |
+| ------ | -------------------------- | ------------------------------------ |
+| GET    | `/propriedades`            | Lista todas as propriedades          |
+| GET    | `/propriedades/<id>`       | Busca uma propriedade pelo id        |
+| GET    | `/propriedades/buscar?...` | Busca propriedades por localização   |
+| POST   | `/propriedades`            | Cadastra uma nova propriedade        |
+| PUT    | `/propriedades/<id>`       | Atualiza os dados de uma propriedade |
+| DELETE | `/propriedades/<id>`       | Remove uma propriedade               |
+
+### Safras
+
+| Método | Rota                         | Descrição                      |
+| ------ | ---------------------------- | ------------------------------ |
+| GET    | `/safras`                    | Lista todas as safras          |
+| GET    | `/safras/<id>`               | Busca uma safra pelo id        |
+| GET    | `/safras/buscar?cultura=...` | Busca safras por cultura       |
+| POST   | `/safras`                    | Cadastra uma nova safra        |
+| PUT    | `/safras/<id>`               | Atualiza os dados de uma safra |
+| DELETE | `/safras/<id>`               | Remove uma safra               |
+
+## Exemplo de JSON para cadastro de usuário
+
+```json
+{
+    "nome": "Leonardo Silva",
+    "email": "leonardo@email.com",
+    "senha": "123456"
+}
+```
+
+## Exemplo de JSON para cadastro de propriedade
+
+```json
+{
+    "usuario_id": 1,
+    "nome": "Fazenda Boa Vista",
+    "localizacao": "Vespasiano - MG",
+    "hectares": 150.50,
+    "tipo_solo": "Argiloso"
+}
+```
+
+## Exemplo de JSON para cadastro de safra
+
+```json
+{
+    "propriedade_id": 1,
+    "cultura": "Soja",
+    "ano_safra": "2026/2027",
+    "area_plantada": 120.00,
+    "data_plantio": "2026-10-15",
+    "data_colheita": "2027-02-20",
+    "produtividade": 3500.00,
+    "custo_total": 85000.00,
+    "status": "Planejamento"
+}
+```
 
 ## Como executar o backend
 
@@ -114,6 +374,12 @@ http://127.0.0.1:5000
 
 O projeto utiliza **MySQL** como banco de dados.
 
+O banco utilizado pelo sistema é:
+
+```text
+agrorisk
+```
+
 Execute o script localizado em:
 
 ```text
@@ -132,52 +398,63 @@ Caso seu usuário possua senha:
 DATABASE_URL=mysql+pymysql://root:sua_senha@localhost/agrorisk
 ```
 
-## Rotas da API
+## Testes das funcionalidades avançadas
 
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| GET | `/usuarios` | Lista todos os usuários |
-| GET | `/usuarios/<id>` | Busca um usuário pelo id |
-| POST | `/usuarios` | Cadastra um novo usuário |
-| PUT | `/usuarios/<id>` | Atualiza os dados de um usuário |
-| DELETE | `/usuarios/<id>` | Remove um usuário |
+As três funcionalidades que vão além do CRUD básico foram implementadas e testadas.
 
-## Exemplo de JSON para cadastro
+### Busca de usuários por nome
 
-```json
-{
-    "nome": "Leonardo Silva",
-    "email": "leonardo@email.com",
-    "senha": "123456"
-}
+```text
+GET /usuarios/buscar?nome=Joao
 ```
 
-## Resposta esperada
+A busca retorna os usuários que possuem o nome informado, permitindo também encontrar parte do nome.
 
-```json
-{
-    "id": 1,
-    "nome": "Leonardo Silva",
-    "email": "leonardo@email.com",
-    "senha": "123456"
-}
+### Busca de propriedades por localização
+
+```text
+GET /propriedades/buscar?localizacao=Vespasiano
 ```
+
+A busca retorna as propriedades correspondentes à localização informada.
+
+### Busca de safras por cultura
+
+```text
+GET /safras/buscar?cultura=Soja
+```
+
+A busca retorna as safras cadastradas para a cultura informada.
 
 ## Tecnologias utilizadas
 
-- Python
-- Flask
-- Flask SQLAlchemy
-- SQLAlchemy
-- Flask CORS
-- MySQL
-- PyMySQL
-- Python Dotenv
+* Python
+* Flask
+* Flask SQLAlchemy
+* SQLAlchemy
+* Flask CORS
+* MySQL
+* PyMySQL
+* Python Dotenv
+* HTML
+* CSS
+* JavaScript
+* Bootstrap
+* Leaflet
+* Chart.js
 
 ## Status atual do projeto
 
-Nesta etapa foi implementada a arquitetura do backend utilizando Flask e SQLAlchemy, seguindo o padrão Controller → Service → Model apresentado em aula.
+Nesta etapa foi implementada a arquitetura do backend utilizando Flask e SQLAlchemy, seguindo o padrão **Controller → Service → Repository → Procedure → Banco de Dados**.
 
-Até o momento foi desenvolvido o CRUD completo da Model **Usuário**, incluindo cadastro, listagem, busca por id, atualização e exclusão de registros no banco de dados MySQL.
+Foi desenvolvido o CRUD completo das Models **Usuário**, **Propriedade** e **Safra**, incluindo cadastro, listagem, busca por id, atualização e exclusão de registros.
 
-As próximas etapas do projeto contemplam a implementação das Models **Propriedade** e **Safra**, além da integração completa com o frontend do sistema AgroRisk.
+Além do CRUD básico, foram implementadas funcionalidades que utilizam consultas específicas no banco de dados por meio de **Repositories e Stored Procedures**:
+
+* Busca de usuários por nome;
+* Busca de propriedades por localização;
+* Busca de safras por cultura.
+
+Os respectivos Controllers e Services foram criados para cada caso de uso, mantendo a separação de responsabilidades entre as camadas da aplicação.
+
+O backend está integrado ao banco de dados MySQL e as funcionalidades avançadas foram testadas por meio das rotas da API.

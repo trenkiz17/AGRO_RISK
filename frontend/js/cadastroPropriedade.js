@@ -1,89 +1,293 @@
-// Criar mapa
-const map = L.map('map').setView([-22.9, -43.2], 12);
+// =======================================
+// VARIÁVEIS GLOBAIS
+// =======================================
 
-// Camada do OpenStreetMap
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+let map;
+let drawnItems;
 
-    attribution: '&copy; OpenStreetMap'
+let area = 0;
+let perimetro = 0;
 
-}).addTo(map);
+let geojson = null;
 
-// Camada onde ficam os desenhos
-const drawnItems = new L.FeatureGroup();
+let latitude = null;
+let longitude = null;
 
-map.addLayer(drawnItems);
+// =======================================
+// INICIAR
+// =======================================
 
-// Ferramentas de desenho
-const drawControl = new L.Control.Draw({
+document.addEventListener("DOMContentLoaded", () => {
 
-    edit: {
+    iniciarMapa();
 
-        featureGroup: drawnItems
-
-    },
-
-    draw: {
-
-        polygon: true,
-
-        rectangle: true,
-
-        marker: true,
-
-        circle: false,
-
-        polyline: false,
-
-        circlemarker: false
-
-    }
+    iniciarEventos();
 
 });
 
-map.addControl(drawControl);
+// =======================================
+// MAPA
+// =======================================
 
-// Quando desenhar
-map.on(L.Draw.Event.CREATED, function(e){
+function iniciarMapa() {
+
+    map = L.map("map").setView([-19.9167, -43.9345], 12);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+
+        attribution: "&copy; OpenStreetMap"
+
+    }).addTo(map);
+
+    drawnItems = new L.FeatureGroup();
+
+    map.addLayer(drawnItems);
+
+    const drawControl = new L.Control.Draw({
+
+        edit: {
+
+            featureGroup: drawnItems
+
+        },
+
+        draw: {
+
+            polygon: true,
+
+            rectangle: true,
+
+            marker: false,
+
+            polyline: false,
+
+            circle: false,
+
+            circlemarker: false
+
+        }
+
+    });
+
+    map.addControl(drawControl);
+
+    map.on(L.Draw.Event.CREATED, desenharArea);
+
+}
+
+// =======================================
+// DESENHAR
+// =======================================
+
+function desenharArea(e) {
+
+    drawnItems.clearLayers();
 
     const layer = e.layer;
 
     drawnItems.addLayer(layer);
 
-    const geojson = layer.toGeoJSON();
-
-    coordenadas = JSON.stringify(geojson);
+    geojson = JSON.stringify(layer.toGeoJSON());
 
     const latlngs = layer.getLatLngs()[0];
 
-    let area = L.GeometryUtil.geodesicArea(latlngs);
+    area = (
+        L.GeometryUtil.geodesicArea(latlngs) / 10000
+    ).toFixed(2);
 
-    area = (area / 10000).toFixed(2);
+    perimetro = calcularPerimetro(latlngs);
 
-    document.getElementById("area").innerHTML =
-        area + " hectares";
+    const centro = layer.getBounds().getCenter();
 
-});
+    latitude = centro.lat;
 
-document.getElementById("salvar").onclick = async () => {
+    longitude = centro.lng;
 
-    const propriedade = {
-
-        nome: document.getElementById("nome").value,
-
-        cidade: document.getElementById("cidade").value,
-
-        estado: document.getElementById("estado").value,
-
-        cultura: document.getElementById("cultura").value,
-
-        area: area,
-
-        geojson: coordenadas
-
-    };
-
-    await api.post("/propriedades", propriedade);
-
-    window.location = "propriedades.html";
+    atualizarResumo();
 
 }
+
+// =======================================
+// RESUMO
+// =======================================
+
+function atualizarResumo() {
+
+    document.getElementById("area").textContent =
+        area + " ha";
+
+    document.getElementById("perimetro").textContent =
+        perimetro + " m";
+
+}
+
+// =======================================
+// PERÍMETRO
+// =======================================
+
+function calcularPerimetro(latlngs) {
+
+    let distancia = 0;
+
+    for (let i = 0; i < latlngs.length; i++) {
+
+        const atual = latlngs[i];
+
+        const proximo = latlngs[(i + 1) % latlngs.length];
+
+        distancia += atual.distanceTo(proximo);
+
+    }
+
+    return distancia.toFixed(2);
+
+}
+
+// =======================================
+// EVENTOS
+// =======================================
+
+function iniciarEventos() {
+
+    document
+        .getElementById("salvar")
+        .addEventListener("click", salvarPropriedade);
+
+    document
+        .getElementById("limparMapa")
+        .addEventListener("click", limparMapa);
+
+}
+
+// =======================================
+// LIMPAR
+// =======================================
+
+function limparMapa() {
+
+    drawnItems.clearLayers();
+
+    area = 0;
+
+    perimetro = 0;
+
+    latitude = null;
+
+    longitude = null;
+
+    geojson = null;
+
+    atualizarResumo();
+
+}
+
+// =======================================
+// SALVAR
+// =======================================
+
+async function salvarPropriedade() {
+
+    try {
+
+        if (!document.getElementById("nome").value.trim()) {
+
+            alert("Informe o nome da propriedade.");
+
+            return;
+
+        }
+
+        if (!document.getElementById("cidade").value.trim()) {
+
+            alert("Informe a cidade.");
+
+            return;
+
+        }
+
+        if (!document.getElementById("estado").value.trim()) {
+
+            alert("Informe o estado.");
+
+            return;
+
+        }
+
+        if (!geojson) {
+
+            alert("Desenhe a propriedade no mapa.");
+
+            return;
+
+        }
+
+        const propriedade = {
+
+            nome: document.getElementById("nome").value.trim(),
+
+            cidade: document.getElementById("cidade").value.trim(),
+
+            estado: document.getElementById("estado").value.trim(),
+
+            observacao: document.getElementById("observacao").value.trim(),
+
+            area: area,
+
+            perimetro: perimetro,
+
+            latitude: latitude,
+
+            longitude: longitude,
+
+            geojson: geojson
+
+        };
+
+        console.log("Enviando:", propriedade);
+
+        const resposta = await cadastrarPropriedade(propriedade);
+
+        console.log("Resposta:", resposta);
+
+        if (!resposta) {
+
+            alert("A API não respondeu.");
+
+            return;
+
+        }
+
+        if (resposta.sucesso === false) {
+
+            alert(resposta.mensagem);
+
+            return;
+
+        }
+
+        alert("Propriedade cadastrada com sucesso!");
+
+        if (resposta.id) {
+
+            window.location.href =
+                "monitoramento.html?id=" + resposta.id;
+
+        } else {
+
+            window.location.href =
+                "monitoramento.html";
+
+        }
+
+    }
+
+    catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao cadastrar a propriedade.");
+
+    }
+
+}
+

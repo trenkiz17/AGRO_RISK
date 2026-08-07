@@ -1,39 +1,55 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const formulario = document.getElementById("cadastroForm");
+    document
+        .getElementById("cadastroForm")
+        .addEventListener("submit", cadastrarUsuario);
 
-    formulario.addEventListener("submit", async (event) => {
+});
 
-        event.preventDefault();
+async function cadastrarUsuario(event) {
 
-        const nome = document.getElementById("nome").value;
-        const email = document.getElementById("email").value;
-        const senha = document.getElementById("senha").value;
+    event.preventDefault();
 
-        try {
+    const nome = document.getElementById("nome").value.trim();
 
-            const resposta = await cadastrar(nome, email, senha);
+    const email = document.getElementById("email").value.trim();
 
-            if (resposta.sucesso) {
+    const senha = document.getElementById("senha").value;
 
-                alert("Conta criada com sucesso!");
+    if (nome === "" || email === "" || senha === "") {
 
-                window.location.href = "login.html";
+        alert("Preencha todos os campos.");
 
-            } else {
+        return;
 
-                alert(resposta.mensagem);
+    }
 
-            }
+    try {
 
-        } catch (erro) {
+        const resposta = await cadastrar(nome, email, senha);
 
-            console.error(erro);
+        if (resposta.sucesso) {
 
-            alert("Erro ao conectar com a API.");
+            alert("Conta criada com sucesso!");
+
+            window.location.href = "login.html";
 
         }
 
-    });
+        else {
 
-});
+            alert(resposta.mensagem);
+
+        }
+
+    }
+
+    catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao conectar com a API.");
+
+    }
+
+}
