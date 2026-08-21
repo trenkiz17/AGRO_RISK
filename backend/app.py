@@ -41,7 +41,8 @@ def create_app():
                     "buscar": "GET /usuarios/<id>",
                     "criar": "POST /usuarios",
                     "atualizar": "PUT /usuarios/<id>",
-                    "deletar": "DELETE /usuarios/<id>"
+                    "deletar": "DELETE /usuarios/<id>",
+                    "login": "POST /login"
                 },
 
                 "PROPRIEDADES": {

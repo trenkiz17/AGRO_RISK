@@ -1,12 +1,14 @@
 from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import SQLAlchemyError
 
+from services.login_usuario_service import LoginUsuarioService
 from services.criar_usuario_service import CriarUsuarioService
 from services.listar_usuario_service import ListarUsuariosService
 from services.buscar_usuario_por_id_service import BuscarUsuarioPorIdService
 from services.atualizar_usuario_service import AtualizarUsuarioService
 from services.deletar_usuario_service import DeletarUsuarioService
 from services.buscar_usuario_por_nome_service import BuscarUsuarioPorNomeService
+
 
 from models.database import db
 
@@ -15,6 +17,31 @@ usuario_controller = Blueprint(
     "usuario_controller",
     __name__
 )
+
+
+@usuario_controller.post("/login")
+def login_usuario():
+
+    try:
+
+        dados = request.get_json() or {}
+
+        service = LoginUsuarioService()
+
+        usuario = service.executar(dados)
+
+        return jsonify({
+            "sucesso": True,
+            "mensagem": "Login realizado com sucesso.",
+            "usuario": usuario
+        }), 200
+
+    except ValueError as erro:
+
+        return jsonify({
+            "sucesso": False,
+            "mensagem": str(erro)
+        }), 401
 
 
 # ==========================================
@@ -179,3 +206,4 @@ def buscar_usuario_por_nome():
         return jsonify({
             "erro": str(erro)
         }), 400
+        

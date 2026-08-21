@@ -2,30 +2,45 @@ from models.propriedade import Propriedade
 
 
 class CriarPropriedadeService:
+
     def executar(self, dados):
 
         campos_obrigatorios = [
             "nome",
             "cidade",
             "estado",
-            "area",
-            "cultura"
+            "area"
         ]
 
         for campo in campos_obrigatorios:
 
             if not dados.get(campo):
 
-                raise ValueError(f"O campo '{campo}' é obrigatório.")
+                raise ValueError(
+                    f"O campo '{campo}' é obrigatório."
+                )
 
         propriedade = Propriedade(
 
             nome=dados["nome"],
-            cidade=dados["cidade"],
-            estado=dados["estado"],
-            area=dados["area"],
-            cultura=dados["cultura"]
 
+            cidade=dados["cidade"],
+
+            estado=dados["estado"],
+
+            observacao=dados.get("observacao"),
+
+            area=float(dados["area"]),
+
+            perimetro=float(
+                dados.get("perimetro", 0)
+            ),
+
+            latitude=dados.get("latitude"),
+
+            longitude=dados.get("longitude"),
+
+            geojson=dados.get("geojson")
         )
 
         propriedade.salvar()

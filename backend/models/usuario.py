@@ -1,6 +1,7 @@
 from models.database import db
 
 
+
 class Usuario(db.Model):
 
     __tablename__ = "usuarios"
@@ -26,6 +27,37 @@ class Usuario(db.Model):
         nullable=False
     )
 
+    telefone = db.Column(
+        db.String(20),
+        nullable=True
+    )
+
+    cpf = db.Column(
+        db.String(14),
+        nullable=True
+    )
+
+    data_nascimento = db.Column(
+        db.Date,
+        nullable=True
+    )
+
+    estado = db.Column(
+        db.String(100),
+        nullable=True
+    )
+
+    cidade = db.Column(
+        db.String(100),
+        nullable=True
+    )
+
+    idioma = db.Column(
+        db.String(50),
+        nullable=True,
+        default="Português"
+    )
+
     # ==========================================
     # CREATE
     # ==========================================
@@ -44,7 +76,13 @@ class Usuario(db.Model):
         self,
         nome=None,
         email=None,
-        senha=None
+        senha=None,
+        telefone=None,
+        cpf=None,
+        data_nascimento=None,
+        estado=None,
+        cidade=None,
+        idioma=None
     ):
 
         if nome is not None:
@@ -55,6 +93,24 @@ class Usuario(db.Model):
 
         if senha is not None:
             self.senha = senha
+
+        if telefone is not None:
+            self.telefone = telefone
+
+        if cpf is not None:
+            self.cpf = cpf
+
+        if data_nascimento is not None:
+            self.data_nascimento = data_nascimento
+
+        if estado is not None:
+            self.estado = estado
+
+        if cidade is not None:
+            self.cidade = cidade
+
+        if idioma is not None:
+            self.idioma = idioma
 
         db.session.commit()
 
@@ -109,6 +165,20 @@ class Usuario(db.Model):
 
             "nome": self.nome,
 
-            "email": self.email
+            "email": self.email,
+
+            "telefone": self.telefone,
+
+            "cpf": self.cpf,
+
+            "data_nascimento":
+                self.data_nascimento.isoformat()
+                if self.data_nascimento else None,
+
+            "estado": self.estado,
+
+            "cidade": self.cidade,
+
+            "idioma": self.idioma
 
         }

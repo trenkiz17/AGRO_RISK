@@ -10,40 +10,50 @@ class Propriedade(db.Model):
         primary_key=True
     )
 
-    usuario_id = db.Column(
-        db.Integer,
-        db.ForeignKey("usuarios.id"),
-        nullable=False
-    )
-
     nome = db.Column(
         db.String(100),
         nullable=False
     )
 
-    localizacao = db.Column(
-        db.String(150),
-        nullable=False
-    )
-
-    hectares = db.Column(
-        db.Numeric(10, 2),
-        nullable=False
-    )
-
-    tipo_solo = db.Column(
+    cidade = db.Column(
         db.String(100),
+        nullable=False
+    )
+
+    estado = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    observacao = db.Column(
+        db.Text,
         nullable=True
     )
 
-    created_at = db.Column(
-        db.DateTime,
+    area = db.Column(
+        db.Float,
         nullable=False
     )
 
-    # ==========================================
-    # CREATE
-    # ==========================================
+    perimetro = db.Column(
+        db.Float,
+        nullable=False
+    )
+
+    latitude = db.Column(
+        db.Float,
+        nullable=True
+    )
+
+    longitude = db.Column(
+        db.Float,
+        nullable=True
+    )
+
+    geojson = db.Column(
+        db.Text,
+        nullable=True
+    )
 
     def salvar(self):
 
@@ -51,35 +61,47 @@ class Propriedade(db.Model):
 
         db.session.commit()
 
-    # ==========================================
-    # UPDATE
-    # ==========================================
-
     def atualizar(
         self,
         nome=None,
-        localizacao=None,
-        hectares=None,
-        tipo_solo=None
+        cidade=None,
+        estado=None,
+        observacao=None,
+        area=None,
+        perimetro=None,
+        latitude=None,
+        longitude=None,
+        geojson=None
     ):
 
         if nome is not None:
             self.nome = nome
 
-        if localizacao is not None:
-            self.localizacao = localizacao
+        if cidade is not None:
+            self.cidade = cidade
 
-        if hectares is not None:
-            self.hectares = hectares
+        if estado is not None:
+            self.estado = estado
 
-        if tipo_solo is not None:
-            self.tipo_solo = tipo_solo
+        if observacao is not None:
+            self.observacao = observacao
+
+        if area is not None:
+            self.area = area
+
+        if perimetro is not None:
+            self.perimetro = perimetro
+
+        if latitude is not None:
+            self.latitude = latitude
+
+        if longitude is not None:
+            self.longitude = longitude
+
+        if geojson is not None:
+            self.geojson = geojson
 
         db.session.commit()
-
-    # ==========================================
-    # DELETE
-    # ==========================================
 
     def deletar(self):
 
@@ -87,46 +109,27 @@ class Propriedade(db.Model):
 
         db.session.commit()
 
-    # ==========================================
-    # READ
-    # ==========================================
-
     @staticmethod
     def listar_todos():
 
-        return (
-            Propriedade.query
-            .order_by(Propriedade.id.asc())
-            .all()
-        )
+        return Propriedade.query.all()
 
     @staticmethod
     def buscar_por_id(id):
 
         return Propriedade.query.get(id)
 
-    # ==========================================
-    # JSON
-    # ==========================================
-
     def to_dict(self):
 
         return {
-
             "id": self.id,
-
-            "usuario_id": self.usuario_id,
-
             "nome": self.nome,
-
-            "localizacao": self.localizacao,
-
-            "hectares": float(self.hectares),
-
-            "tipo_solo": self.tipo_solo,
-
-            "created_at":
-                self.created_at.isoformat()
-                if self.created_at else None
-
+            "cidade": self.cidade,
+            "estado": self.estado,
+            "observacao": self.observacao,
+            "area": self.area,
+            "perimetro": self.perimetro,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "geojson": self.geojson
         }
