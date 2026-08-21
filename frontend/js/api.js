@@ -29,76 +29,101 @@ async function request(endpoint, method = "GET", dados = null) {
             throw new Error(`Erro ${resposta.status}`);
         }
 
+        // DELETE 204 não possui JSON
+        if (resposta.status === 204) {
+            return true;
+        }
+
         return await resposta.json();
 
-    }
-
-    catch (erro) {
+    } catch (erro) {
 
         console.error("Erro API:", erro);
 
         return null;
-
     }
-
 }
 
 const get = (endpoint) => request(endpoint);
 
-const post = (endpoint, dados) => request(endpoint, "POST", dados);
+const post = (endpoint, dados) =>
+    request(endpoint, "POST", dados);
 
-const put = (endpoint, "PUT", dados);
+const put = (endpoint, dados) =>
+    request(endpoint, "PUT", dados);
 
-const del = (endpoint) => request(endpoint, "DELETE");
+const del = (endpoint) =>
+    request(endpoint, "DELETE");
 
 // =============================================
 // LOGIN
 // =============================================
 
-async function login(email, senha){
+async function login(email, senha) {
 
-    return await post("/login",{
+    return await post("/login", {
         email,
         senha
     });
 
 }
 
-async function cadastrarUsuario(usuario){
+async function cadastrarUsuarioAPI(usuario) {
 
-    return await post("/usuarios",usuario);
+    return await post(
+        "/usuarios",
+        usuario
+    );
 
 }
+
+// =============================================
+// USUÁRIO / PERFIL
+// =============================================
+
+async function buscarPerfil(id) {
+
+    return await get(`/usuarios/${id}`);
+
+}
+
+async function atualizarUsuario(id, dados) {
+
+    return await put(`/usuarios/${id}`, dados);
+
+}
+
+
 
 // =============================================
 // PROPRIEDADES
 // =============================================
 
-async function listarPropriedades(){
+async function listarPropriedades() {
 
     return await get("/propriedades");
 
 }
 
-async function buscarPropriedade(id){
+async function buscarPropriedade(id) {
 
     return await get(`/propriedades/${id}`);
 
 }
 
-async function cadastrarPropriedade(dados){
+async function cadastrarPropriedade(dados) {
 
-    return await post("/propriedades",dados);
-
-}
-
-async function atualizarPropriedade(id,dados){
-
-    return await put(`/propriedades/${id}`,dados);
+    return await post("/propriedades", dados);
 
 }
 
-async function excluirPropriedade(id){
+async function atualizarPropriedade(id, dados) {
+
+    return await put(`/propriedades/${id}`, dados);
+
+}
+
+async function excluirPropriedade(id) {
 
     return await del(`/propriedades/${id}`);
 
@@ -108,29 +133,50 @@ async function excluirPropriedade(id){
 // SAFRAS
 // =============================================
 
-async function listarSafras(){
+async function listarSafras() {
 
     return await get("/safras");
 
 }
 
-async function listarSafrasDaPropriedade(id){
+async function listarSafrasDaPropriedade(id) {
 
     return await get(`/propriedades/${id}/safras`);
 
 }
 
-async function cadastrarSafra(dados){
+async function buscarSafra(id) {
 
-    return await post("/safras",dados);
+    return await get(`/safras/${id}`);
 
 }
+
+async function cadastrarSafra(dados) {
+
+    return await post("/safras", dados);
+
+}
+
+async function atualizarSafra(id, dados) {
+
+    return await put(`/safras/${id}`, dados);
+
+}
+
+async function excluirSafra(id) {
+
+    return await del(`/safras/${id}`);
+
+}
+
+
+
 
 // =============================================
 // DASHBOARD
 // =============================================
 
-async function buscarDashboard(){
+async function buscarDashboard() {
 
     return await get("/dashboard");
 
@@ -140,19 +186,9 @@ async function buscarDashboard(){
 // RELATÓRIOS
 // =============================================
 
-async function buscarRelatorios(){
+async function buscarRelatorios() {
 
     return await get("/relatorios");
-
-}
-
-// =============================================
-// PERFIL
-// =============================================
-
-async function buscarPerfil(id){
-
-    return await get(`/usuarios/${id}`);
 
 }
 
@@ -160,7 +196,7 @@ async function buscarPerfil(id){
 // CLIMA
 // =============================================
 
-async function buscarClima(lat,lon){
+async function buscarClima(lat, lon) {
 
     return await get(`/clima?lat=${lat}&lon=${lon}`);
 

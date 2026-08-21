@@ -1,11 +1,11 @@
 // ===================================================
 // MONITORAMENTO
-// (VERSÃO TEMPORÁRIA)
-// Depois será integrado com a API.
 // ===================================================
 
 let map;
 
+// ======================================
+// INICIAR
 // ======================================
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -26,40 +26,121 @@ document.addEventListener("DOMContentLoaded", async () => {
 // PROPRIEDADE
 // ======================================
 
-function carregarPropriedade() {
+async function carregarPropriedade() {
 
-    const propriedade = {
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-        id: 1,
+    const id = params.get("id");
 
-        nome: "Minha Propriedade",
+    if (!id) {
 
-        cidade: "Vespasiano",
+        alert("Propriedade não encontrada.");
 
-        estado: "MG",
+        return;
 
-        area: "--",
+    }
 
-        cultura: "--",
+    const propriedade =
+        await buscarPropriedade(id);
 
-        geojson: null
+    if (!propriedade) {
 
-    };
+        alert("Erro ao carregar propriedade.");
 
-    document.getElementById("nomePropriedade").textContent =
-        propriedade.nome;
+        return;
 
-    document.getElementById("cidade").textContent =
-        propriedade.cidade;
+    }
 
-    document.getElementById("estado").textContent =
-        propriedade.estado;
+    // ======================================
+    // PREENCHER INFORMAÇÕES
+    // ======================================
 
-    document.getElementById("area").textContent =
-        propriedade.area;
+    document.getElementById(
+        "nomePropriedade"
+    ).textContent =
+        propriedade.nome || "-";
 
-    document.getElementById("cultura").textContent =
-        propriedade.cultura;
+    document.getElementById(
+        "cidade"
+    ).textContent =
+        propriedade.cidade || "-";
+
+    document.getElementById(
+        "estado"
+    ).textContent =
+        propriedade.estado || "-";
+
+    document.getElementById(
+        "area"
+    ).textContent =
+        propriedade.area || "-";
+
+    document.getElementById(
+        "cultura"
+    ).textContent =
+        propriedade.cultura || "-";
+
+    // ======================================
+    // DESENHAR PROPRIEDADE NO MAPA
+    // ======================================
+
+    desenharPropriedade(
+        propriedade.geojson
+    );
+
+    // ======================================
+    // BOTÃO EDITAR
+    // ======================================
+
+    const btnEditar =
+        document.getElementById("btnEditar");
+
+    if (btnEditar) {
+
+        btnEditar.onclick = function () {
+
+            window.location.href =
+                "cadastro_Propriedade.html?id=" +
+                propriedade.id;
+
+        };
+
+    }
+
+}
+
+// ======================================
+// DESENHAR PROPRIEDADE
+// ======================================
+
+function desenharPropriedade(geojson) {
+
+    if (!geojson) return;
+
+    try {
+
+        const camada =
+            L.geoJSON(
+                JSON.parse(geojson)
+            ).addTo(map);
+
+        map.fitBounds(
+            camada.getBounds()
+        );
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            "Erro ao desenhar propriedade:",
+            erro
+        );
+
+    }
 
 }
 
@@ -69,13 +150,21 @@ function carregarPropriedade() {
 
 function carregarSafra() {
 
-    document.getElementById("safra").textContent = "--";
+    document.getElementById(
+        "safra"
+    ).textContent = "--";
 
-    document.getElementById("produtividade").textContent = "--";
+    document.getElementById(
+        "produtividade"
+    ).textContent = "--";
 
-    document.getElementById("plantio").textContent = "--";
+    document.getElementById(
+        "plantio"
+    ).textContent = "--";
 
-    document.getElementById("colheita").textContent = "--";
+    document.getElementById(
+        "colheita"
+    ).textContent = "--";
 
 }
 
@@ -85,15 +174,18 @@ function carregarSafra() {
 
 function iniciarMapa() {
 
-    map = L.map("map").setView([-19.9167, -43.9345], 12);
+    map = L.map("map").setView(
+        [-19.9167, -43.9345],
+        12
+    );
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-
-        attribution: "&copy; OpenStreetMap"
-
-    }).addTo(map);
-
-    // Depois iremos desenhar o GeoJSON salvo da propriedade.
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution:
+                "&copy; OpenStreetMap"
+        }
+    ).addTo(map);
 
 }
 
@@ -105,30 +197,37 @@ async function carregarClima() {
 
     try {
 
-        /*
-        Depois:
+        document.getElementById(
+            "temperatura"
+        ).textContent = "--";
 
-        const clima = await buscarClima(
-            propriedade.latitude,
-            propriedade.longitude
-        );
-        */
+        document.getElementById(
+            "umidade"
+        ).textContent = "--";
 
-        document.getElementById("temperatura").textContent = "--";
+        document.getElementById(
+            "vento"
+        ).textContent = "--";
 
-        document.getElementById("umidade").textContent = "--";
+        document.getElementById(
+            "chuva"
+        ).textContent = "--";
 
-        document.getElementById("vento").textContent = "--";
+        document.getElementById(
+            "hojeTemp"
+        ).textContent = "--";
 
-        document.getElementById("chuva").textContent = "--";
+        document.getElementById(
+            "amanhaTemp"
+        ).textContent = "--";
 
-        document.getElementById("hojeTemp").textContent = "--";
+        document.getElementById(
+            "dia2Temp"
+        ).textContent = "--";
 
-        document.getElementById("amanhaTemp").textContent = "--";
-
-        document.getElementById("dia2Temp").textContent = "--";
-
-        document.getElementById("dia3Temp").textContent = "--";
+        document.getElementById(
+            "dia3Temp"
+        ).textContent = "--";
 
     }
 
@@ -146,7 +245,10 @@ async function carregarClima() {
 
 function carregarGrafico() {
 
-    const canvas = document.getElementById("graficoSafra");
+    const canvas =
+        document.getElementById(
+            "graficoSafra"
+        );
 
     if (!canvas) return;
 
@@ -157,14 +259,12 @@ function carregarGrafico() {
         data: {
 
             labels: [
-
                 "Jan",
                 "Fev",
                 "Mar",
                 "Abr",
                 "Mai",
                 "Jun"
-
             ],
 
             datasets: [
@@ -173,11 +273,19 @@ function carregarGrafico() {
 
                     label: "Produtividade",
 
-                    data: [0, 0, 0, 0, 0, 0],
+                    data: [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
 
                     borderColor: "#2E7D32",
 
-                    backgroundColor: "rgba(46,125,50,.15)",
+                    backgroundColor:
+                        "rgba(46,125,50,.15)",
 
                     fill: true,
 

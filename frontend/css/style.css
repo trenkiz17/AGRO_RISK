@@ -4562,4 +4562,596 @@ textarea.form-control{
 
 }
 
+/*==================================================
+                PERFIL - PARTE 1
+==================================================*/
 
+.profile-page{
+    margin-top:30px;
+}
+
+.profile-content{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:30px;
+    margin-top:30px;
+    align-items:flex-start;
+}
+
+.profile-left,
+.profile-right{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.profile-card{
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.profile-card h3{
+    color:var(--escuro);
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+/*==========================
+        FOTO
+===========================*/
+
+.profile-photo-area{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.profile-photo{
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid var(--verde);
+    margin-bottom:25px;
+    box-shadow:0 10px 30px rgba(34,197,94,.20);
+}
+
+.btn-profile-photo{
+    background:linear-gradient(90deg,var(--azul),var(--verde));
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:14px 22px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.35s;
+}
+
+.btn-profile-photo:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
+}
+
+/*==========================
+    INFO DA CONTA
+===========================*/
+
+.profile-info{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.info-item{
+    padding:15px;
+    background:#F8FAFC;
+    border-radius:12px;
+    border-left:5px solid var(--verde);
+}
+
+.info-item span{
+    display:block;
+    color:var(--cinza);
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.info-item strong{
+    color:var(--escuro);
+    font-size:16px;
+}
+
+.status-active{
+    color:var(--verde) !important;
+}
+
+/*==========================
+        GRID
+===========================*/
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    color:var(--escuro);
+    margin-bottom:8px;
+}
+
+/*==================================================
+            PERFIL - PARTE 2
+==================================================*/
+
+/*==========================
+        INPUTS
+===========================*/
+
+.profile-card .form-control{
+    height:52px;
+    border:1px solid #E2E8F0;
+    border-radius:12px;
+    background:#fff;
+    color:var(--escuro);
+    padding:0 16px;
+    font-size:15px;
+    transition:.3s;
+    box-shadow:none;
+}
+
+.profile-card textarea.form-control{
+    min-height:120px;
+    padding:15px;
+    resize:none;
+}
+
+.profile-card .form-control:focus{
+    border-color:var(--verde);
+    box-shadow:0 0 0 4px rgba(34,197,94,.15);
+}
+
+.profile-card select.form-control{
+    cursor:pointer;
+}
+
+/*==========================
+        CHECKBOXES
+===========================*/
+
+.profile-options{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.profile-options label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:16px;
+    color:var(--escuro);
+    cursor:pointer;
+    padding:14px 18px;
+    border-radius:12px;
+    transition:.3s;
+    background:#F8FAFC;
+}
+
+.profile-options label:hover{
+    background:#EEF6FF;
+}
+
+.profile-options input[type="checkbox"]{
+    width:18px;
+    height:18px;
+    accent-color:var(--verde);
+    cursor:pointer;
+}
+
+/*==========================
+        BOTÕES
+===========================*/
+
+.profile-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:18px;
+    margin-top:10px;
+}
+
+.btn-profile-cancel{
+    border:none;
+    background:#E2E8F0;
+    color:var(--escuro);
+    padding:14px 28px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-profile-cancel:hover{
+    background:#CBD5E1;
+    transform:translateY(-2px);
+}
+
+.btn-profile-save{
+    border:none;
+    background:linear-gradient(90deg,var(--azul),var(--verde));
+    color:#fff;
+    padding:14px 28px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.35s;
+}
+
+.btn-profile-save i{
+    margin-right:8px;
+}
+
+.btn-profile-save:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(37,99,235,.25);
+}
+
+/*==========================
+      ANIMAÇÕES
+===========================*/
+
+.profile-card{
+    transition:.35s;
+}
+
+.profile-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 18px 35px rgba(0,0,0,.08);
+}
+
+/*==========================
+    RESPONSIVIDADE
+===========================*/
+
+@media (max-width:992px){
+
+    .profile-content{
+        grid-template-columns:1fr;
+    }
+
+    .profile-left{
+        order:1;
+    }
+
+    .profile-right{
+        order:2;
+    }
+
+    .profile-photo{
+        width:150px;
+        height:150px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-card{
+        padding:22px;
+    }
+
+    .profile-actions{
+        flex-direction:column-reverse;
+    }
+
+    .btn-profile-save,
+    .btn-profile-cancel{
+        width:100%;
+    }
+
+    .profile-photo{
+        width:130px;
+        height:130px;
+    }
+
+    .topbar{
+        flex-direction:column;
+        gap:20px;
+        align-items:flex-start;
+    }
+
+}
+
+@media (max-width:480px){
+
+    .profile-card h3{
+        font-size:20px;
+    }
+
+    .profile-page{
+        margin-top:20px;
+    }
+
+    .info-item{
+        padding:12px;
+    }
+
+    .profile-options label{
+        font-size:14px;
+    }
+
+}
+
+
+/* ======================================
+   MINHAS PROPRIEDADES
+====================================== */
+
+.propriedades-page {
+    padding: 30px;
+}
+
+.propriedades-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.propriedades-header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.propriedades-header h1 i {
+    margin-right: 10px;
+}
+
+.propriedades-header p {
+    margin-top: 8px;
+    color: #777;
+}
+
+.btn-nova-propriedade {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #2e7d32;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-nova-propriedade:hover {
+    color: white;
+    background: #256628;
+}
+
+
+/* GRID */
+
+.propriedades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+
+/* CARD */
+
+.propriedade-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .08);
+    transition: .2s;
+}
+
+.propriedade-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .12);
+}
+
+
+/* TOPO */
+
+.propriedade-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #f5f8f5;
+}
+
+.propriedade-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2e7d32;
+    color: white;
+    font-size: 20px;
+}
+
+.propriedade-status {
+    font-size: 13px;
+    color: #2e7d32;
+}
+
+.propriedade-status i {
+    font-size: 8px;
+    margin-right: 4px;
+}
+
+
+/* CORPO */
+
+.propriedade-card-body {
+    padding: 20px;
+}
+
+.propriedade-card-body h3 {
+    margin-bottom: 8px;
+    font-size: 21px;
+}
+
+.localizacao {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.localizacao i {
+    margin-right: 5px;
+}
+
+
+/* INFORMAÇÕES */
+
+.propriedade-info {
+    display: flex;
+    gap: 35px;
+}
+
+.propriedade-info div {
+    display: flex;
+    flex-direction: column;
+}
+
+.propriedade-info span {
+    font-size: 12px;
+    color: #888;
+}
+
+.propriedade-info strong {
+    font-size: 16px;
+}
+
+
+/* RODAPÉ */
+
+.propriedade-card-footer {
+    padding: 15px 20px 20px;
+}
+
+.btn-monitoramento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 11px;
+    border-radius: 8px;
+    background: #2e7d32;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-monitoramento:hover {
+    background: #256628;
+    color: white;
+}
+
+.btn-monitoramento .fa-arrow-right {
+    margin-left: auto;
+}
+
+
+/* SEM PROPRIEDADES */
+
+.sem-propriedades {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 70px 20px;
+    background: white;
+    border-radius: 14px;
+}
+
+.sem-propriedades > i {
+    font-size: 55px;
+    margin-bottom: 20px;
+    color: #2e7d32;
+}
+
+.sem-propriedades h3 {
+    margin-bottom: 10px;
+}
+
+.sem-propriedades p {
+    color: #777;
+    margin-bottom: 25px;
+}
+
+.propriedades-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px;
+    color: #777;
+}
+
+.propriedades-loading i {
+    margin-right: 8px;
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 768px) {
+
+    .propriedades-page {
+        padding: 20px;
+    }
+
+    .propriedades-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+}
+
+/* ======================================
+   BOTÃO EXCLUIR PROPRIEDADE
+====================================== */
+
+.propriedade-card-footer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-monitoramento {
+    flex: 1;
+}
+
+.btn-excluir {
+    border: none;
+    background: #dc3545;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-excluir:hover {
+    background: #bb2d3b;
+}

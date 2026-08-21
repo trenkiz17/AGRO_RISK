@@ -12,7 +12,8 @@
 
     <!-- Bootstrap -->
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
 
@@ -141,7 +142,7 @@
 
 </header>
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 
 <section class="hero-dashboard">
 
@@ -177,459 +178,115 @@
 
 </section>
 
-<!-- CARDS -->
+<!-- ================= CARDS ================= -->
 
 <section class="cards-dashboard">
 
-<div class="card-info">
+    <div class="card-info">
 
-<div>
+        <div>
 
-<small>Safras</small>
+            <small>Safras</small>
 
-<h2 id="totalSafras">
+            <h2 id="totalSafras">
 
-3
+                0
 
-</h2>
+            </h2>
 
-</div>
+        </div>
 
-<i class="fa-solid fa-seedling"></i>
+        <i class="fa-solid fa-seedling"></i>
 
-</div>
+    </div>
 
-<div class="card-info">
+    <div class="card-info">
 
-<div>
+        <div>
 
-<small>Em andamento</small>
+            <small>Em andamento</small>
+            <h2 id="totalAndamento">
 
-<h2>
+                0
 
-1
+            </h2>
 
-</h2>
+        </div>
 
-</div>
+        <i class="fa-solid fa-clock"></i>
 
-<i class="fa-solid fa-clock"></i>
+    </div>
 
-</div>
+    <div class="card-info">
 
-<div class="card-info">
+        <div>
 
-<div>
+            <small>Finalizadas</small>
 
-<small>Finalizadas</small>
+            <h2 id="totalFinalizadas">
 
-<h2>
+                0
 
-2
+            </h2>
 
-</h2>
+        </div>
 
-</div>
+        <i class="fa-solid fa-circle-check"></i>
 
-<i class="fa-solid fa-circle-check"></i>
+    </div>
 
-</div>
+    <div class="card-info">
 
-<div class="card-info">
+        <div>
 
-<div>
+            <small>Área Plantada</small>
 
-<small>Área Plantada</small>
+            <h2 id="totalArea">
 
-<h2>
+                0 ha
 
-182 ha
+            </h2>
 
-</h2>
+        </div>
 
-</div>
+        <i class="fa-solid fa-vector-square"></i>
 
-<i class="fa-solid fa-vector-square"></i>
-
-</div>
+    </div>
 
 </section>
 
-<!-- LISTA DAS SAFRAS -->
+<!-- ================= LISTA DAS SAFRAS ================= -->
 
 <section class="lista-safras">
 
-<div class="titulo-secao">
+    <div class="titulo-secao">
 
-<h3>
+        <h3>
 
-<i class="fa-solid fa-leaf"></i>
+            <i class="fa-solid fa-leaf"></i>
 
-Safras cadastradas
+            Safras cadastradas
 
-</h3>
-
-</div>
-
-<!-- ================= CARD SAFRA 1 ================= -->
-
-<div class="safra-card">
-
-    <div class="safra-top">
-
-        <div>
-
-            <span class="badge-status andamento">
-
-                <i class="fa-solid fa-circle"></i>
-
-                Em andamento
-
-            </span>
-
-            <h3>
-
-                Safra 2025 / 2026
-
-            </h3>
-
-            <small>
-
-                Cultura: <strong>Soja</strong>
-
-            </small>
-
-        </div>
-
-        <div class="safra-icon">
-
-            <i class="fa-solid fa-seedling"></i>
-
-        </div>
+        </h3>
 
     </div>
 
-    <div class="safra-info">
+    <!--
 
-        <div>
+        IMPORTANTE:
 
-            <span>Plantio</span>
+        Os cards serão colocados automaticamente
+        pelo arquivo js/safras.js.
 
-            <strong>
+        Assim, quando cadastrar uma nova safra,
+        ela aparecerá aqui no mesmo padrão visual.
+    -->
 
-                15/10/2025
+    <div id="listaSafras">
 
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Colheita</span>
-
-            <strong>
-
-                Março/2026
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Área</span>
-
-            <strong>
-
-                86 ha
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Produtividade</span>
-
-            <strong>
-
-                92%
-
-            </strong>
-
-        </div>
+        <!-- CARDS GERADOS PELO JAVASCRIPT -->
 
     </div>
-
-    <div class="safra-buttons">
-
-        <a href="monitoramento.html" class="btn-monitorar">
-
-            <i class="fa-solid fa-chart-line"></i>
-
-            Monitorar
-
-        </a>
-
-        <a href="#" class="btn-editar">
-
-            <i class="fa-solid fa-pen"></i>
-
-            Editar
-
-        </a>
-
-        <a href="relatorios.html" class="btn-relatorio">
-
-            <i class="fa-solid fa-chart-column"></i>
-
-            Relatório
-
-        </a>
-
-    </div>
-
-</div>
-
-<!-- ================= CARD SAFRA 2 ================= -->
-
-<div class="safra-card">
-
-    <div class="safra-top">
-
-        <div>
-
-            <span class="badge-status finalizada">
-
-                <i class="fa-solid fa-circle-check"></i>
-
-                Finalizada
-
-            </span>
-
-            <h3>
-
-                Safra 2024 / 2025
-
-            </h3>
-
-            <small>
-
-                Cultura: <strong>Milho</strong>
-
-            </small>
-
-        </div>
-
-        <div class="safra-icon">
-
-            <i class="fa-solid fa-wheat-awn"></i>
-
-        </div>
-
-    </div>
-
-    <div class="safra-info">
-
-        <div>
-
-            <span>Plantio</span>
-
-            <strong>
-
-                Outubro/2024
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Colheita</span>
-
-            <strong>
-
-                Fevereiro/2025
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Área</span>
-
-            <strong>
-
-                74 ha
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Produtividade</span>
-
-            <strong>
-
-                89%
-
-            </strong>
-
-        </div>
-
-    </div>
-
-    <div class="safra-buttons">
-
-        <a href="monitoramento.html" class="btn-monitorar">
-
-            <i class="fa-solid fa-eye"></i>
-
-            Visualizar
-
-        </a>
-
-        <a href="#" class="btn-editar">
-
-            <i class="fa-solid fa-file-pen"></i>
-
-            Editar
-
-        </a>
-
-        <a href="relatorios.html" class="btn-relatorio">
-
-            <i class="fa-solid fa-chart-column"></i>
-
-            Relatório
-
-        </a>
-
-    </div>
-
-</div>
-
-<!-- ================= CARD SAFRA 3 ================= -->
-
-<div class="safra-card">
-
-    <div class="safra-top">
-
-        <div>
-
-            <span class="badge-status finalizada">
-
-                <i class="fa-solid fa-circle-check"></i>
-
-                Finalizada
-
-            </span>
-
-            <h3>
-
-                Safra 2023 / 2024
-
-            </h3>
-
-            <small>
-
-                Cultura: <strong>Café</strong>
-
-            </small>
-
-        </div>
-
-        <div class="safra-icon">
-
-            <i class="fa-solid fa-mug-hot"></i>
-
-        </div>
-
-    </div>
-
-    <div class="safra-info">
-
-        <div>
-
-            <span>Plantio</span>
-
-            <strong>
-
-                Março/2023
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Colheita</span>
-
-            <strong>
-
-                Janeiro/2024
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Área</span>
-
-            <strong>
-
-                22 ha
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <span>Produtividade</span>
-
-            <strong>
-
-                94%
-
-            </strong>
-
-        </div>
-
-    </div>
-
-    <div class="safra-buttons">
-
-        <a href="monitoramento.html" class="btn-monitorar">
-
-            <i class="fa-solid fa-eye"></i>
-
-            Visualizar
-
-        </a>
-
-        <a href="#" class="btn-editar">
-
-            <i class="fa-solid fa-file-pen"></i>
-
-            Editar
-
-        </a>
-
-        <a href="relatorios.html" class="btn-relatorio">
-
-            <i class="fa-solid fa-chart-column"></i>
-
-            Relatório
-
-        </a>
-
-    </div>
-
-</div>
 
 </section>
 
@@ -642,6 +299,8 @@ Safras cadastradas
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/api.js"></script>
 
 <script src="js/safras.js"></script>
 

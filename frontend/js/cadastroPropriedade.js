@@ -2,28 +2,210 @@
 // VARIÁVEIS GLOBAIS
 // =======================================
 
+let propriedadeEditando = null;
+
 let map;
+
 let drawnItems;
 
 let area = 0;
+
 let perimetro = 0;
 
 let geojson = null;
 
 let latitude = null;
+
 let longitude = null;
 
 // =======================================
 // INICIAR
 // =======================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
 
-    iniciarMapa();
+        iniciarMapa();
 
-    iniciarEventos();
+        iniciarEventos();
 
-});
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const id =
+            params.get("id");
+
+        // ==================================
+        // SE EXISTIR ID, ESTÁ EDITANDO
+        // ==================================
+
+        if (id) {
+
+            await carregarPropriedadeEdicao(
+                id
+            );
+
+        }
+
+    }
+);
+
+// =======================================
+// CARREGAR PROPRIEDADE PARA EDIÇÃO
+// =======================================
+
+async function carregarPropriedadeEdicao(id) {
+
+    try {
+
+        const propriedade =
+            await buscarPropriedade(id);
+
+        if (!propriedade) {
+
+            alert(
+                "Propriedade não encontrada."
+            );
+
+            return;
+
+        }
+
+        propriedadeEditando =
+            propriedade;
+
+        // ==================================
+        // PREENCHER CAMPOS
+        // ==================================
+
+        document.getElementById(
+            "nome"
+        ).value =
+            propriedade.nome || "";
+
+        document.getElementById(
+            "cidade"
+        ).value =
+            propriedade.cidade || "";
+
+        document.getElementById(
+            "estado"
+        ).value =
+            propriedade.estado || "";
+
+        document.getElementById(
+            "observacao"
+        ).value =
+            propriedade.observacao || "";
+
+        // ==================================
+        // CARREGAR DADOS DO MAPA
+        // ==================================
+
+        area =
+            propriedade.area || 0;
+
+        perimetro =
+            propriedade.perimetro || 0;
+
+        latitude =
+            propriedade.latitude;
+
+        longitude =
+            propriedade.longitude;
+
+        geojson =
+            propriedade.geojson;
+
+        // ==================================
+        // DESENHAR ÁREA EXISTENTE
+        // ==================================
+
+        if (geojson) {
+
+            const layer =
+                L.geoJSON(
+                    JSON.parse(geojson)
+                );
+
+            layer.eachLayer(
+                camada => {
+
+                    drawnItems.addLayer(
+                        camada
+                    );
+
+                }
+            );
+
+            if (
+                layer.getBounds().isValid()
+            ) {
+
+                map.fitBounds(
+                    layer.getBounds()
+                );
+
+            }
+
+        }
+
+        // ==================================
+        // ATUALIZAR RESUMO
+        // ==================================
+
+        atualizarResumo();
+
+        // ==================================
+        // ALTERAR TEXTOS PARA EDIÇÃO
+        // ==================================
+
+        const titulo =
+            document.querySelector(
+                ".property-header h1"
+            );
+
+        if (titulo) {
+
+            titulo.innerHTML =
+                `
+                <i class="fa-solid fa-map-location-dot"></i>
+                Editar Propriedade
+                `;
+
+        }
+
+        const botao =
+            document.getElementById(
+                "salvar"
+            );
+
+        if (botao) {
+
+            botao.innerHTML =
+                `
+                <i class="fa-solid fa-floppy-disk"></i>
+                Salvar Alterações
+                `;
+
+        }
+
+    }
+
+    catch (erro) {
+
+        console.error(erro);
+
+        alert(
+            "Erro ao carregar a propriedade."
+        );
+
+    }
+
+}
 
 // =======================================
 // MAPA
@@ -31,77 +213,148 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function iniciarMapa() {
 
-    map = L.map("map").setView([-19.9167, -43.9345], 12);
+    map =
+        L.map("map").setView(
+            [-19.9167, -43.9345],
+            12
+        );
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
 
-        attribution: "&copy; OpenStreetMap"
-
-    }).addTo(map);
-
-    drawnItems = new L.FeatureGroup();
-
-    map.addLayer(drawnItems);
-
-    const drawControl = new L.Control.Draw({
-
-        edit: {
-
-            featureGroup: drawnItems
-
-        },
-
-        draw: {
-
-            polygon: true,
-
-            rectangle: true,
-
-            marker: false,
-
-            polyline: false,
-
-            circle: false,
-
-            circlemarker: false
+            attribution:
+                "&copy; OpenStreetMap"
 
         }
+    ).addTo(map);
 
-    });
+    drawnItems =
+        new L.FeatureGroup();
 
-    map.addControl(drawControl);
+    map.addLayer(
+        drawnItems
+    );
 
-    map.on(L.Draw.Event.CREATED, desenharArea);
+    const drawControl =
+        new L.Control.Draw({
+
+            edit: {
+
+                featureGroup:
+                    drawnItems
+
+            },
+
+            draw: {
+
+                polygon: true,
+
+                rectangle: true,
+
+                marker: false,
+
+                polyline: false,
+
+                circle: false,
+
+                circlemarker: false
+
+            }
+
+        });
+
+    map.addControl(
+        drawControl
+    );
+
+    map.on(
+        L.Draw.Event.CREATED,
+        desenharArea
+    );
+
+    // ==================================
+    // QUANDO EDITAR O DESENHO EXISTENTE
+    // ==================================
+
+    map.on(
+        L.Draw.Event.EDITED,
+        function (e) {
+
+            e.layers.eachLayer(
+                layer => {
+
+                    atualizarDadosDaCamada(
+                        layer
+                    );
+
+                }
+            );
+
+        }
+    );
 
 }
 
 // =======================================
-// DESENHAR
+// DESENHAR ÁREA
 // =======================================
 
 function desenharArea(e) {
 
     drawnItems.clearLayers();
 
-    const layer = e.layer;
+    const layer =
+        e.layer;
 
-    drawnItems.addLayer(layer);
+    drawnItems.addLayer(
+        layer
+    );
 
-    geojson = JSON.stringify(layer.toGeoJSON());
+    atualizarDadosDaCamada(
+        layer
+    );
 
-    const latlngs = layer.getLatLngs()[0];
+}
 
-    area = (
-        L.GeometryUtil.geodesicArea(latlngs) / 10000
-    ).toFixed(2);
+// =======================================
+// ATUALIZAR DADOS DA ÁREA
+// =======================================
 
-    perimetro = calcularPerimetro(latlngs);
+function atualizarDadosDaCamada(
+    layer
+) {
 
-    const centro = layer.getBounds().getCenter();
+    geojson =
+        JSON.stringify(
+            layer.toGeoJSON()
+        );
 
-    latitude = centro.lat;
+    const latlngs =
+        layer.getLatLngs()[0];
 
-    longitude = centro.lng;
+    area =
+        (
+            L.GeometryUtil.geodesicArea(
+                latlngs
+            ) / 10000
+        ).toFixed(2);
+
+    perimetro =
+        calcularPerimetro(
+            latlngs
+        );
+
+    const centro =
+        layer
+            .getBounds()
+            .getCenter();
+
+    latitude =
+        centro.lat;
+
+    longitude =
+        centro.lng;
 
     atualizarResumo();
 
@@ -113,11 +366,33 @@ function desenharArea(e) {
 
 function atualizarResumo() {
 
-    document.getElementById("area").textContent =
-        area + " ha";
+    const elementoArea =
+        document.getElementById(
+            "area"
+        );
 
-    document.getElementById("perimetro").textContent =
-        perimetro + " m";
+    const elementoPerimetro =
+        document.getElementById(
+            "perimetro"
+        );
+
+    if (elementoArea) {
+
+        elementoArea.textContent =
+            area
+                ? area + " ha"
+                : "Ainda não calculada";
+
+    }
+
+    if (elementoPerimetro) {
+
+        elementoPerimetro.textContent =
+            perimetro
+                ? perimetro + " m"
+                : "Ainda não calculado";
+
+    }
 
 }
 
@@ -125,17 +400,31 @@ function atualizarResumo() {
 // PERÍMETRO
 // =======================================
 
-function calcularPerimetro(latlngs) {
+function calcularPerimetro(
+    latlngs
+) {
 
     let distancia = 0;
 
-    for (let i = 0; i < latlngs.length; i++) {
+    for (
+        let i = 0;
+        i < latlngs.length;
+        i++
+    ) {
 
-        const atual = latlngs[i];
+        const atual =
+            latlngs[i];
 
-        const proximo = latlngs[(i + 1) % latlngs.length];
+        const proximo =
+            latlngs[
+                (i + 1) %
+                latlngs.length
+            ];
 
-        distancia += atual.distanceTo(proximo);
+        distancia +=
+            atual.distanceTo(
+                proximo
+            );
 
     }
 
@@ -149,13 +438,47 @@ function calcularPerimetro(latlngs) {
 
 function iniciarEventos() {
 
-    document
-        .getElementById("salvar")
-        .addEventListener("click", salvarPropriedade);
+    const btnPesquisar =
+        document.getElementById(
+            "btnPesquisar"
+        );
 
-    document
-        .getElementById("limparMapa")
-        .addEventListener("click", limparMapa);
+    if (btnPesquisar) {
+
+        btnPesquisar.addEventListener(
+            "click",
+            pesquisarLocal
+        );
+
+    }
+
+    const btnSalvar =
+        document.getElementById(
+            "salvar"
+        );
+
+    if (btnSalvar) {
+
+        btnSalvar.addEventListener(
+            "click",
+            salvarPropriedade
+        );
+
+    }
+
+    const btnLimpar =
+        document.getElementById(
+            "limparMapa"
+        );
+
+    if (btnLimpar) {
+
+        btnLimpar.addEventListener(
+            "click",
+            limparMapa
+        );
+
+    }
 
 }
 
@@ -182,32 +505,66 @@ function limparMapa() {
 }
 
 // =======================================
-// SALVAR
+// SALVAR / ATUALIZAR
 // =======================================
 
 async function salvarPropriedade() {
 
     try {
 
-        if (!document.getElementById("nome").value.trim()) {
+        // ==================================
+        // VALIDAÇÕES
+        // ==================================
 
-            alert("Informe o nome da propriedade.");
+        const nome =
+            document
+                .getElementById("nome")
+                .value
+                .trim();
+
+        const cidade =
+            document
+                .getElementById("cidade")
+                .value
+                .trim();
+
+        const estado =
+            document
+                .getElementById("estado")
+                .value
+                .trim();
+
+        const observacao =
+            document
+                .getElementById("observacao")
+                .value
+                .trim();
+
+        if (!nome) {
+
+            alert(
+                "Informe o nome da propriedade."
+            );
 
             return;
 
         }
 
-        if (!document.getElementById("cidade").value.trim()) {
+        if (!cidade) {
 
-            alert("Informe a cidade.");
+            alert(
+                "Informe a cidade."
+            );
 
             return;
 
         }
 
-        if (!document.getElementById("estado").value.trim()) {
+        if (!estado) {
 
-            alert("Informe o estado.");
+            alert(
+                "Informe o estado."
+            );
 
             return;
 
@@ -215,79 +572,188 @@ async function salvarPropriedade() {
 
         if (!geojson) {
 
-            alert("Desenhe a propriedade no mapa.");
+            alert(
+                "Desenhe a propriedade no mapa."
+            );
 
             return;
 
         }
+
+        // ==================================
+        // OBJETO DA PROPRIEDADE
+        // ==================================
 
         const propriedade = {
 
-            nome: document.getElementById("nome").value.trim(),
+            nome: nome,
 
-            cidade: document.getElementById("cidade").value.trim(),
+            cidade: cidade,
 
-            estado: document.getElementById("estado").value.trim(),
+            estado: estado,
 
-            observacao: document.getElementById("observacao").value.trim(),
+            observacao:
+                observacao,
 
             area: area,
 
-            perimetro: perimetro,
+            perimetro:
+                perimetro,
 
-            latitude: latitude,
+            latitude:
+                latitude,
 
-            longitude: longitude,
+            longitude:
+                longitude,
 
-            geojson: geojson
+            geojson:
+                geojson
 
         };
 
-        console.log("Enviando:", propriedade);
+        let resposta;
 
-        const resposta = await cadastrarPropriedade(propriedade);
+        // ==================================
+        // EDITAR PROPRIEDADE EXISTENTE
+        // ==================================
 
-        console.log("Resposta:", resposta);
+        if (propriedadeEditando) {
+
+            resposta =
+                await atualizarPropriedade(
+                    propriedadeEditando.id,
+                    propriedade
+                );
+
+            if (!resposta) {
+
+                alert(
+                    "Erro ao atualizar a propriedade."
+                );
+
+                return;
+
+            }
+
+            alert(
+                "Propriedade atualizada com sucesso!"
+            );
+
+            window.location.href =
+                "monitoramento.html?id=" +
+                propriedadeEditando.id;
+
+            return;
+
+        }
+
+        // ==================================
+        // CADASTRAR NOVA PROPRIEDADE
+        // ==================================
+
+        resposta =
+            await cadastrarPropriedade(
+                propriedade
+            );
 
         if (!resposta) {
 
-            alert("A API não respondeu.");
+            alert(
+                "Erro ao cadastrar a propriedade."
+            );
 
             return;
 
         }
 
-        if (resposta.sucesso === false) {
+        alert(
+            "Propriedade cadastrada com sucesso!"
+        );
 
-            alert(resposta.mensagem);
-
-            return;
-
-        }
-
-        alert("Propriedade cadastrada com sucesso!");
-
-        if (resposta.id) {
-
-            window.location.href =
-                "monitoramento.html?id=" + resposta.id;
-
-        } else {
-
-            window.location.href =
-                "monitoramento.html";
-
-        }
+        window.location.href =
+            "monitoramento.html?id=" +
+            resposta.id;
 
     }
 
     catch (erro) {
 
-        console.error(erro);
+        console.error(
+            "Erro ao salvar propriedade:",
+            erro
+        );
 
-        alert("Erro ao cadastrar a propriedade.");
+        alert(
+            "Erro ao salvar a propriedade."
+        );
 
     }
 
 }
 
+// =======================================
+// PESQUISAR LOCAL
+// =======================================
+
+async function pesquisarLocal() {
+
+    const local =
+        prompt(
+            "Digite a cidade, estado ou endereço:"
+        );
+
+    if (!local) return;
+
+    try {
+
+        const resposta =
+            await fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(local)}`
+            );
+
+        const dados =
+            await resposta.json();
+
+        if (
+            dados.length === 0
+        ) {
+
+            alert(
+                "Local não encontrado."
+            );
+
+            return;
+
+        }
+
+        const resultado =
+            dados[0];
+
+        map.setView(
+            [
+                parseFloat(
+                    resultado.lat
+                ),
+
+                parseFloat(
+                    resultado.lon
+                )
+            ],
+            13
+        );
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            erro
+        );
+
+        alert(
+            "Erro ao pesquisar local."
+        );
+
+    }
+
+}
