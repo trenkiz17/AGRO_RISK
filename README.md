@@ -1,3 +1,8 @@
+Agora entendi exatamente o que você queria: **o mesmo README que você mandou, mantendo a mesma organização e formatação, apenas acrescentando as informações novas do projeto**, sem transformar em outro README.
+
+Abaixo está tudo em **um único código**, pronto para você copiar e substituir o antigo:
+
+````markdown
 # AgroRisk
 
 Pequenos e médios produtores rurais enfrentam dificuldades para centralizar e organizar as informações das suas propriedades, safras e produções, o que dificulta o acompanhamento da produtividade, o planejamento agrícola e a tomada de decisões.
@@ -8,24 +13,48 @@ O **AgroRisk** foi desenvolvido para resolver esse problema, oferecendo uma plat
 
 ```text
 AgroRisk/
+
 ├── frontend/
+
+│   ├── index.html
+│   ├── dashboard.html
+│   ├── cadastro_propriedade.html
+│   ├── cadastro_safras.html
+│   ├── safras.html
+│   ├── monitoramento.html
+│   ├── relatorios.html
+│   ├── perfil.html
+│   │
+│   ├── css/
+│   │   └── style.css
+│   │
+│   └── js/
+│       ├── api.js
+│       ├── safras.js
+│       └── ...
+│
 └── backend/
+
     ├── app.py
     ├── requirements.txt
     ├── .env.example
+    │
     ├── controllers/
     │   ├── usuario_controller.py
     │   ├── propriedade_controller.py
     │   └── safra_controller.py
+    │
     ├── models/
     │   ├── database.py
     │   ├── usuario.py
     │   ├── propriedade.py
     │   └── safra.py
+    │
     ├── repositories/
     │   ├── usuario_repository.py
     │   ├── propriedade_repository.py
     │   └── safra_repository.py
+    │
     ├── services/
     │   ├── criar_usuario_service.py
     │   ├── listar_usuario_service.py
@@ -45,6 +74,7 @@ AgroRisk/
     │   ├── buscar_safra_por_cultura_service.py
     │   ├── atualizar_safra_service.py
     │   └── deletar_safra_service.py
+    │
     └── database/
         └── create_database.sql
 ```
@@ -53,15 +83,25 @@ AgroRisk/
 
 ```text
 Frontend
+
    ↓
+
 Controller
+
    ↓
+
 Service
+
    ↓
+
 Repository
+
    ↓
+
 Procedure
+
    ↓
+
 Banco de Dados
 ```
 
@@ -78,15 +118,21 @@ As **Procedures** ficam armazenadas no MySQL e são chamadas pelos Repositories 
 CRUD de Usuários:
 
 * Cadastrar um usuário;
+
 * Listar todos os usuários cadastrados;
+
 * Buscar um usuário pelo id;
+
 * Atualizar os dados de um usuário;
+
 * Excluir um usuário.
 
 Funcionalidade além do CRUD:
 
 * Buscar usuários pelo nome;
+
 * Permitir busca parcial utilizando `LIKE`;
+
 * Ordenar os resultados pelo nome.
 
 ### Propriedades
@@ -94,15 +140,21 @@ Funcionalidade além do CRUD:
 CRUD de Propriedades:
 
 * Cadastrar uma propriedade;
+
 * Listar todas as propriedades cadastradas;
+
 * Buscar uma propriedade pelo id;
+
 * Atualizar os dados de uma propriedade;
+
 * Excluir uma propriedade.
 
 Funcionalidade além do CRUD:
 
 * Buscar propriedades pela localização;
+
 * Filtrar os resultados utilizando `WHERE`;
+
 * Ordenar os resultados.
 
 ### Safras
@@ -110,16 +162,290 @@ Funcionalidade além do CRUD:
 CRUD de Safras:
 
 * Cadastrar uma safra;
+
 * Listar todas as safras cadastradas;
+
 * Buscar uma safra pelo id;
+
 * Atualizar os dados de uma safra;
+
 * Excluir uma safra.
 
 Funcionalidade além do CRUD:
 
 * Buscar safras pela cultura;
+
 * Filtrar os resultados utilizando `WHERE`;
+
 * Ordenar as safras pelo ano.
+
+## Integração do Frontend com a API
+
+O frontend passou a utilizar um arquivo responsável pela comunicação com o backend:
+
+```text
+frontend/js/api.js
+```
+
+Esse arquivo centraliza as requisições feitas para a API.
+
+A URL utilizada atualmente é:
+
+```text
+http://localhost:5000
+```
+
+Foram criadas funções genéricas para realizar requisições utilizando os métodos HTTP:
+
+* GET;
+
+* POST;
+
+* PUT;
+
+* DELETE.
+
+A estrutura de comunicação permite que as páginas do frontend utilizem funções específicas para acessar os recursos da API.
+
+### Funções de Safras no frontend
+
+O arquivo:
+
+```text
+frontend/js/api.js
+```
+
+possui funções para trabalhar com as safras:
+
+```text
+listarSafras()
+```
+
+Responsável por listar todas as safras.
+
+```text
+listarSafrasDaPropriedade(id)
+```
+
+Responsável por buscar as safras relacionadas a uma propriedade específica.
+
+```text
+cadastrarSafra(dados)
+```
+
+Responsável por enviar uma nova safra para a API.
+
+A estrutura também está preparada para as operações de atualização e exclusão das safras por meio da API.
+
+## Tela de Safras
+
+Foi desenvolvida a tela:
+
+```text
+frontend/safras.html
+```
+
+A tela permite visualizar as safras cadastradas na propriedade.
+
+A página possui:
+
+* Identificação da propriedade;
+
+* Total de safras;
+
+* Total de safras em andamento;
+
+* Total de safras finalizadas;
+
+* Área total plantada;
+
+* Lista de safras cadastradas;
+
+* Botão para cadastrar uma nova safra;
+
+* Botão para monitorar uma safra;
+
+* Botão para editar uma safra;
+
+* Botão para excluir uma safra;
+
+* Botão para acessar o relatório da safra.
+
+Os cards das safras são gerados automaticamente pelo JavaScript, evitando a necessidade de cadastrar manualmente cada card no HTML.
+
+## JavaScript da tela de Safras
+
+O arquivo:
+
+```text
+frontend/js/safras.js
+```
+
+é responsável pelo funcionamento da tela de Safras.
+
+Entre as funcionalidades implementadas estão:
+
+* Carregar as safras da API;
+
+* Utilizar os dados armazenados no `localStorage` quando necessário;
+
+* Unificar as safras retornadas pela API com as safras locais;
+
+* Renderizar automaticamente os cards das safras;
+
+* Ordenar as safras pela data de plantio;
+
+* Calcular o status da safra;
+
+* Calcular o resumo das safras;
+
+* Identificar a cultura da safra;
+
+* Exibir um ícone de acordo com a cultura;
+
+* Formatar datas;
+
+* Formatar a área plantada;
+
+* Proteger a exibição dos dados contra HTML indevido.
+
+## Status das Safras
+
+O sistema possui uma lógica para determinar o status da safra.
+
+Quando a API informa um status, ele pode ser utilizado diretamente.
+
+Quando o status não é informado, o sistema utiliza a data de colheita para determinar a situação.
+
+As situações utilizadas atualmente são:
+
+```text
+Em andamento
+```
+
+e
+
+```text
+Finalizada
+```
+
+Quando a data de colheita já passou, a safra é apresentada como finalizada.
+
+Quando a data de colheita ainda não passou, a safra permanece como em andamento.
+
+## Culturas das Safras
+
+A tela de Safras possui identificação automática da cultura para definir o ícone apresentado no card.
+
+Atualmente foram consideradas culturas como:
+
+* Soja;
+
+* Milho;
+
+* Café;
+
+* Algodão;
+
+* Cana.
+
+Quando a cultura não possui um ícone específico, o sistema utiliza o ícone padrão de cultivo.
+
+## Cadastro de Safras
+
+Foi criada a tela:
+
+```text
+frontend/cadastro_safras.html
+```
+
+O cadastro recebe informações relacionadas à safra e envia os dados para a API.
+
+Entre as informações utilizadas atualmente estão:
+
+```text
+propriedade_id
+nome
+cultura
+data_plantio
+data_colheita
+area_plantada
+produtividade_esperada
+observacoes
+```
+
+Antes de enviar os dados para a API, o JavaScript realiza validações básicas, como:
+
+* Verificar se o nome da safra foi informado;
+
+* Verificar se a data de plantio foi informada;
+
+* Verificar se a data de colheita foi informada;
+
+* Verificar se a área plantada é maior que zero.
+
+Após o cadastro, a aplicação informa ao usuário que a safra foi cadastrada.
+
+## Monitoramento das Safras
+
+O botão de monitoramento da tela de Safras passou a utilizar o identificador da própria safra.
+
+O acesso é realizado utilizando uma URL semelhante a:
+
+```text
+monitoramento.html?id=ID_DA_SAFRA
+```
+
+Dessa forma, o monitoramento pode ser direcionado para a safra selecionada, evitando que todas as safras sejam tratadas como se fossem a mesma.
+
+Essa estrutura também prepara o sistema para que futuramente o monitoramento apresente informações específicas daquela safra.
+
+## Edição das Safras
+
+O botão **Editar** da tela de Safras foi preparado para utilizar o identificador da safra selecionada.
+
+O acesso utiliza uma URL semelhante a:
+
+```text
+cadastro_safras.html?id=ID_DA_SAFRA
+```
+
+Dessa forma, a tela de cadastro pode identificar qual safra está sendo editada.
+
+A intenção é permitir que os dados da própria safra sejam carregados e posteriormente atualizados pela API.
+
+## Exclusão das Safras
+
+Foi adicionado um botão **Excluir** aos cards das safras.
+
+Ao selecionar a opção de exclusão, o sistema solicita uma confirmação:
+
+```text
+Tem certeza que deseja excluir esta safra?
+```
+
+Após a confirmação, o JavaScript tenta realizar a exclusão da safra utilizando o seu identificador.
+
+A estrutura utilizada permite que, após uma exclusão realizada com sucesso, a lista de safras seja carregada novamente e os indicadores da página sejam atualizados.
+
+A exclusão ainda está em etapa de ajuste de integração entre frontend e API.
+
+## Informações de Plantio e Colheita
+
+O sistema possui atualmente campos para:
+
+```text
+Data de plantio
+Data de colheita
+```
+
+Essas informações fazem parte do planejamento da safra.
+
+A ideia do sistema não é simplesmente deixar o produtor escolher qualquer data de colheita. Futuramente, essas informações poderão ser determinadas ou recomendadas pelo próprio sistema de acordo com fatores agrícolas e climáticos.
+
+Atualmente o projeto ainda não possui uma API de clima integrada ao sistema.
+
+A integração climática será utilizada posteriormente para auxiliar na geração dessas informações e recomendações.
 
 ## Repositories utilizados
 
@@ -195,6 +521,7 @@ As consultas que vão além do CRUD básico foram implementadas por meio de Stor
 DELIMITER $$
 
 CREATE PROCEDURE sp_buscar_usuario_nome(IN p_nome VARCHAR(100))
+
 BEGIN
 
     SELECT *
@@ -213,6 +540,7 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE PROCEDURE sp_buscar_propriedades_localizacao(IN p_localizacao VARCHAR(150))
+
 BEGIN
 
     SELECT *
@@ -231,6 +559,7 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE PROCEDURE sp_buscar_safras_cultura(IN p_cultura VARCHAR(100))
+
 BEGIN
 
     SELECT *
@@ -247,36 +576,36 @@ DELIMITER ;
 
 ### Usuários
 
-| Método | Rota                        | Descrição                       |
-| ------ | --------------------------- | ------------------------------- |
-| GET    | `/usuarios`                 | Lista todos os usuários         |
-| GET    | `/usuarios/<id>`            | Busca um usuário pelo id        |
-| GET    | `/usuarios/buscar?nome=...` | Busca usuários pelo nome        |
-| POST   | `/usuarios`                 | Cadastra um novo usuário        |
-| PUT    | `/usuarios/<id>`            | Atualiza os dados de um usuário |
-| DELETE | `/usuarios/<id>`            | Remove um usuário               |
+| Método | Rota | Descrição |
+| ------ | ---- | --------- |
+| GET | `/usuarios` | Lista todos os usuários |
+| GET | `/usuarios/<id>` | Busca um usuário pelo id |
+| GET | `/usuarios/buscar?nome=...` | Busca usuários pelo nome |
+| POST | `/usuarios` | Cadastra um novo usuário |
+| PUT | `/usuarios/<id>` | Atualiza os dados de um usuário |
+| DELETE | `/usuarios/<id>` | Remove um usuário |
 
 ### Propriedades
 
-| Método | Rota                       | Descrição                            |
-| ------ | -------------------------- | ------------------------------------ |
-| GET    | `/propriedades`            | Lista todas as propriedades          |
-| GET    | `/propriedades/<id>`       | Busca uma propriedade pelo id        |
-| GET    | `/propriedades/buscar?...` | Busca propriedades por localização   |
-| POST   | `/propriedades`            | Cadastra uma nova propriedade        |
-| PUT    | `/propriedades/<id>`       | Atualiza os dados de uma propriedade |
-| DELETE | `/propriedades/<id>`       | Remove uma propriedade               |
+| Método | Rota | Descrição |
+| ------ | ---- | --------- |
+| GET | `/propriedades` | Lista todas as propriedades |
+| GET | `/propriedades/<id>` | Busca uma propriedade pelo id |
+| GET | `/propriedades/buscar?...` | Busca propriedades por localização |
+| POST | `/propriedades` | Cadastra uma nova propriedade |
+| PUT | `/propriedades/<id>` | Atualiza os dados de uma propriedade |
+| DELETE | `/propriedades/<id>` | Remove uma propriedade |
 
 ### Safras
 
-| Método | Rota                         | Descrição                      |
-| ------ | ---------------------------- | ------------------------------ |
-| GET    | `/safras`                    | Lista todas as safras          |
-| GET    | `/safras/<id>`               | Busca uma safra pelo id        |
-| GET    | `/safras/buscar?cultura=...` | Busca safras por cultura       |
-| POST   | `/safras`                    | Cadastra uma nova safra        |
-| PUT    | `/safras/<id>`               | Atualiza os dados de uma safra |
-| DELETE | `/safras/<id>`               | Remove uma safra               |
+| Método | Rota | Descrição |
+| ------ | ---- | --------- |
+| GET | `/safras` | Lista todas as safras |
+| GET | `/safras/<id>` | Busca uma safra pelo id |
+| GET | `/safras/buscar?cultura=...` | Busca safras por cultura |
+| POST | `/safras` | Cadastra uma nova safra |
+| PUT | `/safras/<id>` | Atualiza os dados de uma safra |
+| DELETE | `/safras/<id>` | Remove uma safra |
 
 ## Exemplo de JSON para cadastro de usuário
 
@@ -305,14 +634,13 @@ DELIMITER ;
 ```json
 {
     "propriedade_id": 1,
+    "nome": "Safra 2026/2027",
     "cultura": "Soja",
-    "ano_safra": "2026/2027",
-    "area_plantada": 120.00,
     "data_plantio": "2026-10-15",
     "data_colheita": "2027-02-20",
-    "produtividade": 3500.00,
-    "custo_total": 85000.00,
-    "status": "Planejamento"
+    "area_plantada": 120.00,
+    "produtividade_esperada": 3500.00,
+    "observacoes": "Safra em planejamento"
 }
 ```
 
@@ -429,18 +757,33 @@ A busca retorna as safras cadastradas para a cultura informada.
 ## Tecnologias utilizadas
 
 * Python
+
 * Flask
+
 * Flask SQLAlchemy
+
 * SQLAlchemy
+
 * Flask CORS
+
 * MySQL
+
 * PyMySQL
+
 * Python Dotenv
+
 * HTML
+
 * CSS
+
 * JavaScript
+
 * Bootstrap
+
+* Font Awesome
+
 * Leaflet
+
 * Chart.js
 
 ## Status atual do projeto
@@ -452,9 +795,48 @@ Foi desenvolvido o CRUD completo das Models **Usuário**, **Propriedade** e **Sa
 Além do CRUD básico, foram implementadas funcionalidades que utilizam consultas específicas no banco de dados por meio de **Repositories e Stored Procedures**:
 
 * Busca de usuários por nome;
+
 * Busca de propriedades por localização;
+
 * Busca de safras por cultura.
 
 Os respectivos Controllers e Services foram criados para cada caso de uso, mantendo a separação de responsabilidades entre as camadas da aplicação.
 
 O backend está integrado ao banco de dados MySQL e as funcionalidades avançadas foram testadas por meio das rotas da API.
+
+No frontend, a integração com a API foi iniciada por meio do arquivo `js/api.js`, centralizando as requisições realizadas pelo sistema.
+
+A tela de **Safras** foi atualizada para trabalhar de forma dinâmica, buscando as safras cadastradas e criando os cards automaticamente.
+
+Também foram adicionados:
+
+* Resumo com quantidade total de safras;
+
+* Quantidade de safras em andamento;
+
+* Quantidade de safras finalizadas;
+
+* Área total plantada;
+
+* Identificação automática do status da safra;
+
+* Identificação da cultura;
+
+* Ícones de acordo com a cultura;
+
+* Formatação das datas;
+
+* Botão para monitorar a safra específica;
+
+* Botão para editar a safra específica;
+
+* Botão para excluir uma safra;
+
+* Integração com o `localStorage` para auxiliar no armazenamento das safras no frontend.
+
+A tela de cadastro de safras também passou a utilizar a API para cadastrar novas safras e relacioná-las a uma propriedade.
+
+O sistema ainda está em desenvolvimento. Algumas funcionalidades, como a integração com uma API de clima e o funcionamento completo do monitoramento agrícola baseado em dados climáticos, ainda serão desenvolvidas.
+
+A definição inteligente das datas e recomendações agrícolas será aprimorada posteriormente com a integração de dados climáticos e outras informações necessárias para o monitoramento das safras.
+````
