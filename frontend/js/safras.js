@@ -44,10 +44,10 @@ async function carregarSafras() {
 
                 if (Array.isArray(resultado)) {
 
-                    safras =
-                        resultado;
+                    safras = resultado;
 
                 }
+
                 else if (
                     resultado &&
                     Array.isArray(resultado.data)
@@ -238,7 +238,6 @@ function renderizarSafras(safras) {
 
         `;
 
-
         return;
 
     }
@@ -371,6 +370,7 @@ function criarCardSafra(safra) {
             class="safra-card"
             data-id="${id}">
 
+
             <!-- ================= TOP ================= -->
 
             <div class="safra-top">
@@ -388,11 +388,13 @@ function criarCardSafra(safra) {
 
                     </span>
 
+
                     <h3>
 
                         ${escaparHTML(nome)}
 
                     </h3>
+
 
                     <small>
 
@@ -407,6 +409,7 @@ function criarCardSafra(safra) {
                     </small>
 
                 </div>
+
 
                 <div class="safra-icon">
 
@@ -481,6 +484,9 @@ function criarCardSafra(safra) {
 
             <div class="safra-buttons">
 
+
+                <!-- MONITORAR -->
+
                 <a
                     href="monitoramento.html?id=${id}"
                     class="btn-monitorar">
@@ -496,6 +502,8 @@ function criarCardSafra(safra) {
                 </a>
 
 
+                <!-- EDITAR -->
+
                 <a
                     href="cadastro_safras.html?id=${id}"
                     class="btn-editar">
@@ -507,27 +515,32 @@ function criarCardSafra(safra) {
                 </a>
 
 
+                <!-- RELATÓRIO DA SAFRA -->
+
                 <a
                     href="relatorios.html?id=${id}"
                     class="btn-relatorio">
 
                     <i class="fa-solid fa-chart-column"></i>
 
-                    Relatório
+                    Analisar Safra
 
                 </a>
 
 
+                <!-- EXCLUIR -->
+
                 <button
                     type="button"
                     class="btn-excluir"
-                    onclick="excluirSafraTela(${id})">
+                    onclick="excluirSafraTela('${id}')">
 
                     <i class="fa-solid fa-trash"></i>
 
                     Excluir
 
                 </button>
+
 
             </div>
 
@@ -570,34 +583,26 @@ async function excluirSafraTela(id) {
 
     try {
 
+        let excluidaNaApi = false;
+
+
         // =======================================
-        // EXCLUIR NA API
+        // TENTAR EXCLUIR NA API
         // =======================================
 
         if (
-            typeof excluirSafra !== "function"
+            typeof excluirSafra === "function"
         ) {
 
-            alert(
-                "A função de exclusão da API não foi encontrada."
-            );
-
-            return;
-
-        }
+            const resposta =
+                await excluirSafra(id);
 
 
-        const resposta =
-            await excluirSafra(id);
+            if (resposta) {
 
+                excluidaNaApi = true;
 
-        if (!resposta) {
-
-            alert(
-                "Não foi possível excluir a safra."
-            );
-
-            return;
+            }
 
         }
 
@@ -610,6 +615,10 @@ async function excluirSafraTela(id) {
             JSON.parse(
                 localStorage.getItem("safras")
             ) || [];
+
+
+        const quantidadeAntes =
+            safrasLocais.length;
 
 
         safrasLocais =
@@ -631,16 +640,35 @@ async function excluirSafraTela(id) {
         );
 
 
+        const foiRemovidaLocal =
+            safrasLocais.length <
+            quantidadeAntes;
+
+
         // =======================================
-        // ATUALIZAR TELA
+        // RESULTADO
         // =======================================
+
+        if (
+            excluidaNaApi ||
+            foiRemovidaLocal
+        ) {
+
+            alert(
+                "Safra excluída com sucesso!"
+            );
+
+
+            await carregarSafras();
+
+            return;
+
+        }
+
 
         alert(
-            "Safra excluída com sucesso!"
+            "Não foi possível excluir a safra."
         );
-
-
-        await carregarSafras();
 
     }
 
@@ -650,6 +678,69 @@ async function excluirSafraTela(id) {
             "Erro ao excluir safra:",
             erro
         );
+
+
+        // =======================================
+        // TENTAR REMOVER LOCALMENTE
+        // =======================================
+
+        try {
+
+            let safrasLocais =
+                JSON.parse(
+                    localStorage.getItem("safras")
+                ) || [];
+
+
+            const quantidadeAntes =
+                safrasLocais.length;
+
+
+            safrasLocais =
+                safrasLocais.filter(
+                    function (safra) {
+
+                        return String(safra.id) !==
+                            String(id);
+
+                    }
+                );
+
+
+            localStorage.setItem(
+                "safras",
+                JSON.stringify(
+                    safrasLocais
+                )
+            );
+
+
+            if (
+                safrasLocais.length <
+                quantidadeAntes
+            ) {
+
+                alert(
+                    "Safra removida dos dados de teste locais."
+                );
+
+
+                await carregarSafras();
+
+                return;
+
+            }
+
+        }
+
+        catch (erroLocal) {
+
+            console.error(
+                "Erro ao remover safra local:",
+                erroLocal
+            );
+
+        }
 
 
         alert(
@@ -860,6 +951,7 @@ function atualizarResumo(safras) {
                 finalizadas++;
 
             }
+
             else {
 
                 andamento++;
