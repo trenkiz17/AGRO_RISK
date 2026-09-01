@@ -6,125 +6,224 @@ from services.listar_safra_service import ListarSafrasService
 from services.buscar_safra_por_id_service import BuscarSafraPorIdService
 from services.atualizar_safra_service import AtualizarSafraService
 from services.deletar_safra_service import DeletarSafraService
-from services.buscar_safra_por_cultura_service import  BuscarSafraPorCulturaService
+from services.buscar_safra_por_cultura_service import (
+    BuscarSafraPorCulturaService
+)
 
 from models.database import db
 
-safra_controller = Blueprint("safra_controller", __name__)
 
+class SafraController:
 
-@safra_controller.post("/safras")
-def criar_safra():
-    try:
+    def __init__(self):
 
-        dados = request.get_json() or {}
+        self.blueprint = Blueprint(
+            "safra_controller",
+            __name__
+        )
 
-        service = CriarSafraService()
+        self.registrar_rotas()
 
-        safra = service.executar(dados)
+    # ==========================================
+    # REGISTRAR ROTAS
+    # ==========================================
 
-        return jsonify(safra), 201
+    def registrar_rotas(self):
 
-    except ValueError as erro:
+        self.blueprint.add_url_rule(
+            "/safras",
+            view_func=self.criar_safra,
+            methods=["POST"]
+        )
 
-        return jsonify({"erro": str(erro)}), 400
+        self.blueprint.add_url_rule(
+            "/safras",
+            view_func=self.listar_safras,
+            methods=["GET"]
+        )
 
-    except SQLAlchemyError:
+        self.blueprint.add_url_rule(
+            "/safras/<int:safra_id>",
+            view_func=self.buscar_safra_por_id,
+            methods=["GET"]
+        )
 
-        db.session.rollback()
+        self.blueprint.add_url_rule(
+            "/safras/<int:safra_id>",
+            view_func=self.atualizar_safra,
+            methods=["PUT"]
+        )
 
-        return jsonify({"erro": "Erro ao salvar safra no banco de dados."}), 500
+        self.blueprint.add_url_rule(
+            "/safras/<int:safra_id>",
+            view_func=self.deletar_safra,
+            methods=["DELETE"]
+        )
 
+        self.blueprint.add_url_rule(
+            "/safras/buscar",
+            view_func=self.buscar_safra_por_cultura,
+            methods=["GET"]
+        )
 
-@safra_controller.get("/safras")
-def listar_safras():
+    # ==========================================
+    # CRIAR SAFRA
+    # ==========================================
 
-    service = ListarSafrasService()
+    def criar_safra(self):
 
-    safras = service.executar()
+        try:
 
-    return jsonify(safras), 200
+            dados = request.get_json() or {}
 
+            service = CriarSafraService()
 
-@safra_controller.get("/safras/<int:safra_id>")
-def buscar_safra_por_id(safra_id):
+            safra = service.executar(dados)
 
-    service = BuscarSafraPorIdService()
+            return jsonify(safra), 201
 
-    safra = service.executar(safra_id)
+        except ValueError as erro:
 
-    if safra is None:
+            return jsonify({
+                "erro": str(erro)
+            }), 400
 
-        return jsonify({"erro": "Safra não encontrada."}), 404
+        except SQLAlchemyError:
 
-    return jsonify(safra), 200
+            db.session.rollback()
 
+            return jsonify({
+                "erro": "Erro ao salvar safra no banco de dados."
+            }), 500
 
-@safra_controller.put("/safras/<int:safra_id>")
-def atualizar_safra(safra_id):
+    # ==========================================
+    # LISTAR SAFRAS
+    # ==========================================
 
-    try:
+    def listar_safras(self):
 
-        dados = request.get_json() or {}
+        service = ListarSafrasService()
 
-        service = AtualizarSafraService()
-
-        safra = service.executar(safra_id, dados)
-
-        if safra is None:
-
-            return jsonify({"erro": "Safra não encontrada."}), 404
-
-        return jsonify(safra), 200
-
-    except ValueError as erro:
-
-        return jsonify({"erro": str(erro)}), 400
-
-    except SQLAlchemyError:
-
-        db.session.rollback()
-
-        return jsonify({"erro": "Erro ao atualizar safra no banco de dados."}), 500
-
-
-@safra_controller.delete("/safras/<int:safra_id>")
-def deletar_safra(safra_id):
-
-    try:
-
-        service = DeletarSafraService()
-
-        safra_deletada = service.executar(safra_id)
-
-        if safra_deletada is False:
-
-            return jsonify({"erro": "Safra não encontrada."}), 404
-
-        return "", 204
-
-    except SQLAlchemyError:
-
-        db.session.rollback()
-
-        return jsonify({"erro": "Erro ao deletar safra no banco de dados."}), 500
-
-
-@safra_controller.get("/safras/buscar")
-def buscar_safra_por_cultura():
-
-    cultura = request.args.get("cultura")
-
-    try:
-
-        service = BuscarSafraPorCulturaService()
-
-        safras = service.executar(cultura)
+        safras = service.executar()
 
         return jsonify(safras), 200
 
-    except ValueError as erro:
+    # ==========================================
+    # BUSCAR SAFRA POR ID
+    # ==========================================
 
-        return jsonify({
-            "erro": str(erro)
-        }), 400
+    def buscar_safra_por_id(self, safra_id):
+
+        service = BuscarSafraPorIdService()
+
+        safra = service.executar(safra_id)
+
+        if safra is None:
+
+            return jsonify({
+                "erro": "Safra não encontrada."
+            }), 404
+
+        return jsonify(safra), 200
+
+    # ==========================================
+    # ATUALIZAR SAFRA
+    # ==========================================
+
+    def atualizar_safra(self, safra_id):
+
+        try:
+
+            dados = request.get_json() or {}
+
+            service = AtualizarSafraService()
+
+            safra = service.executar(
+                safra_id,
+                dados
+            )
+
+            if safra is None:
+
+                return jsonify({
+                    "erro": "Safra não encontrada."
+                }), 404
+
+            return jsonify(safra), 200
+
+        except ValueError as erro:
+
+            return jsonify({
+                "erro": str(erro)
+            }), 400
+
+        except SQLAlchemyError:
+
+            db.session.rollback()
+
+            return jsonify({
+                "erro": "Erro ao atualizar safra no banco de dados."
+            }), 500
+
+    # ==========================================
+    # DELETAR SAFRA
+    # ==========================================
+
+    def deletar_safra(self, safra_id):
+
+        try:
+
+            service = DeletarSafraService()
+
+            safra_deletada = service.executar(
+                safra_id
+            )
+
+            if safra_deletada is False:
+
+                return jsonify({
+                    "erro": "Safra não encontrada."
+                }), 404
+
+            return "", 204
+
+        except SQLAlchemyError:
+
+            db.session.rollback()
+
+            return jsonify({
+                "erro": "Erro ao deletar safra no banco de dados."
+            }), 500
+
+    # ==========================================
+    # BUSCAR SAFRA POR CULTURA
+    # ==========================================
+
+    def buscar_safra_por_cultura(self):
+
+        cultura = request.args.get(
+            "cultura"
+        )
+
+        try:
+
+            service = BuscarSafraPorCulturaService()
+
+            safras = service.executar(
+                cultura
+            )
+
+            return jsonify(safras), 200
+
+        except ValueError as erro:
+
+            return jsonify({
+                "erro": str(erro)
+            }), 400
+
+
+# ==========================================
+# INSTÂNCIA DO CONTROLLER
+# ==========================================
+
+safra_controller = SafraController()

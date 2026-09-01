@@ -1,6 +1,7 @@
 import os
+
 from dotenv import load_dotenv
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 
 from models.database import db
@@ -11,9 +12,15 @@ from controllers.safra_controller import safra_controller
 
 
 def create_app():
+
     load_dotenv()
 
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        template_folder="templates",
+        static_folder="static"
+    )
+
     CORS(app)
 
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
@@ -25,18 +32,33 @@ def create_app():
 
     db.init_app(app)
 
-    # Controllers
-    app.register_blueprint(usuario_controller)
-    app.register_blueprint(propriedade_controller)
-    app.register_blueprint(safra_controller)
+    # ==========================================
+    # CONTROLLERS
+    # ==========================================
+
+    app.register_blueprint(usuario_controller.blueprint)
+    app.register_blueprint(propriedade_controller.blueprint)
+    app.register_blueprint(safra_controller.blueprint)
+
+    # ==========================================
+    # FRONT-END
+    # ==========================================
 
     @app.get("/")
     def home():
+        return render_template("index.html")
+
+    # ==========================================
+    # INFORMAÇÕES DA API
+    # ==========================================
+
+    @app.get("/api")
+    def api_info():
+
         return jsonify({
             "mensagem": "API AgroRisk funcionando.",
             "rotas": {
-
-                "USUÁRIOS": {
+                "usuarios": {
                     "listar": "GET /usuarios",
                     "buscar": "GET /usuarios/<id>",
                     "criar": "POST /usuarios",
@@ -45,24 +67,31 @@ def create_app():
                     "login": "POST /login"
                 },
 
-                "PROPRIEDADES": {
+                "propriedades": {
                     "listar": "GET /propriedades",
                     "buscar": "GET /propriedades/<id>",
                     "criar": "POST /propriedades",
                     "atualizar": "PUT /propriedades/<id>",
-                    "deletar": "DELETE /propriedades/<id>"
+                    "deletar": "DELETE /propriedades/<id>",
+                    "buscar_localizacao":
+                        "GET /propriedades/buscar?localizacao=..."
                 },
 
-                "SAFRAS": {
+                "safras": {
                     "listar": "GET /safras",
                     "buscar": "GET /safras/<id>",
                     "criar": "POST /safras",
                     "atualizar": "PUT /safras/<id>",
-                    "deletar": "DELETE /safras/<id>"
+                    "deletar": "DELETE /safras/<id>",
+                    "buscar_cultura":
+                        "GET /safras/buscar?cultura=..."
                 }
-
             }
         })
+
+    # ==========================================
+    # BANCO
+    # ==========================================
 
     with app.app_context():
         db.create_all()
@@ -74,6 +103,7 @@ app = create_app()
 
 
 if __name__ == "__main__":
+
     debug = os.getenv("FLASK_DEBUG", "True") == "True"
 
     app.run(

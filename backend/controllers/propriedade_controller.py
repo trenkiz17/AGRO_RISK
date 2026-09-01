@@ -6,126 +6,224 @@ from services.listar_propriedade_service import ListarPropriedadesService
 from services.buscar_propriedade_por_id_service import BuscarPropriedadePorIdService
 from services.atualizar_propriedade_service import AtualizarPropriedadeService
 from services.deletar_propriedade_service import DeletarPropriedadeService
-from services.buscar_propriedade_por_localizacao_service import BuscarPropriedadePorLocalizacaoService
+from services.buscar_propriedade_por_localizacao_service import (
+    BuscarPropriedadePorLocalizacaoService
+)
+
 from models.database import db
 
-propriedade_controller = Blueprint("propriedade_controller", __name__)
 
+class PropriedadeController:
 
-@propriedade_controller.post("/propriedades")
-def criar_propriedade():
-    try:
-        dados = request.get_json() or {}
+    def __init__(self):
 
-        service = CriarPropriedadeService()
+        self.blueprint = Blueprint(
+            "propriedade_controller",
+            __name__
+        )
 
-        propriedade = service.executar(dados)
+        self.registrar_rotas()
 
-        return jsonify(propriedade), 201
+    # ==========================================
+    # REGISTRAR ROTAS
+    # ==========================================
 
-    except ValueError as erro:
+    def registrar_rotas(self):
 
-        return jsonify({"erro": str(erro)}), 400
+        self.blueprint.add_url_rule(
+            "/propriedades",
+            view_func=self.criar_propriedade,
+            methods=["POST"]
+        )
 
-    except SQLAlchemyError:
+        self.blueprint.add_url_rule(
+            "/propriedades",
+            view_func=self.listar_propriedades,
+            methods=["GET"]
+        )
 
-        db.session.rollback()
+        self.blueprint.add_url_rule(
+            "/propriedades/<int:propriedade_id>",
+            view_func=self.buscar_propriedade_por_id,
+            methods=["GET"]
+        )
 
-        return jsonify({"erro": "Erro ao salvar propriedade no banco de dados."}), 500
+        self.blueprint.add_url_rule(
+            "/propriedades/<int:propriedade_id>",
+            view_func=self.atualizar_propriedade,
+            methods=["PUT"]
+        )
 
+        self.blueprint.add_url_rule(
+            "/propriedades/<int:propriedade_id>",
+            view_func=self.deletar_propriedade,
+            methods=["DELETE"]
+        )
 
-@propriedade_controller.get("/propriedades")
-def listar_propriedades():
+        self.blueprint.add_url_rule(
+            "/propriedades/buscar",
+            view_func=self.buscar_propriedade_por_localizacao,
+            methods=["GET"]
+        )
 
-    service = ListarPropriedadesService()
+    # ==========================================
+    # CRIAR PROPRIEDADE
+    # ==========================================
 
-    propriedades = service.executar()
+    def criar_propriedade(self):
 
-    return jsonify(propriedades), 200
+        try:
 
+            dados = request.get_json() or {}
 
-@propriedade_controller.get("/propriedades/<int:propriedade_id>")
-def buscar_propriedade_por_id(propriedade_id):
+            service = CriarPropriedadeService()
 
-    service = BuscarPropriedadePorIdService()
+            propriedade = service.executar(dados)
 
-    propriedade = service.executar(propriedade_id)
+            return jsonify(propriedade), 201
 
-    if propriedade is None:
+        except ValueError as erro:
 
-        return jsonify({"erro": "Propriedade não encontrada."}), 404
+            return jsonify({
+                "erro": str(erro)
+            }), 400
 
-    return jsonify(propriedade), 200
+        except SQLAlchemyError:
 
+            db.session.rollback()
 
-@propriedade_controller.put("/propriedades/<int:propriedade_id>")
-def atualizar_propriedade(propriedade_id):
+            return jsonify({
+                "erro": "Erro ao salvar propriedade no banco de dados."
+            }), 500
 
-    try:
+    # ==========================================
+    # LISTAR PROPRIEDADES
+    # ==========================================
 
-        dados = request.get_json() or {}
+    def listar_propriedades(self):
 
-        service = AtualizarPropriedadeService()
+        service = ListarPropriedadesService()
 
-        propriedade = service.executar(propriedade_id, dados)
-
-        if propriedade is None:
-
-            return jsonify({"erro": "Propriedade não encontrada."}), 404
-
-        return jsonify(propriedade), 200
-
-    except ValueError as erro:
-
-        return jsonify({"erro": str(erro)}), 400
-
-    except SQLAlchemyError:
-
-        db.session.rollback()
-
-        return jsonify({"erro": "Erro ao atualizar propriedade no banco de dados."}), 500
-
-
-@propriedade_controller.delete("/propriedades/<int:propriedade_id>")
-def deletar_propriedade(propriedade_id):
-
-    try:
-
-        service = DeletarPropriedadeService()
-
-        propriedade_deletada = service.executar(propriedade_id)
-
-        if propriedade_deletada is False:
-
-            return jsonify({"erro": "Propriedade não encontrada."}), 404
-
-        return "", 204
-
-    except SQLAlchemyError:
-
-        db.session.rollback()
-
-        return jsonify({"erro": "Erro ao deletar propriedade no banco de dados."}), 500
-
-
-@propriedade_controller.get("/propriedades/buscar")
-def buscar_propriedade_por_localizacao():
-
-    localizacao = request.args.get("localizacao")
-
-    try:
-
-        service = BuscarPropriedadePorLocalizacaoService()
-
-        propriedades = service.executar(localizacao)
+        propriedades = service.executar()
 
         return jsonify(propriedades), 200
 
-    except ValueError as erro:
+    # ==========================================
+    # BUSCAR PROPRIEDADE POR ID
+    # ==========================================
 
-        return jsonify({
-            "erro": str(erro)
-        }), 400
+    def buscar_propriedade_por_id(self, propriedade_id):
+
+        service = BuscarPropriedadePorIdService()
+
+        propriedade = service.executar(propriedade_id)
+
+        if propriedade is None:
+
+            return jsonify({
+                "erro": "Propriedade não encontrada."
+            }), 404
+
+        return jsonify(propriedade), 200
+
+    # ==========================================
+    # ATUALIZAR PROPRIEDADE
+    # ==========================================
+
+    def atualizar_propriedade(self, propriedade_id):
+
+        try:
+
+            dados = request.get_json() or {}
+
+            service = AtualizarPropriedadeService()
+
+            propriedade = service.executar(
+                propriedade_id,
+                dados
+            )
+
+            if propriedade is None:
+
+                return jsonify({
+                    "erro": "Propriedade não encontrada."
+                }), 404
+
+            return jsonify(propriedade), 200
+
+        except ValueError as erro:
+
+            return jsonify({
+                "erro": str(erro)
+            }), 400
+
+        except SQLAlchemyError:
+
+            db.session.rollback()
+
+            return jsonify({
+                "erro": "Erro ao atualizar propriedade no banco de dados."
+            }), 500
+
+    # ==========================================
+    # DELETAR PROPRIEDADE
+    # ==========================================
+
+    def deletar_propriedade(self, propriedade_id):
+
+        try:
+
+            service = DeletarPropriedadeService()
+
+            propriedade_deletada = service.executar(
+                propriedade_id
+            )
+
+            if propriedade_deletada is False:
+
+                return jsonify({
+                    "erro": "Propriedade não encontrada."
+                }), 404
+
+            return "", 204
+
+        except SQLAlchemyError:
+
+            db.session.rollback()
+
+            return jsonify({
+                "erro": "Erro ao deletar propriedade no banco de dados."
+            }), 500
+
+    # ==========================================
+    # BUSCAR POR LOCALIZAÇÃO
+    # ==========================================
+
+    def buscar_propriedade_por_localizacao(self):
+
+        localizacao = request.args.get(
+            "localizacao"
+        )
+
+        try:
+
+            service = BuscarPropriedadePorLocalizacaoService()
+
+            propriedades = service.executar(
+                localizacao
+            )
+
+            return jsonify(propriedades), 200
+
+        except ValueError as erro:
+
+            return jsonify({
+                "erro": str(erro)
+            }), 400
 
 
-    
+# ==========================================
+# INSTÂNCIA DO CONTROLLER
+# ==========================================
+
+propriedade_controller = PropriedadeController()

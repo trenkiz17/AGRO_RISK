@@ -45,8 +45,8 @@ img{
     --azul:#2563EB;
     --azulEscuro:#1E40AF;
 
-    --verde:#22C55E;
-    --verdeEscuro:#16A34A;
+    --verde:#2563EB;
+    --verdeEscuro:#1E40AF;
 
     --amarelo:#FACC15;
 
@@ -72,7 +72,7 @@ img{
 
     padding:18px 0;
 
-    transition:.4s;
+    transition:.2s;
 
     position:fixed;
 
@@ -106,7 +106,7 @@ img{
 
     font-weight:500;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
@@ -126,7 +126,7 @@ img{
 
     padding:10px 24px;
 
-    transition:.3s;
+    transition:.2s;
 
     margin-right:15px;
 
@@ -142,7 +142,7 @@ img{
 
 .btn-conta{
 
-    background:linear-gradient(90deg,var(--azul),var(--verde));
+    background:var(--azul);
 
     color:white;
 
@@ -152,7 +152,7 @@ img{
 
     font-weight:600;
 
-    transition:.4s;
+    transition:.2s;
 
 }
 
@@ -160,9 +160,9 @@ img{
 
     color:white;
 
-    transform:translateY(-3px);
+    transform:none;
 
-    box-shadow:0 10px 30px rgba(37,99,235,.35);
+    box-shadow:none;
 
 }
 
@@ -222,11 +222,11 @@ img{
 
 .hero-badge{
 
-    background:rgba(34,197,94,.15);
+    background:rgba(37,99,235,.12);
 
-    color:#A7F3D0;
+    color:#DBEAFE;
 
-    border:1px solid rgba(34,197,94,.4);
+    border:1px solid rgba(37,99,235,.35);
 
     padding:10px 22px;
 
@@ -280,7 +280,7 @@ img{
 
     font-weight:600;
 
-    transition:.35s;
+    transition:.2s;
 
 }
 
@@ -296,13 +296,13 @@ img{
 
     background:var(--verdeEscuro);
 
-    transform:translateY(-4px);
+    transform:none;
 
 }
 
 .hero-buttons .btn-outline-light:hover{
 
-    transform:translateY(-4px);
+    transform:none;
 
 }
 
@@ -322,7 +322,7 @@ img{
 
     50%{
 
-        transform:translateY(-12px);
+        transform:none;
 
     }
 
@@ -457,13 +457,13 @@ section p{
 
 .stats .col-md-3{
 
-    transition:.35s;
+    transition:.2s;
 
 }
 
 .stats .col-md-3:hover{
 
-    transform:translateY(-8px);
+    transform:none;
 
 }
 
@@ -483,13 +483,13 @@ section p{
 
     box-shadow:0 25px 50px rgba(0,0,0,.12);
 
-    transition:.4s;
+    transition:.2s;
 
 }
 
 .sobre img:hover{
 
-    transform:scale(1.02);
+    transform:none;
 
 }
 
@@ -505,7 +505,7 @@ section p{
 
     font-weight:500;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
@@ -523,7 +523,7 @@ section p{
 
     color:white;
 
-    transform:translateX(8px);
+    transform:none;
 
 }
 
@@ -555,7 +555,7 @@ section p{
 
     text-align:center;
 
-    transition:.4s;
+    transition:.2s;
 
     border:1px solid #E2E8F0;
 
@@ -563,7 +563,7 @@ section p{
 
 .card-funcao:hover{
 
-    transform:translateY(-12px);
+    transform:none;
 
     box-shadow:0 20px 40px rgba(0,0,0,.12);
 
@@ -577,7 +577,7 @@ section p{
 
     height:80px;
 
-    background:linear-gradient(135deg,var(--azul),var(--verde));
+    background:var(--azul);
 
     border-radius:50%;
 
@@ -595,13 +595,13 @@ section p{
 
     margin-bottom:25px;
 
-    transition:.4s;
+    transition:.2s;
 
 }
 
 .card-funcao:hover i{
 
-    transform:rotate(8deg) scale(1.1);
+    transform:none;
 
 }
 
@@ -627,7 +627,7 @@ section p{
 
 .passos{
 
-    background:linear-gradient(135deg,#0F172A,#1E293B);
+    background:#0F172A;
 
     color:white;
 
@@ -653,13 +653,13 @@ section p{
 
     height:100%;
 
-    transition:.4s;
+    transition:.2s;
 
 }
 
 .passo:hover{
 
-    transform:translateY(-10px);
+    transform:none;
 
 }
 
@@ -671,7 +671,7 @@ section p{
 
     border-radius:50%;
 
-    background:linear-gradient(135deg,var(--azul),var(--verde));
+    background:var(--azul);
 
     color:white;
 
@@ -719,7 +719,7 @@ section p{
 
 .dashboard-preview img:hover{
 
-    transform:scale(1.03);
+    transform:none;
 
 }
 
@@ -773,7 +773,7 @@ section p{
 
     height:100%;
 
-    transition:.35s;
+    transition:.2s;
 
     box-shadow:0 10px 30px rgba(0,0,0,.06);
 
@@ -781,7 +781,7 @@ section p{
 
 .card-beneficio:hover{
 
-    transform:translateY(-10px);
+    transform:none;
 
 }
 
@@ -834,7 +834,7 @@ section p{
 
     background:#F8FAFC;
 
-    transition:.35s;
+    transition:.2s;
 
     color:var(--escuro);
 
@@ -850,7 +850,7 @@ section p{
 
 .lista-diferenciais li:hover{
 
-    background:linear-gradient(90deg,var(--azul),var(--verde));
+    background:var(--azul);
 
     color:white;
 
@@ -912,7 +912,7 @@ section p{
 
 .accordion-button:not(.collapsed){
 
-    background:linear-gradient(90deg,var(--azul),var(--verde));
+    background:var(--azul);
 
     color:white;
 
@@ -940,7 +940,7 @@ section p{
 
 .cta{
 
-    background:linear-gradient(135deg,var(--azul),var(--verde));
+    background:var(--azul);
 
     color:white;
 
@@ -1038,7 +1038,7 @@ footer a{
 
     color:#CBD5E1;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
@@ -1096,7 +1096,7 @@ footer a:hover{
 
     box-shadow:0 15px 30px rgba(0,0,0,.25);
 
-    transition:.35s;
+    transition:.2s;
 
     z-index:999;
 
@@ -1106,7 +1106,7 @@ footer a:hover{
 
     background:var(--azul);
 
-    transform:translateY(-5px);
+    transform:none;
 
 }
 
@@ -1128,7 +1128,7 @@ footer a:hover{
 
 ::-webkit-scrollbar-thumb{
 
-    background:linear-gradient(var(--azul),var(--verde));
+    background:var(--azul);
 
     border-radius:20px;
 
@@ -1247,7 +1247,7 @@ footer{
 .card-beneficio:hover,
 .passo:hover{
 
-    transform:translateY(-8px);
+    transform:none;
 
 }
 
@@ -1303,7 +1303,7 @@ footer{
     padding:14px;
     border-radius:12px;
     border:1px solid #E2E8F0;
-    transition:.3s;
+    transition:.2s;
 }
 
 .login-card .form-control:focus{
@@ -1316,12 +1316,12 @@ footer{
     border-radius:12px;
     font-weight:600;
     margin-top:10px;
-    transition:.3s;
+    transition:.2s;
 }
 
 .login-card .btn-success:hover{
     background:var(--verdeEscuro);
-    transform:translateY(-3px);
+    transform:none;
 }
 
 .login-footer{
@@ -1383,7 +1383,7 @@ body{
 
     font-weight:700;
 
-    color:#22C55E;
+    color:#2563EB;
 
     display:flex;
 
@@ -1423,7 +1423,7 @@ body{
 
     border-radius:15px;
 
-    transition:.35s;
+    transition:.2s;
 
     font-weight:500;
 
@@ -1435,13 +1435,13 @@ body{
 
     color:white;
 
-    transform:translateX(8px);
+    transform:none;
 
 }
 
 .sidebar .active a{
 
-    background:#22C55E;
+    background:#2563EB;
 
     color:white;
 
@@ -1531,7 +1531,7 @@ body{
 
     object-fit:cover;
 
-    border:3px solid #22C55E;
+    border:3px solid #2563EB;
 
 }
 
@@ -1557,7 +1557,7 @@ body{
 
     margin-top:30px;
 
-    background:linear-gradient(135deg,#2563EB,#22C55E);
+    background:#2563EB;
 
     border-radius:25px;
 
@@ -1653,13 +1653,13 @@ body{
 
     box-shadow:0 12px 30px rgba(0,0,0,.06);
 
-    transition:.35s;
+    transition:.2s;
 
 }
 
 .card-info:hover{
 
-    transform:translateY(-10px);
+    transform:none;
 
 }
 
@@ -1687,7 +1687,7 @@ body{
 
     height:70px;
 
-    background:linear-gradient(135deg,#2563EB,#22C55E);
+    background:#2563EB;
 
     border-radius:20px;
 
@@ -1749,7 +1749,7 @@ body{
 
     box-shadow:0 12px 30px rgba(0,0,0,.06);
 
-    transition:.35s;
+    transition:.2s;
 
     position:relative;
 
@@ -1767,7 +1767,7 @@ body{
 
     height:180px;
 
-    background:rgba(34,197,94,.05);
+    background:rgba(37,99,235,.04);
 
     border-radius:50%;
 
@@ -1779,9 +1779,9 @@ body{
 
 .acao-card:hover{
 
-    transform:translateY(-12px);
+    transform:none;
 
-    box-shadow:0 20px 45px rgba(37,99,235,.18);
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
 
 }
 
@@ -1791,7 +1791,7 @@ body{
 
     height:70px;
 
-    background:linear-gradient(135deg,#2563EB,#22C55E);
+    background:#2563EB;
 
     border-radius:18px;
 
@@ -1831,7 +1831,7 @@ body{
 
 .acao-card span{
 
-    color:#22C55E;
+    color:#2563EB;
 
     font-weight:600;
 
@@ -1883,7 +1883,7 @@ body{
 
 .painel h4 i{
 
-    color:#22C55E;
+    color:#2563EB;
 
     margin-right:10px;
 
@@ -1989,7 +1989,7 @@ body{
 
 .timeline i{
 
-    color:#22C55E;
+    color:#2563EB;
 
     font-size:18px;
 
@@ -2169,7 +2169,7 @@ body{
 
 .property-body{
 
-    background:#EEF5F3;
+    background:#F4F8FC;
 
     min-height:100vh;
 
@@ -2179,7 +2179,7 @@ body{
 
 .property-header{
 
-    background:linear-gradient(135deg,#123D2F,#1D6B4E);
+    background:linear-gradient(135deg,#0F2F5F,#1E40AF);
 
     padding:45px 0;
 
@@ -2215,7 +2215,7 @@ body{
 
 .property-header p{
 
-    color:#DDEFE8;
+    color:#DBEAFE;
 
     margin:0;
 
@@ -2227,7 +2227,7 @@ body{
 
     background:white;
 
-    color:#14532D;
+    color:#1E40AF;
 
     padding:14px 24px;
 
@@ -2235,15 +2235,15 @@ body{
 
     font-weight:600;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
 .btn-voltar:hover{
 
-    transform:translateY(-3px);
+    transform:none;
 
-    color:#14532D;
+    color:#1E40AF;
 
     box-shadow:0 10px 25px rgba(0,0,0,.15);
 
@@ -2291,7 +2291,7 @@ body{
 
 .map-top h3{
 
-    color:#14532D;
+    color:#1E40AF;
 
     font-size:28px;
 
@@ -2315,7 +2315,7 @@ body{
 
     overflow:hidden;
 
-    border:3px solid #EDF2EF;
+    border:3px solid #E5E7EB;
 
 }
 
@@ -2323,7 +2323,7 @@ body{
 
 .btn-search{
 
-    background:linear-gradient(135deg,#198754,#34C759);
+    background:#2563EB;
 
     color:white;
 
@@ -2335,15 +2335,15 @@ body{
 
     font-weight:600;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
 .btn-search:hover{
 
-    transform:translateY(-3px);
+    transform:none;
 
-    box-shadow:0 10px 25px rgba(25,135,84,.35);
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
 
 }
 
@@ -2367,7 +2367,7 @@ body{
 
 .side-panel h3{
 
-    color:#14532D;
+    color:#1E40AF;
 
     margin-bottom:25px;
 
@@ -2395,7 +2395,7 @@ body{
 
     border:2px solid #E8ECEF;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
@@ -2449,7 +2449,7 @@ body{
 
     margin-bottom:10px;
 
-    color:#14532D;
+    color:#1E40AF;
 
 }
 
@@ -2487,13 +2487,13 @@ body{
 
     box-shadow:0 12px 30px rgba(0,0,0,.08);
 
-    transition:.35s;
+    transition:.2s;
 
 }
 
 .metric-card:hover{
 
-    transform:translateY(-8px);
+    transform:none;
 
 }
 
@@ -2525,7 +2525,7 @@ body{
 
 .metric-card h5{
 
-    color:#14532D;
+    color:#1E40AF;
 
     font-weight:700;
 
@@ -2623,13 +2623,13 @@ body{
 
     font-weight:600;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
 .btn-limpar:hover{
 
-    transform:translateY(-4px);
+    transform:none;
 
     background:#DC2626;
 
@@ -2643,19 +2643,19 @@ body{
 
     border-radius:15px;
 
-    background:linear-gradient(135deg,#16A34A,#22C55E);
+    background:linear-gradient(135deg,#1E40AF,#2563EB);
 
     color:white;
 
     font-weight:700;
 
-    transition:.35s;
+    transition:.2s;
 
 }
 
 .btn-salvar:hover{
 
-    transform:translateY(-4px);
+    transform:none;
 
     box-shadow:0 15px 35px rgba(34,197,94,.35);
 
@@ -2799,7 +2799,7 @@ textarea.form-control{
 .logo{
     font-size:30px;
     font-weight:700;
-    color:#22C55E;
+    color:#2563EB;
 }
 
 .logo span{
@@ -2820,7 +2820,7 @@ textarea.form-control{
     text-decoration:none;
     padding:10px 18px;
     border-radius:12px;
-    transition:.3s;
+    transition:.2s;
 }
 
 .menu a:hover{
@@ -2833,7 +2833,7 @@ textarea.form-control{
 
     padding:60px 0;
 
-    background:linear-gradient(135deg,#2563EB,#16A34A);
+    background:linear-gradient(135deg,#2563EB,#1E40AF);
 
     color:#FFF;
 
@@ -2931,7 +2931,7 @@ textarea.form-control{
 
     box-shadow:0 10px 35px rgba(0,0,0,.08);
 
-    transition:.35s;
+    transition:.2s;
 
     height:100%;
 
@@ -2939,7 +2939,7 @@ textarea.form-control{
 
 .monitor-card:hover{
 
-    transform:translateY(-8px);
+    transform:none;
 
     box-shadow:0 20px 40px rgba(0,0,0,.12);
 
@@ -2949,7 +2949,7 @@ textarea.form-control{
 
     font-size:42px;
 
-    color:#16A34A;
+    color:#1E40AF;
 
     margin-bottom:18px;
 
@@ -3023,7 +3023,7 @@ textarea.form-control{
 
     color:#1E293B;
 
-    transition:.35s;
+    transition:.2s;
 
     box-shadow:0 10px 25px rgba(0,0,0,.08);
 
@@ -3031,7 +3031,7 @@ textarea.form-control{
 
 .acao-card:hover{
 
-    transform:translateY(-8px);
+    transform:none;
 
     color:#1E293B;
 
@@ -3045,7 +3045,7 @@ textarea.form-control{
 
     border-radius:50%;
 
-    background:linear-gradient(135deg,#2563EB,#16A34A);
+    background:linear-gradient(135deg,#2563EB,#1E40AF);
 
     display:flex;
 
@@ -3105,7 +3105,7 @@ textarea.form-control{
 
     border-radius:18px;
 
-    transition:.35s;
+    transition:.2s;
 
     border:1px solid #E2E8F0;
 
@@ -3135,7 +3135,7 @@ textarea.form-control{
 
     font-size:30px;
 
-    color:#16A34A;
+    color:#1E40AF;
 
     font-weight:700;
 
@@ -3153,7 +3153,7 @@ textarea.form-control{
 
 .status-panel{
 
-    background:linear-gradient(135deg,#16A34A,#2563EB);
+    background:linear-gradient(135deg,#1E40AF,#2563EB);
 
     color:white;
 
@@ -3245,7 +3245,7 @@ textarea.form-control{
 
     padding:25px;
 
-    transition:.35s;
+    transition:.2s;
 
     border:1px solid #E2E8F0;
 
@@ -3253,7 +3253,7 @@ textarea.form-control{
 
 .forecast-card:hover{
 
-    transform:translateY(-8px);
+    transform:none;
 
     background:white;
 
@@ -3271,7 +3271,7 @@ textarea.form-control{
 
     margin-top:15px;
 
-    color:#16A34A;
+    color:#1E40AF;
 
 }
 
@@ -3325,7 +3325,7 @@ textarea.form-control{
 
     height:100%;
 
-    background:#16A34A;
+    background:#1E40AF;
 
 }
 
@@ -3359,13 +3359,13 @@ textarea.form-control{
 
     height:18px;
 
-    background:#16A34A;
+    background:#1E40AF;
 
     border-radius:50%;
 
     border:4px solid white;
 
-    box-shadow:0 0 0 3px #16A34A;
+    box-shadow:0 0 0 3px #1E40AF;
 
 }
 
@@ -3545,7 +3545,7 @@ textarea.form-control{
 
     box-shadow:0 15px 40px rgba(0,0,0,.08);
 
-    transition:.35s;
+    transition:.2s;
 
     border:1px solid #edf2f7;
 
@@ -3553,7 +3553,7 @@ textarea.form-control{
 
 .safra-card:hover{
 
-    transform:translateY(-8px);
+    transform:none;
 
     box-shadow:0 25px 60px rgba(0,0,0,.12);
 
@@ -3683,7 +3683,7 @@ textarea.form-control{
 
     text-align:center;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
@@ -3739,7 +3739,7 @@ textarea.form-control{
 
     font-weight:600;
 
-    transition:.35s;
+    transition:.2s;
 
     display:flex;
 
@@ -3753,7 +3753,7 @@ textarea.form-control{
 
 .btn-monitorar{
 
-    background:linear-gradient(135deg,#2563EB,#22C55E);
+    background:#2563EB;
 
     color:white;
 
@@ -3763,7 +3763,7 @@ textarea.form-control{
 
     color:white;
 
-    transform:translateY(-5px);
+    transform:none;
 
     box-shadow:0 15px 35px rgba(37,99,235,.35);
 
@@ -3811,7 +3811,7 @@ textarea.form-control{
 
 .safras-body .hero-dashboard{
 
-    background:linear-gradient(135deg,#2563EB,#22C55E);
+    background:#2563EB;
 
     border-radius:25px;
 
@@ -4071,7 +4071,7 @@ textarea.form-control{
 
 .safra-navbar .logo i{
 
-    color:#22C55E;
+    color:#2563EB;
 
     margin-right:8px;
 
@@ -4079,7 +4079,7 @@ textarea.form-control{
 
 .safra-navbar .logo span{
 
-    color:#22C55E;
+    color:#2563EB;
 
 }
 
@@ -4099,13 +4099,13 @@ textarea.form-control{
 
     font-weight:500;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
 .safra-navbar .menu a:hover{
 
-    color:#22C55E;
+    color:#2563EB;
 
 }
 
@@ -4237,7 +4237,7 @@ textarea.form-control{
 
     border:2px solid #E2E8F0;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
@@ -4245,7 +4245,7 @@ textarea.form-control{
 
 .form-safra .form-select:focus{
 
-    border-color:#22C55E;
+    border-color:#2563EB;
 
     box-shadow:none;
 
@@ -4277,7 +4277,7 @@ textarea.form-control{
 
     text-decoration:none;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
@@ -4293,7 +4293,7 @@ textarea.form-control{
 
     border:none;
 
-    background:linear-gradient(135deg,#2563EB,#22C55E);
+    background:#2563EB;
 
     color:white;
 
@@ -4303,13 +4303,13 @@ textarea.form-control{
 
     font-weight:600;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
 .btn-salvar:hover{
 
-    transform:translateY(-3px);
+    transform:none;
 
     box-shadow:0 15px 35px rgba(37,99,235,.30);
 
@@ -4354,7 +4354,7 @@ textarea.form-control{
 
     height:55px;
 
-    background:linear-gradient(135deg,#2563EB,#22C55E);
+    background:#2563EB;
 
     color:white;
 
@@ -4412,7 +4412,7 @@ textarea.form-control{
 
 .status-box i{
 
-    color:#22C55E;
+    color:#2563EB;
 
     font-size:30px;
 
@@ -4426,7 +4426,7 @@ textarea.form-control{
 
     border-radius:18px;
 
-    background:linear-gradient(135deg,#2563EB,#22C55E);
+    background:#2563EB;
 
     color:white;
 
@@ -4620,18 +4620,18 @@ textarea.form-control{
 }
 
 .btn-profile-photo{
-    background:linear-gradient(90deg,var(--azul),var(--verde));
+    background:var(--azul);
     color:#fff;
     border:none;
     border-radius:12px;
     padding:14px 22px;
     font-weight:600;
     cursor:pointer;
-    transition:.35s;
+    transition:.2s;
 }
 
 .btn-profile-photo:hover{
-    transform:translateY(-3px);
+    transform:none;
     box-shadow:0 10px 25px rgba(37,99,235,.25);
 }
 
@@ -4705,7 +4705,7 @@ textarea.form-control{
     color:var(--escuro);
     padding:0 16px;
     font-size:15px;
-    transition:.3s;
+    transition:.2s;
     box-shadow:none;
 }
 
@@ -4717,7 +4717,7 @@ textarea.form-control{
 
 .profile-card .form-control:focus{
     border-color:var(--verde);
-    box-shadow:0 0 0 4px rgba(34,197,94,.15);
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
 }
 
 .profile-card select.form-control{
@@ -4743,7 +4743,7 @@ textarea.form-control{
     cursor:pointer;
     padding:14px 18px;
     border-radius:12px;
-    transition:.3s;
+    transition:.2s;
     background:#F8FAFC;
 }
 
@@ -4777,7 +4777,7 @@ textarea.form-control{
     border-radius:12px;
     font-weight:600;
     cursor:pointer;
-    transition:.3s;
+    transition:.2s;
 }
 
 .btn-profile-cancel:hover{
@@ -4787,13 +4787,13 @@ textarea.form-control{
 
 .btn-profile-save{
     border:none;
-    background:linear-gradient(90deg,var(--azul),var(--verde));
+    background:var(--azul);
     color:#fff;
     padding:14px 28px;
     border-radius:12px;
     font-weight:600;
     cursor:pointer;
-    transition:.35s;
+    transition:.2s;
 }
 
 .btn-profile-save i{
@@ -4801,7 +4801,7 @@ textarea.form-control{
 }
 
 .btn-profile-save:hover{
-    transform:translateY(-3px);
+    transform:none;
     box-shadow:0 12px 25px rgba(37,99,235,.25);
 }
 
@@ -4810,11 +4810,11 @@ textarea.form-control{
 ===========================*/
 
 .profile-card{
-    transition:.35s;
+    transition:.2s;
 }
 
 .profile-card:hover{
-    transform:translateY(-4px);
+    transform:none;
     box-shadow:0 18px 35px rgba(0,0,0,.08);
 }
 
