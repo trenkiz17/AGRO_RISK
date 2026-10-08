@@ -6,9 +6,9 @@ from services.listar_safra_service import ListarSafrasService
 from services.buscar_safra_por_id_service import BuscarSafraPorIdService
 from services.atualizar_safra_service import AtualizarSafraService
 from services.deletar_safra_service import DeletarSafraService
-from services.buscar_safra_por_cultura_service import (
-    BuscarSafraPorCulturaService
-)
+from services.buscar_safra_por_cultura_service import (BuscarSafraPorCulturaService)
+from services.estimar_colheita_service import (EstimarColheitaService)
+
 
 from models.database import db
 
@@ -25,10 +25,18 @@ class SafraController:
         self.registrar_rotas()
 
     # ==========================================
-    # REGISTRAR ROTAS
+    # ROTAS
     # ==========================================
 
     def registrar_rotas(self):
+        
+        
+        self.blueprint.add_url_rule(
+            "/safras/estimar-colheita",
+            view_func=self.estimar_colheita,
+            methods=["GET"]
+        )
+
 
         self.blueprint.add_url_rule(
             "/safras",
@@ -65,22 +73,31 @@ class SafraController:
             view_func=self.buscar_safra_por_cultura,
             methods=["GET"]
         )
+        
+        
+       
+
 
     # ==========================================
-    # CRIAR SAFRA
+    # CRIAR
     # ==========================================
 
     def criar_safra(self):
 
         try:
 
-            dados = request.get_json() or {}
+            dados = request.get_json(
+                silent=True
+            ) or {}
 
-            service = CriarSafraService()
+            safra = CriarSafraService().executar(
+                dados
+            )
 
-            safra = service.executar(dados)
-
-            return jsonify(safra), 201
+            return jsonify({
+                "mensagem": "Safra cadastrada com sucesso.",
+                "safra": safra
+            }), 201
 
         except ValueError as erro:
 
@@ -88,59 +105,68 @@ class SafraController:
                 "erro": str(erro)
             }), 400
 
-        except SQLAlchemyError:
+        except SQLAlchemyError as erro:
 
             db.session.rollback()
 
             return jsonify({
-                "erro": "Erro ao salvar safra no banco de dados."
+                "erro": "Erro ao salvar safra no banco de dados.",
+                "detalhes": str(erro)
             }), 500
 
+    
     # ==========================================
-    # LISTAR SAFRAS
+    # LISTAR
     # ==========================================
 
     def listar_safras(self):
 
-        service = ListarSafrasService()
+        try:
 
-        safras = service.executar()
+            # Identificar o usuário
+            usuario_id = request.args.get(
+                "usuario_id",
+                type=int
+            )
 
-        return jsonify(safras), 200
+            # Filtrar por propriedade, se informado
+            propriedade_id = request.args.get(
+                "propriedade_id",
+                type=int
+            )
+
+            if usuario_id is None:
+
+                return jsonify({
+                    "erro": "Informe o ID do usuário."
+                }), 400
+
+            # Enviar os filtros para o Service
+            safras = ListarSafrasService().executar(
+                usuario_id=usuario_id,
+                propriedade_id=propriedade_id
+            )
+
+            return jsonify(safras), 200
+
+        except SQLAlchemyError as erro:
+
+            return jsonify({
+                "erro": "Erro ao listar safras.",
+                "detalhes": str(erro)
+            }), 500
+
 
     # ==========================================
-    # BUSCAR SAFRA POR ID
+    # BUSCAR
     # ==========================================
 
     def buscar_safra_por_id(self, safra_id):
 
-        service = BuscarSafraPorIdService()
-
-        safra = service.executar(safra_id)
-
-        if safra is None:
-
-            return jsonify({
-                "erro": "Safra não encontrada."
-            }), 404
-
-        return jsonify(safra), 200
-
-    # ==========================================
-    # ATUALIZAR SAFRA
-    # ==========================================
-
-    def atualizar_safra(self, safra_id):
-
         try:
 
-            dados = request.get_json() or {}
-
-            service = AtualizarSafraService()
-
-            safra = service.executar(
-                safra_id,
-                dados
+            safra = BuscarSafraPorIdService().executar(
+                safra_id
             )
 
             if safra is None:
@@ -151,69 +177,135 @@ class SafraController:
 
             return jsonify(safra), 200
 
+        except SQLAlchemyError as erro:
+
+            return jsonify({
+                "erro": "Erro ao buscar safra.",
+                "detalhes": str(erro)
+            }), 500
+
+    # ==========================================
+    # ATUALIZAR
+    # ==========================================
+
+    def atualizar_safra(self, safra_id):
+
+        try:
+
+            dados = request.get_json(
+                silent=True
+            ) or {}
+
+            safra = AtualizarSafraService().executar(
+                safra_id,
+                dados
+            )
+
+            if safra is None:
+
+                return jsonify({
+                    "erro": "Safra não encontrada."
+                }), 404
+
+            return jsonify({
+                "mensagem": "Safra atualizada com sucesso.",
+                "safra": safra
+            }), 200
+
         except ValueError as erro:
 
             return jsonify({
                 "erro": str(erro)
             }), 400
 
-        except SQLAlchemyError:
+        except SQLAlchemyError as erro:
 
             db.session.rollback()
 
             return jsonify({
-                "erro": "Erro ao atualizar safra no banco de dados."
+                "erro": "Erro ao atualizar safra no banco de dados.",
+                "detalhes": str(erro)
             }), 500
 
     # ==========================================
-    # DELETAR SAFRA
+    # DELETAR
     # ==========================================
 
     def deletar_safra(self, safra_id):
 
         try:
 
-            service = DeletarSafraService()
-
-            safra_deletada = service.executar(
+            resultado = DeletarSafraService().executar(
                 safra_id
             )
 
-            if safra_deletada is False:
+            if resultado is False:
 
                 return jsonify({
                     "erro": "Safra não encontrada."
                 }), 404
 
-            return "", 204
+            return jsonify({
+                "mensagem": "Safra excluída com sucesso."
+            }), 200
 
-        except SQLAlchemyError:
+        except SQLAlchemyError as erro:
 
             db.session.rollback()
 
             return jsonify({
-                "erro": "Erro ao deletar safra no banco de dados."
+                "erro": "Erro ao deletar safra.",
+                "detalhes": str(erro)
             }), 500
 
     # ==========================================
-    # BUSCAR SAFRA POR CULTURA
+    # BUSCAR POR CULTURA
     # ==========================================
 
     def buscar_safra_por_cultura(self):
 
         cultura = request.args.get(
-            "cultura"
-        )
+            "cultura",
+            ""
+        ).strip()
+
+        if not cultura:
+
+            return jsonify({
+                "erro": "Informe a cultura."
+            }), 400
 
         try:
 
-            service = BuscarSafraPorCulturaService()
-
-            safras = service.executar(
+            safras = BuscarSafraPorCulturaService().executar(
                 cultura
             )
 
             return jsonify(safras), 200
+
+        except SQLAlchemyError as erro:
+
+            return jsonify({
+                "erro": "Erro ao buscar safras.",
+                "detalhes": str(erro)
+            }), 500
+
+
+
+    # ==========================================
+    # ESTIMAR COLHEITA
+    # ==========================================
+
+    def estimar_colheita(self):
+
+        try:
+
+            resultado = EstimarColheitaService().executar(
+                request.args.get("cultura"),
+                request.args.get("data_plantio")
+            )
+
+            return jsonify(resultado), 200
 
         except ValueError as erro:
 
@@ -221,9 +313,5 @@ class SafraController:
                 "erro": str(erro)
             }), 400
 
-
-# ==========================================
-# INSTÂNCIA DO CONTROLLER
-# ==========================================
 
 safra_controller = SafraController()

@@ -5,28 +5,21 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AgroRisk | Relatório da Safra</title>
 
     <!-- Bootstrap -->
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
 
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- CSS -->
 
-    <link
-        rel="stylesheet"
-        href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -34,746 +27,780 @@
 <body class="safras-body">
 
 
-<!-- ================= SIDEBAR ================= -->
+    <!-- ================= SIDEBAR ================= -->
 
-<aside class="sidebar">
+    <aside class="sidebar">
 
-    <div class="logo">
+        <div class="logo">
 
-        <i class="fa-solid fa-seedling"></i>
+            <i class="fa-solid fa-seedling"></i>
 
-        <span>AgroRisk</span>
-
-    </div>
-
-
-    <ul>
-
-        <li>
-
-            <a href="dashboard.html">
-
-                <i class="fa-solid fa-house"></i>
-
-                Dashboard
-
-            </a>
-
-        </li>
-
-
-        <li>
-
-            <a href="cadastro_propriedade.html">
-
-                <i class="fa-solid fa-map-location-dot"></i>
-
-                Propriedades
-
-            </a>
-
-        </li>
-
-
-        <li>
-
-            <a href="safras.html">
-
-                <i class="fa-solid fa-wheat-awn"></i>
-
-                Safras
-
-            </a>
-
-        </li>
-
-
-        <li class="active">
-
-            <a href="relatorios.html">
-
-                <i class="fa-solid fa-chart-column"></i>
-
-                Relatórios
-
-            </a>
-
-        </li>
-
-
-        <li>
-
-            <a href="perfil.html">
-
-                <i class="fa-solid fa-user"></i>
-
-                Perfil
-
-            </a>
-
-        </li>
-
-    </ul>
-
-
-    <div class="sidebar-footer">
-
-        <a href="index.html">
-
-            <i class="fa-solid fa-right-from-bracket"></i>
-
-            Sair
-
-        </a>
-
-    </div>
-
-</aside>
-
-
-
-<!-- ================= CONTEÚDO ================= -->
-
-<main class="main-content">
-
-
-    <!-- ================= TOPO ================= -->
-
-    <header class="topbar">
-
-        <div>
-
-            <h2>
-
-                Relatório da Safra
-
-            </h2>
-
-            <span>
-
-                Análise individual da produção
-
-            </span>
+            <span>AgroRisk</span>
 
         </div>
 
 
-        <a
-            href="safras.html"
-            class="btn btn-success">
+        <ul>
 
-            <i class="fa-solid fa-arrow-left"></i>
+            <li>
 
-            Voltar para Safras
+                <a href="dashboard.html">
 
-        </a>
+                    <i class="fa-solid fa-house"></i>
 
-    </header>
+                    Dashboard
 
+                </a>
 
-
-    <!-- ================= LOADING ================= -->
-
-    <section
-        id="carregandoRelatorio"
-        class="card shadow border-0 rounded-4 p-5 text-center">
-
-        <i
-            class="fa-solid fa-spinner fa-spin text-success fs-1 mb-3">
-        </i>
-
-        <h4>
-
-            Carregando relatório...
-
-        </h4>
-
-        <p class="text-muted mb-0">
-
-            Buscando os dados da safra selecionada.
-
-        </p>
-
-    </section>
+            </li>
 
 
+            <li>
 
-    <!-- ================= ERRO ================= -->
+                <a href="cadastro_propriedade.html">
 
-    <div
-        id="erroRelatorio"
-        class="alert alert-danger mt-4"
-        style="display:none;">
-    </div>
+                    <i class="fa-solid fa-map-location-dot"></i>
 
+                    Propriedades
 
+                </a>
 
-    <!-- ================= RELATÓRIO ================= -->
-
-    <div
-        id="conteudoRelatorio"
-        style="display:none;">
+            </li>
 
 
-        <!-- ================= CABEÇALHO ================= -->
+            <li>
 
-        <section class="hero-dashboard">
+                <a href="safras.html">
+
+                    <i class="fa-solid fa-wheat-awn"></i>
+
+                    Safras
+
+                </a>
+
+            </li>
+
+
+            <li class="active">
+
+                <a href="relatorios.html">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    Relatórios
+
+                </a>
+
+            </li>
+
+
+            <li>
+
+                <a href="perfil.html">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Perfil
+
+                </a>
+
+            </li>
+
+        </ul>
+
+
+        <div class="sidebar-footer">
+
+            <a href="index.html">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Sair
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= CONTEÚDO ================= -->
+
+    <main class="main-content">
+
+
+        <!-- ================= TOPO ================= -->
+
+        <header class="topbar">
 
             <div>
 
-                <span class="badge bg-success mb-2">
+                <h2>
 
-                    <i class="fa-solid fa-file-lines"></i>
+                    Relatório da Safra
 
-                    Relatório individual
+                </h2>
+
+                <span>
+
+                    Análise individual da produção
 
                 </span>
 
-
-                <h1 id="nomeSafra">
-
-                    --
-
-                </h1>
-
-
-                <p class="mb-1">
-
-                    Cultura:
-
-                    <strong id="culturaSafra">
-
-                        --
-
-                    </strong>
-
-                </p>
-
-
-                <p class="mb-0">
-
-                    Propriedade:
-
-                    <strong id="propriedadeSafra">
-
-                        --
-
-                    </strong>
-
-                </p>
-
             </div>
 
 
-            <div class="hero-icon">
+            <a href="safras.html" class="btn btn-success">
 
-                <i class="fa-solid fa-chart-column"></i>
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Voltar para Safras
+
+            </a>
+
+        </header>
+
+
+        <!-- ================= SELECIONAR SAFRA ================= -->
+
+        <section class="card shadow border-0 rounded-4 p-4 mb-4">
+
+            <h4 class="mb-2">
+                <i class="fa-solid fa-file-lines text-success"></i>
+                Selecionar relatório
+            </h4>
+
+            <p class="text-muted">
+                Escolha uma propriedade e uma safra para
+                visualizar seu relatório agrícola.
+            </p>
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-md-5">
+
+                    <label for="filtroPropriedadeRelatorio" class="form-label fw-semibold">
+                        Propriedade
+                    </label>
+
+                    <select id="filtroPropriedadeRelatorio" class="form-select">
+                        <option value="">
+                            Carregando propriedades...
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-5">
+
+                    <label for="filtroSafraRelatorio" class="form-label fw-semibold">
+                        Safra
+                    </label>
+
+                    <select id="filtroSafraRelatorio" class="form-select" disabled>
+                        <option value="">
+                            Selecione uma propriedade primeiro
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button type="button" id="btnVisualizarRelatorio" class="btn btn-success w-100" disabled>
+                        Visualizar
+                    </button>
+
+                </div>
 
             </div>
+
+            <p id="avisoSelecaoRelatorio" class="text-muted small mt-3 mb-0" aria-live="polite">
+                Consultando dados do AgroRisk...
+            </p>
 
         </section>
 
 
 
-        <!-- ================= STATUS ================= -->
+        <!-- ================= LOADING ================= -->
 
-        <section class="cards-dashboard">
+        <section id="carregandoRelatorio" class="card shadow border-0 rounded-4 p-5 text-center">
 
+            <i class="fa-solid fa-spinner fa-spin text-success fs-1 mb-3">
+            </i>
 
-            <div class="card-info">
+            <h4>
 
-                <div>
+                Carregando relatório...
 
-                    <small>
+            </h4>
 
-                        Status
+            <p class="text-muted mb-0">
 
-                    </small>
+                Buscando os dados da safra selecionada.
 
-                    <h2 id="statusSafra">
-
-                        --
-
-                    </h2>
-
-                </div>
-
-                <i class="fa-solid fa-circle-check"></i>
-
-            </div>
-
-
-            <div class="card-info">
-
-                <div>
-
-                    <small>
-
-                        Área plantada
-
-                    </small>
-
-                    <h2 id="areaSafra">
-
-                        --
-
-                    </h2>
-
-                </div>
-
-                <i class="fa-solid fa-vector-square"></i>
-
-            </div>
-
-
-            <div class="card-info">
-
-                <div>
-
-                    <small>
-
-                        Produtividade
-
-                    </small>
-
-                    <h2 id="produtividadeSafra">
-
-                        --
-
-                    </h2>
-
-                </div>
-
-                <i class="fa-solid fa-seedling"></i>
-
-            </div>
-
-
-            <div class="card-info">
-
-                <div>
-
-                    <small>
-
-                        Lucro estimado
-
-                    </small>
-
-                    <h2 id="lucroEstimado">
-
-                        Aguardando
-
-                    </h2>
-
-                </div>
-
-                <i class="fa-solid fa-money-bill-trend-up"></i>
-
-            </div>
-
+            </p>
 
         </section>
 
 
 
-        <!-- ================= PERÍODO ================= -->
+        <!-- ================= ERRO ================= -->
 
-        <section class="card shadow border-0 rounded-4 mt-4">
-
-            <div class="card-header bg-success text-white">
-
-                <i class="fa-solid fa-calendar-days"></i>
-
-                Período da safra
-
-            </div>
+        <div id="erroRelatorio" class="alert alert-danger mt-4" style="display:none;">
+        </div>
 
 
-            <div class="card-body">
 
-                <div class="row g-4">
+        <!-- ================= RELATÓRIO ================= -->
+
+        <div id="conteudoRelatorio" style="display:none;">
 
 
-                    <div class="col-md-6">
+            <!-- ================= CABEÇALHO ================= -->
 
-                        <small class="text-muted">
+            <section class="hero-dashboard">
 
-                            Data do plantio
+                <div>
 
-                        </small>
+                    <span class="badge bg-success mb-2">
 
-                        <h4 id="dataPlantio">
+                        <i class="fa-solid fa-file-lines"></i>
+
+                        Relatório individual
+
+                    </span>
+
+
+                    <h1 id="nomeSafra">
+
+                        --
+
+                    </h1>
+
+
+                    <p class="mb-1">
+
+                        Cultura:
+
+                        <strong id="culturaSafra">
 
                             --
 
-                        </h4>
+                        </strong>
 
-                    </div>
+                    </p>
 
 
-                    <div class="col-md-6">
+                    <p class="mb-0">
 
-                        <small class="text-muted">
+                        Propriedade:
 
-                            Data da colheita
-
-                        </small>
-
-                        <h4 id="dataColheita">
+                        <strong id="propriedadeSafra">
 
                             --
 
-                        </h4>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= DESEMPENHO ================= -->
-
-        <section class="card shadow border-0 rounded-4 mt-4">
-
-            <div class="card-header bg-success text-white">
-
-                <i class="fa-solid fa-chart-line"></i>
-
-                Desempenho da safra
-
-            </div>
-
-
-            <div class="card-body">
-
-                <div class="table-responsive">
-
-                    <table class="table align-middle">
-
-                        <tbody>
-
-
-                            <tr>
-
-                                <td>
-
-                                    Produtividade
-
-                                </td>
-
-                                <td
-                                    class="text-end fw-bold"
-                                    id="produtividadeSafra">
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>
-
-                                    Produção estimada
-
-                                </td>
-
-                                <td
-                                    class="text-end"
-                                    id="producaoEstimada">
-
-                                    Aguardando dados
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>
-
-                                    Custo estimado
-
-                                </td>
-
-                                <td
-                                    class="text-end"
-                                    id="custoEstimado">
-
-                                    Aguardando dados
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>
-
-                                    Receita estimada
-
-                                </td>
-
-                                <td
-                                    class="text-end"
-                                    id="receitaEstimada">
-
-                                    Aguardando dados
-
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>
-
-                                    Lucro estimado
-
-                                </td>
-
-                                <td
-                                    class="text-end fw-bold"
-                                    id="lucroEstimado">
-
-                                    Aguardando dados
-
-                                </td>
-
-                            </tr>
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= CLIMA ================= -->
-
-        <section class="card shadow border-0 rounded-4 mt-4">
-
-            <div class="card-header bg-success text-white">
-
-                <i class="fa-solid fa-cloud-sun"></i>
-
-                Condições climáticas
-
-            </div>
-
-
-            <div class="card-body">
-
-
-                <div class="alert alert-light border">
-
-                    <i class="fa-solid fa-circle-info text-success"></i>
-
-                    Os indicadores climáticos serão preenchidos
-                    quando a API de clima estiver integrada.
-
-                </div>
-
-
-                <div class="row g-4">
-
-
-                    <div class="col-md-6 col-lg-3">
-
-                        <small class="text-muted">
-
-                            Previsão
-
-                        </small>
-
-                        <h6 id="previsaoClima">
-
-                            Aguardando integração
-
-                        </h6>
-
-                    </div>
-
-
-                    <div class="col-md-6 col-lg-3">
-
-                        <small class="text-muted">
-
-                            Chuva
-
-                        </small>
-
-                        <h4 id="chuvaClima">
-
-                            --
-
-                        </h4>
-
-                    </div>
-
-
-                    <div class="col-md-6 col-lg-3">
-
-                        <small class="text-muted">
-
-                            Temperatura
-
-                        </small>
-
-                        <h4 id="temperaturaClima">
-
-                            --
-
-                        </h4>
-
-                    </div>
-
-
-                    <div class="col-md-6 col-lg-3">
-
-                        <small class="text-muted">
-
-                            Risco climático
-
-                        </small>
-
-                        <h6 id="riscoClima">
-
-                            Aguardando dados
-
-                        </h6>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= ANÁLISE ================= -->
-
-        <section class="card shadow border-0 rounded-4 mt-4">
-
-            <div class="card-header bg-success text-white">
-
-                <i class="fa-solid fa-lightbulb"></i>
-
-                Análise da safra
-
-            </div>
-
-
-            <div class="card-body">
-
-                <p
-                    id="analiseSafra"
-                    class="mb-0">
-
-                    --
-
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ================= PDF ================= -->
-
-        <section class="card shadow border-0 rounded-4 mt-4">
-
-            <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-3">
-
-                <div>
-
-                    <h5 class="mb-1">
-
-                        Relatório da safra
-
-                    </h5>
-
-                    <p class="text-muted mb-0">
-
-                        Gere um arquivo PDF com o resumo desta safra.
+                        </strong>
 
                     </p>
 
                 </div>
 
 
-                <button
-                    type="button"
-                    id="btnGerarPDF"
-                    class="btn btn-success btn-lg">
+                <div class="hero-icon">
 
-                    <i class="fa-solid fa-file-pdf"></i>
+                    <i class="fa-solid fa-chart-column"></i>
 
-                    Gerar PDF
+                </div>
 
-                </button>
-
-            </div>
-
-        </section>
-
-
-    </div>
+            </section>
 
 
 
-    <!-- ================= RODAPÉ ================= -->
+            <!-- ================= STATUS ================= -->
 
-    <footer class="dashboard-footer">
-
-        © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
-
-    </footer>
+            <section class="cards-dashboard">
 
 
-</main>
+                <div class="card-info">
+
+                    <div>
+
+                        <small>
+
+                            Status
+
+                        </small>
+
+                        <h2 id="statusSafra">
+
+                            --
+
+                        </h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+
+                <div class="card-info">
+
+                    <div>
+
+                        <small>
+
+                            Área plantada
+
+                        </small>
+
+                        <h2 id="areaSafra">
+
+                            --
+
+                        </h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-vector-square"></i>
+
+                </div>
+
+
+                <div class="card-info">
+
+                    <div>
+
+                        <small>
+
+                            Produtividade
+
+                        </small>
+
+                        <h2 id="produtividadeSafra">
+
+                            --
+
+                        </h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-seedling"></i>
+
+                </div>
+
+
+                <div class="card-info">
+
+                    <div>
+
+                        <small>
+
+                            Lucro estimado
+
+                        </small>
+
+                        <h2 id="lucroEstimado">
+
+                            Aguardando
+
+                        </h2>
+
+                    </div>
+
+                    <i class="fa-solid fa-money-bill-trend-up"></i>
+
+                </div>
+
+
+            </section>
 
 
 
-<!-- ================= BOOTSTRAP ================= -->
+            <!-- ================= PERÍODO ================= -->
 
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
-</script>
+            <section class="card shadow border-0 rounded-4 mt-4">
 
+                <div class="card-header bg-success text-white">
 
-<!-- ================= GERADOR PDF ================= -->
+                    <i class="fa-solid fa-calendar-days"></i>
 
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-</script>
+                    Período da safra
 
-
-<!-- ================= API ================= -->
-
-<script src="js/api.js"></script>
+                </div>
 
 
-<!-- ================= RELATÓRIO ================= -->
+                <div class="card-body">
 
-<script src="js/relatorios.js"></script>
+                    <div class="row g-4">
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+
+                                Data do plantio
+
+                            </small>
+
+                            <h4 id="dataPlantio">
+
+                                --
+
+                            </h4>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+
+                                Data da colheita
+
+                            </small>
+
+                            <h4 id="dataColheita">
+
+                                --
+
+                            </h4>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= DESEMPENHO ================= -->
+
+            <section class="card shadow border-0 rounded-4 mt-4">
+
+                <div class="card-header bg-success text-white">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    Desempenho da safra
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table align-middle">
+
+                            <tbody>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        Produtividade
+
+                                    </td>
+
+                                    <td class="text-end fw-bold" id="produtividadeSafra">
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        Produção estimada
+
+                                    </td>
+
+                                    <td class="text-end" id="producaoEstimada">
+
+                                        Aguardando dados
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        Custo estimado
+
+                                    </td>
+
+                                    <td class="text-end" id="custoEstimado">
+
+                                        Aguardando dados
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        Receita estimada
+
+                                    </td>
+
+                                    <td class="text-end" id="receitaEstimada">
+
+                                        Aguardando dados
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        Lucro estimado
+
+                                    </td>
+
+                                    <td class="text-end fw-bold" id="lucroEstimado">
+
+                                        Aguardando dados
+
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= CLIMA ================= -->
+
+            <section class="card shadow border-0 rounded-4 mt-4">
+
+                <div class="card-header bg-success text-white">
+
+                    <i class="fa-solid fa-cloud-sun"></i>
+
+                    Condições climáticas
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div class="alert alert-light border">
+
+                        <i class="fa-solid fa-circle-info text-success"></i>
+
+                        Os indicadores climáticos serão preenchidos
+                        quando a API de clima estiver integrada.
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+
+                        <div class="col-md-6 col-lg-3">
+
+                            <small class="text-muted">
+
+                                Previsão
+
+                            </small>
+
+                            <h6 id="previsaoClima">
+
+                                Aguardando integração
+
+                            </h6>
+
+                        </div>
+
+
+                        <div class="col-md-6 col-lg-3">
+
+                            <small class="text-muted">
+
+                                Chuva
+
+                            </small>
+
+                            <h4 id="chuvaClima">
+
+                                --
+
+                            </h4>
+
+                        </div>
+
+
+                        <div class="col-md-6 col-lg-3">
+
+                            <small class="text-muted">
+
+                                Temperatura
+
+                            </small>
+
+                            <h4 id="temperaturaClima">
+
+                                --
+
+                            </h4>
+
+                        </div>
+
+
+                        <div class="col-md-6 col-lg-3">
+
+                            <small class="text-muted">
+
+                                Risco climático
+
+                            </small>
+
+                            <h6 id="riscoClima">
+
+                                Aguardando dados
+
+                            </h6>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= ANÁLISE ================= -->
+
+            <section class="card shadow border-0 rounded-4 mt-4">
+
+                <div class="card-header bg-success text-white">
+
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                    Análise da safra
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <p id="analiseSafra" class="mb-0">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= PDF ================= -->
+
+            <section class="card shadow border-0 rounded-4 mt-4">
+
+                <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                    <div>
+
+                        <h5 class="mb-1">
+
+                            Relatório da safra
+
+                        </h5>
+
+                        <p class="text-muted mb-0">
+
+                            Gere um arquivo PDF com o resumo desta safra.
+
+                        </p>
+
+                    </div>
+
+
+                    <button type="button" id="btnGerarPDF" class="btn btn-success btn-lg">
+
+                        <i class="fa-solid fa-file-pdf"></i>
+
+                        Gerar PDF
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+
+
+        <!-- ================= RODAPÉ ================= -->
+
+        <footer class="dashboard-footer">
+
+            © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- ================= BOOTSTRAP ================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- ================= GERADOR PDF ================= -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
+
+
+    <!-- ================= API ================= -->
+
+    <script src="js/api.js"></script>
+
+
+    <!-- ================= RELATÓRIO ================= -->
+
+    <script src="js/relatorios.js"></script>
 
 
 </body>

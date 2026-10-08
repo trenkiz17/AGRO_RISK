@@ -7,6 +7,11 @@
 // INICIAR
 // =======================================
 
+
+// Propriedades reais cadastradas no MySQL
+let mapaPropriedadesSafras = new Map();
+
+
 document.addEventListener(
     "DOMContentLoaded",
     async function () {
@@ -21,133 +26,268 @@ document.addEventListener(
 // CARREGAR SAFRAS
 // =======================================
 
+
+// =======================================
+// CARREGAR SAFRAS DO MYSQL
+// =======================================
+
 async function carregarSafras() {
+
+    const titulo = document.getElementById(
+        "tituloSafras"
+    );
+
+    const filtro = document.getElementById(
+        "filtroPropriedadeSafras"
+    );
+
+    const linkNovaSafra = document.getElementById(
+        "linkNovaSafraLista"
+    );
+
+    const lista = document.getElementById(
+        "listaSafras"
+    );
+
+    // Verificar usuário
+
+    if (!obterUsuarioId()) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    // Identificar propriedade selecionada
+
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+    const propriedadeId = params.get(
+        "propriedade_id"
+    );
 
     try {
 
-        let safras = [];
+        // ===================================
+        // BUSCAR DADOS REAIS DO MYSQL
+        // ===================================
 
+        const respostaPropriedades =
+            await listarPropriedades();
 
-        // =======================================
-        // BUSCAR DA API
-        // =======================================
+        const respostaSafras =
+            await listarSafras();
+
+        const propriedades = Array.isArray(
+            respostaPropriedades
+        )
+            ? respostaPropriedades
+            : respostaPropriedades?.data;
+
+        const safras = Array.isArray(
+            respostaSafras
+        )
+            ? respostaSafras
+            : respostaSafras?.data;
 
         if (
-            typeof listarSafras === "function"
+            !Array.isArray(propriedades) ||
+            !Array.isArray(safras)
         ) {
-
-            try {
-
-                const resultado =
-                    await listarSafras();
-
-
-                if (Array.isArray(resultado)) {
-
-                    safras = resultado;
-
-                }
-
-                else if (
-                    resultado &&
-                    Array.isArray(resultado.data)
-                ) {
-
-                    safras =
-                        resultado.data;
-
-                }
-
-            }
-
-            catch (erroApi) {
-
-                console.warn(
-                    "Não foi possível carregar as safras pela API.",
-                    erroApi
-                );
-
-            }
-
+            throw new Error(
+                "Não foi possível consultar os dados no Flask."
+            );
         }
 
+        // ===================================
+        // VINCULAR IDs AOS NOMES REAIS
+        // ===================================
 
-        // =======================================
-        // CARREGAR SAFRAS DO LOCALSTORAGE
-        // =======================================
+        mapaPropriedadesSafras = new Map(
+            propriedades.map(propriedade => [
+                String(propriedade.id),
+                propriedade
+            ])
+        );
 
-        const safrasLocais =
-            JSON.parse(
-                localStorage.getItem("safras")
-            ) || [];
+        // ===================================
+        // MONTAR FILTRO DE PROPRIEDADES
+        // ===================================
 
+        if (filtro) {
 
-        const todasSafras = [
-            ...safras
-        ];
+            filtro.replaceChildren(
+                new Option(
+                    "Todas as propriedades",
+                    ""
+                )
+            );
 
+            propriedades.forEach(propriedade => {
 
-        safrasLocais.forEach(
-            function (safraLocal) {
+                filtro.add(
+                    new Option(
+                        propriedade.nome,
+                        String(propriedade.id)
+                    )
+                );
+            });
 
-                const existe =
-                    todasSafras.some(
-                        function (safra) {
+            filtro.value = propriedadeId || "";
 
-                            return String(safra.id) ===
-                                String(safraLocal.id);
+            filtro.onchange = function () {
 
-                        }
-                    );
+                const selecionada = filtro.value;
 
+                window.location.href = selecionada
+                    ? "safras.html?propriedade_id=" +
+                      encodeURIComponent(selecionada)
+                    : "safras.html";
+            };
+        }
 
-                if (!existe) {
+        // ===================================
+        // VERIFICAR PROPRIEDADE SELECIONADA
+        // ===================================
 
-                    todasSafras.push(
-                        safraLocal
-                    );
+        if (
+            propriedadeId &&
+            !mapaPropriedadesSafras.has(
+                String(propriedadeId)
+            )
+        ) {
+            throw new Error(
+                "A propriedade selecionada não foi encontrada."
+            );
+        }
 
-                }
+        // ===================================
+        // TÍTULO REAL DA PÁGINA
+        // ===================================
 
+        if (propriedadeId) {
+
+            const propriedade =
+                mapaPropriedadesSafras.get(
+                    String(propriedadeId)
+                );
+
+            if (titulo) {
+                titulo.textContent =
+                    "Safras da propriedade " +
+                    propriedade.nome;
             }
+
+        } else if (propriedades.length === 1) {
+
+            if (titulo) {
+                titulo.textContent =
+                    "Safras da propriedade " +
+                    propriedades[0].nome;
+            }
+
+        } else {
+
+            if (titulo) {
+                titulo.textContent = "Minhas Safras";
+            }
+        }
+
+        // ===================================
+        // BOTÃO NOVA SAFRA
+        // ===================================
+
+        if (linkNovaSafra) {
+
+            linkNovaSafra.href = propriedadeId
+                ? "cadastro_safras.html?propriedade_id=" +
+                  encodeURIComponent(propriedadeId)
+                : "cadastro_safras.html";
+        }
+
+        // ===================================
+        // GARANTIR VÍNCULO COM A PROPRIEDADE
+        // ===================================
+
+        const safrasDoUsuario = safras.filter(
+            safra => mapaPropriedadesSafras.has(
+                String(safra.propriedade_id)
+            )
         );
 
+        // ===================================
+        // FILTRAR PROPRIEDADE ESCOLHIDA
+        // ===================================
 
-        // =======================================
-        // RENDERIZAR
-        // =======================================
+        const safrasExibidas = propriedadeId
+            ? safrasDoUsuario.filter(
+                safra =>
+                    String(safra.propriedade_id) ===
+                    String(propriedadeId)
+            )
+            : safrasDoUsuario;
 
-        renderizarSafras(
-            todasSafras
-        );
+        // ===================================
+        // ATUALIZAR TELA
+        // ===================================
 
+        renderizarSafras(safrasExibidas);
 
-        atualizarResumo(
-            todasSafras
-        );
+        atualizarResumo(safrasExibidas);
 
+        // Corrigir o link do cartão vazio
 
-        carregarNomePropriedade(
-            todasSafras
-        );
+        if (
+            safrasExibidas.length === 0 &&
+            linkNovaSafra
+        ) {
 
-    }
+            const linkCadastroVazio =
+                lista?.querySelector(
+                    ".btn-monitorar"
+                );
 
-    catch (erro) {
+            if (linkCadastroVazio) {
+                linkCadastroVazio.href =
+                    linkNovaSafra.href;
+            }
+        }
+
+    } catch (erro) {
 
         console.error(
             "Erro ao carregar safras:",
             erro
         );
 
+        if (titulo) {
+            titulo.textContent =
+                "Safras indisponíveis";
+        }
 
-        renderizarSafras([]);
+        if (lista) {
+            lista.textContent = erro.message;
+        }
 
-        atualizarResumo([]);
+        // Evitar indicadores falsos quando
+        // ocorrer falha na API.
 
+        [
+            "totalSafras",
+            "totalAndamento",
+            "totalFinalizadas",
+            "totalArea"
+        ].forEach(id => {
+
+            const elemento = document.getElementById(id);
+
+            if (elemento) {
+                elemento.textContent = "—";
+            }
+        });
     }
-
 }
+
 
 
 // =======================================
@@ -488,16 +628,15 @@ function criarCardSafra(safra) {
                 <!-- MONITORAR -->
 
                 <a
-                    href="monitoramento.html?id=${id}"
+                    href="monitoramento.html?id=${encodeURIComponent(safra.propriedade_id)}"
                     class="btn-monitorar">
 
                     <i class="fa-solid fa-chart-line"></i>
 
-                    ${
-                        status === "Finalizada"
-                            ? "Visualizar"
-                            : "Monitorar"
-                    }
+                    ${status === "Finalizada"
+            ? "Visualizar"
+            : "Monitorar"
+        }
 
                 </a>
 
@@ -1032,100 +1171,75 @@ function atualizarResumo(safras) {
 // NOME DA PROPRIEDADE
 // =======================================
 
-function carregarNomePropriedade(safras) {
 
-    const elemento =
-        document.getElementById(
-            "nomePropriedade"
+// =======================================
+// NOME REAL DA PROPRIEDADE - MYSQL
+// =======================================
+
+async function carregarNomePropriedade() {
+
+    const elemento = document.getElementById(
+        "nomePropriedade"
+    );
+
+    if (!elemento) return;
+
+    try {
+
+        // Buscar propriedades reais no Flask/MySQL
+        const propriedades = await listarPropriedades();
+
+        if (!Array.isArray(propriedades)) {
+            throw new Error("Erro ao consultar propriedades.");
+        }
+
+        // Verificar se a página recebeu o ID da propriedade
+        const params = new URLSearchParams(
+            window.location.search
         );
 
+        const propriedadeId = params.get(
+            "propriedade_id"
+        );
 
-    if (!elemento) {
+        if (propriedadeId) {
 
-        return;
-
-    }
-
-
-    const primeiraSafra =
-        safras[0];
-
-
-    if (
-        primeiraSafra &&
-        primeiraSafra.propriedade_nome
-    ) {
-
-        elemento.textContent =
-            primeiraSafra.propriedade_nome;
-
-        return;
-
-    }
-
-
-    if (
-        primeiraSafra &&
-        primeiraSafra.propriedade &&
-        typeof primeiraSafra.propriedade === "object"
-    ) {
-
-        if (
-            primeiraSafra.propriedade.nome
-        ) {
-
-            elemento.textContent =
-                primeiraSafra.propriedade.nome;
-
-            return;
-
-        }
-
-    }
-
-
-    const propriedades =
-        JSON.parse(
-            localStorage.getItem(
-                "propriedades"
-            )
-        ) || [];
-
-
-    if (
-        primeiraSafra &&
-        primeiraSafra.propriedade_id
-    ) {
-
-        const propriedade =
-            propriedades.find(
-                function (prop) {
-
-                    return String(prop.id) ===
-                        String(
-                            primeiraSafra.propriedade_id
-                        );
-
-                }
+            const propriedade = propriedades.find(
+                p => String(p.id) === String(propriedadeId)
             );
 
-
-        if (propriedade) {
-
-            elemento.textContent =
-                propriedade.nome;
+            elemento.textContent = propriedade
+                ? propriedade.nome
+                : "não encontrada";
 
             return;
-
         }
 
+        // Se o usuário só tem uma propriedade,
+        // mostrar automaticamente o nome dela
+        if (propriedades.length === 1) {
+
+            elemento.textContent = propriedades[0].nome;
+
+            return;
+        }
+
+        // Se houver várias propriedades cadastradas
+        elemento.textContent = propriedades.length > 1
+            ? "todas as propriedades"
+            : "nenhuma propriedade cadastrada";
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar nome da propriedade:",
+            erro
+        );
+
+        elemento.textContent = "indisponível";
     }
-
-
-    elemento.textContent =
-        "Boa Vista";
-
 }
+
 
 
 // =======================================

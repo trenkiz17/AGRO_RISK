@@ -1,74 +1,221 @@
 // =============================================
-// CONFIGURAÇÃO DA API
+// CONFIGURAÇÃO
 // =============================================
 
-const API_URL = "http://localhost:5000";
+const API_URL = "http://127.0.0.1:5000";
+
 
 // =============================================
-// MÉTODOS GENÉRICOS
+// USUÁRIO LOGADO
 // =============================================
 
-async function request(endpoint, method = "GET", dados = null) {
-
-    const config = {
-        method,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    };
-
-    if (dados) {
-        config.body = JSON.stringify(dados);
-    }
+function obterUsuarioLogado() {
 
     try {
 
-        const resposta = await fetch(API_URL + endpoint, config);
-
-        if (!resposta.ok) {
-            throw new Error(`Erro ${resposta.status}`);
-        }
-
-        // DELETE 204 não possui JSON
-        if (resposta.status === 204) {
-            return true;
-        }
-
-        return await resposta.json();
+        return JSON.parse(
+            localStorage.getItem("usuario")
+        );
 
     } catch (erro) {
 
-        console.error("Erro API:", erro);
+        console.error(
+            "Erro ao recuperar usuário:",
+            erro
+        );
 
         return null;
+
     }
+
 }
 
-const get = (endpoint) => request(endpoint);
 
-const post = (endpoint, dados) =>
-    request(endpoint, "POST", dados);
+function obterUsuarioId() {
 
-const put = (endpoint, dados) =>
-    request(endpoint, "PUT", dados);
+    const usuario =
+        obterUsuarioLogado();
 
-const del = (endpoint) =>
-    request(endpoint, "DELETE");
+    return usuario?.id || null;
+
+}
+
+
+// =============================================
+// REQUISIÇÃO
+// =============================================
+
+async function request(
+    endpoint,
+    method = "GET",
+    dados = null
+) {
+
+    const config = {
+
+        method: method,
+
+        headers: {}
+
+    };
+
+
+    // Só envia Content-Type quando existe
+    // um corpo JSON na requisição.
+    //
+    // Isso evita preflight OPTIONS desnecessário
+    // em requisições GET.
+
+    if (dados !== null) {
+
+        config.headers["Content-Type"] =
+            "application/json";
+
+        config.body =
+            JSON.stringify(dados);
+
+    }
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                API_URL + endpoint,
+                config
+            );
+
+
+        const texto =
+            await resposta.text();
+
+
+        let resultado = null;
+
+
+        if (texto) {
+
+            try {
+
+                resultado =
+                    JSON.parse(texto);
+
+            } catch {
+
+                resultado = texto;
+
+            }
+
+        }
+
+
+        if (!resposta.ok) {
+
+            const mensagem =
+                resultado?.erro ||
+                resultado?.mensagem ||
+                `Erro ${resposta.status}`;
+
+            throw new Error(
+                mensagem
+            );
+
+        }
+
+
+        return resultado;
+
+    }
+
+
+    catch (erro) {
+
+        console.error(
+            "Erro na API:",
+            erro
+        );
+
+
+        alert(
+            erro.message ||
+            "Erro ao comunicar com a API."
+        );
+
+
+        return null;
+
+    }
+
+}
+
+
+// =============================================
+// MÉTODOS HTTP
+// =============================================
+
+const get = endpoint =>
+    request(
+        endpoint,
+        "GET"
+    );
+
+
+const post = (
+    endpoint,
+    dados
+) =>
+    request(
+        endpoint,
+        "POST",
+        dados
+    );
+
+
+const put = (
+    endpoint,
+    dados
+) =>
+    request(
+        endpoint,
+        "PUT",
+        dados
+    );
+
+
+const del = endpoint =>
+    request(
+        endpoint,
+        "DELETE"
+    );
+
 
 // =============================================
 // LOGIN
 // =============================================
 
-async function login(email, senha) {
+async function login(
+    email,
+    senha
+) {
 
-    return await post("/login", {
-        email,
-        senha
-    });
+    return await post(
+        "/login",
+        {
+            email,
+            senha
+        }
+    );
 
 }
 
-async function cadastrarUsuarioAPI(usuario) {
+
+// =============================================
+// USUÁRIO
+// =============================================
+
+async function cadastrarUsuarioAPI(
+    usuario
+) {
 
     return await post(
         "/usuarios",
@@ -77,22 +224,27 @@ async function cadastrarUsuarioAPI(usuario) {
 
 }
 
-// =============================================
-// USUÁRIO / PERFIL
-// =============================================
 
 async function buscarPerfil(id) {
 
-    return await get(`/usuarios/${id}`);
+    return await get(
+        `/usuarios/${id}`
+    );
 
 }
 
-async function atualizarUsuario(id, dados) {
 
-    return await put(`/usuarios/${id}`, dados);
+async function atualizarUsuario(
+    id,
+    dados
+) {
+
+    return await put(
+        `/usuarios/${id}`,
+        dados
+    );
 
 }
-
 
 
 // =============================================
@@ -101,33 +253,89 @@ async function atualizarUsuario(id, dados) {
 
 async function listarPropriedades() {
 
-    return await get("/propriedades");
+    const usuarioId =
+        obterUsuarioId();
+
+
+    if (!usuarioId) {
+
+        console.warn(
+            "Nenhum usuário logado."
+        );
+
+        return [];
+
+    }
+
+
+    return await get(
+        `/propriedades?usuario_id=${usuarioId}`
+    );
 
 }
+
 
 async function buscarPropriedade(id) {
 
-    return await get(`/propriedades/${id}`);
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await get(
+        `/propriedades/${id}?usuario_id=${usuarioId}`
+    );
 
 }
 
-async function cadastrarPropriedade(dados) {
 
-    return await post("/propriedades", dados);
+async function cadastrarPropriedade(
+    dados
+) {
+
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await post(
+        "/propriedades",
+        {
+            ...dados,
+            usuario_id: usuarioId
+        }
+    );
 
 }
 
-async function atualizarPropriedade(id, dados) {
 
-    return await put(`/propriedades/${id}`, dados);
+async function atualizarPropriedade(
+    id,
+    dados
+) {
+
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await put(
+        `/propriedades/${id}?usuario_id=${usuarioId}`,
+        dados
+    );
 
 }
+
 
 async function excluirPropriedade(id) {
 
-    return await del(`/propriedades/${id}`);
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await del(
+        `/propriedades/${id}?usuario_id=${usuarioId}`
+    );
 
 }
+
 
 // =============================================
 // SAFRAS
@@ -135,41 +343,95 @@ async function excluirPropriedade(id) {
 
 async function listarSafras() {
 
-    return await get("/safras");
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await get(
+        `/safras?usuario_id=${usuarioId}`
+    );
 
 }
 
-async function listarSafrasDaPropriedade(id) {
 
-    return await get(`/propriedades/${id}/safras`);
+async function listarSafrasDaPropriedade(
+    propriedadeId
+) {
+
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await get(
+        `/safras?propriedade_id=${propriedadeId}&usuario_id=${usuarioId}`
+    );
 
 }
+
 
 async function buscarSafra(id) {
 
-    return await get(`/safras/${id}`);
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await get(
+        `/safras/${id}?usuario_id=${usuarioId}`
+    );
 
 }
 
-async function cadastrarSafra(dados) {
 
-    return await post("/safras", dados);
+async function cadastrarSafra(
+    dados
+) {
+
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await post(
+        "/safras",
+        {
+            ...dados,
+            usuario_id: usuarioId
+        }
+    );
 
 }
 
-async function atualizarSafra(id, dados) {
 
-    return await put(`/safras/${id}`, dados);
+async function atualizarSafra(
+    id,
+    dados
+) {
+
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await put(
+        `/safras/${id}?usuario_id=${usuarioId}`,
+        {
+            ...dados,
+            usuario_id: usuarioId
+        }
+    );
 
 }
+
 
 async function excluirSafra(id) {
 
-    return await del(`/safras/${id}`);
+    const usuarioId =
+        obterUsuarioId();
+
+
+    return await del(
+        `/safras/${id}?usuario_id=${usuarioId}`
+    );
 
 }
-
-
 
 
 // =============================================
@@ -178,9 +440,12 @@ async function excluirSafra(id) {
 
 async function buscarDashboard() {
 
-    return await get("/dashboard");
+    return await get(
+        "/dashboard"
+    );
 
 }
+
 
 // =============================================
 // RELATÓRIOS
@@ -188,16 +453,100 @@ async function buscarDashboard() {
 
 async function buscarRelatorios() {
 
-    return await get("/relatorios");
+    return await get(
+        "/relatorios"
+    );
 
 }
+
 
 // =============================================
 // CLIMA
 // =============================================
 
-async function buscarClima(lat, lon) {
+async function buscarClima(
+    lat,
+    lon
+) {
 
-    return await get(`/clima?lat=${lat}&lon=${lon}`);
+    if (
+        lat === null ||
+        lat === undefined ||
+        lon === null ||
+        lon === undefined
+    ) {
+
+        console.error(
+            "Latitude e longitude são obrigatórias."
+        );
+
+        return null;
+
+    }
+
+
+    const latitude =
+        encodeURIComponent(lat);
+
+
+    const longitude =
+        encodeURIComponent(lon);
+
+
+    return await get(
+        `/api/clima?lat=${latitude}&lon=${longitude}`
+    );
+
+}
+
+
+// =============================================
+// ALIASES
+// =============================================
+//
+// Mantemos estes nomes também para evitar
+// problemas caso alguma tela esteja usando
+// "criar" em vez de "cadastrar".
+
+// PROPRIEDADE
+
+async function criarPropriedade(
+    dados
+) {
+
+    return await cadastrarPropriedade(
+        dados
+    );
+
+}
+
+
+// SAFRA
+
+async function criarSafra(
+    dados
+) {
+
+    return await cadastrarSafra(
+        dados
+    );
+
+}
+
+
+// ==========================================
+// ESTIMATIVA INICIAL DE COLHEITA
+// ==========================================
+
+async function estimarColheita(cultura, dataPlantio) {
+
+    const parametros = new URLSearchParams({
+        cultura: cultura,
+        data_plantio: dataPlantio
+    });
+
+    return await get(
+        `/safras/estimar-colheita?${parametros.toString()}`
+    );
 
 }

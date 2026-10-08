@@ -1,3 +1,6 @@
+
+from datetime import date
+
 from models.usuario import Usuario
 
 
@@ -10,57 +13,111 @@ class AtualizarUsuarioService:
         if usuario is None:
             return None
 
-        # ==========================================
-        # VERIFICAR E-MAIL
-        # ==========================================
+        # Validar nome
+        nome = str(
+            dados.get("nome", usuario.nome) or ""
+        ).strip()
 
-        novo_email = dados.get("email")
+        if not nome:
+            raise ValueError("O nome é obrigatório.")
 
-        if novo_email:
+        if len(nome) > 100:
+            raise ValueError("O nome é muito longo.")
 
-            usuario_com_email = Usuario.buscar_por_email(
-                novo_email
+        # Validar e-mail
+        email = str(
+            dados.get("email", usuario.email) or ""
+        ).strip().lower()
+
+        if not email or "@" not in email:
+            raise ValueError("Informe um e-mail válido.")
+
+        if len(email) > 120:
+            raise ValueError("O e-mail é muito longo.")
+
+        outro_usuario = Usuario.buscar_por_email(email)
+
+        if outro_usuario and outro_usuario.id != usuario.id:
+            raise ValueError(
+                "Este e-mail já está cadastrado em outra conta."
             )
 
-            if (
-                usuario_com_email
-                and usuario_com_email.id != usuario.id
-            ):
+        # Atualizar dados principais
+        usuario.nome = nome
+        usuario.email = email
 
+        # Atualizar campos opcionais
+        campos_opcionais = [
+            "telefone",
+            "cpf",
+            "estado",
+            "cidade",
+            "idioma"
+        ]
+
+        for nome_campo in campos_opcionais:
+
+            if nome_campo in dados:
+
+                valor = dados[nome_campo]
+
+                if valor is not None:
+                    valor = str(valor).strip()
+
+                setattr(usuario, nome_campo, valor or None)
+
+        # Validar telefone
+        if usuario.telefone:
+            numeros = "".join(
+                caractere
+                for caractere in usuario.telefone
+                if caractere.isdigit()
+            )
+
+            if len(numeros) not in (10, 11):
                 raise ValueError(
-                    "Já existe outro usuário cadastrado com este e-mail."
+                    "O telefone deve conter DDD e 8 ou 9 dígitos."
                 )
 
-        # ==========================================
-        # ATUALIZAR USUÁRIO
-        # ==========================================
+        # Validar CPF
+        if usuario.cpf:
+            numeros = "".join(
+                caractere
+                for caractere in usuario.cpf
+                if caractere.isdigit()
+            )
 
-        usuario.atualizar(
+            if len(numeros) != 11:
+                raise ValueError(
+                    "O CPF deve conter 11 dígitos."
+                )
 
-            nome=dados.get("nome"),
+        # Converter data de nascimento
+        if "data_nascimento" in dados:
 
-            email=dados.get("email"),
+            data_recebida = dados["data_nascimento"]
 
-            senha=dados.get("senha"),
+            if not data_recebida:
+                usuario.data_nascimento = None
 
-            telefone=dados.get("telefone"),
+            else:
+                try:
+                    data_convertida = date.fromisoformat(
+                        data_recebida
+                    )
+                except (ValueError, TypeError):
+                    raise ValueError(
+                        "Data de nascimento inválida."
+                    )
 
-            cpf=dados.get("cpf"),
+                if data_convertida > date.today():
+                    raise ValueError(
+                        "A data de nascimento não pode estar no futuro."
+                    )
 
-            data_nascimento=dados.get(
-                "data_nascimento"
-            ),
+                usuario.data_nascimento = data_convertida
 
-            estado=dados.get("estado"),
-
-            cidade=dados.get("cidade"),
-
-            idioma=dados.get("idioma")
-
-        )
-
-        # ==========================================
-        # RETORNAR USUÁRIO ATUALIZADO
-        # ==========================================
+        # O Model realiza o commit no MySQL
+        usuario.atualizar()
 
         return usuario.to_dict()

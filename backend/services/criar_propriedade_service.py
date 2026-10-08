@@ -6,6 +6,7 @@ class CriarPropriedadeService:
     def executar(self, dados):
 
         campos_obrigatorios = [
+            "usuario_id",
             "nome",
             "cidade",
             "estado",
@@ -14,7 +15,7 @@ class CriarPropriedadeService:
 
         for campo in campos_obrigatorios:
 
-            if not dados.get(campo):
+            if dados.get(campo) is None or dados.get(campo) == "":
 
                 raise ValueError(
                     f"O campo '{campo}' é obrigatório."
@@ -22,25 +23,42 @@ class CriarPropriedadeService:
 
         propriedade = Propriedade(
 
+            usuario_id=int(
+                dados["usuario_id"]
+            ),
+
             nome=dados["nome"],
 
             cidade=dados["cidade"],
 
             estado=dados["estado"],
 
-            observacao=dados.get("observacao"),
-
-            area=float(dados["area"]),
-
-            perimetro=float(
-                dados.get("perimetro", 0)
+            observacao=dados.get(
+                "observacao"
             ),
 
-            latitude=dados.get("latitude"),
+            area=float(
+                dados["area"]
+            ),
 
-            longitude=dados.get("longitude"),
+            perimetro=float(
+                dados.get(
+                    "perimetro",
+                    0
+                )
+            ),
 
-            geojson=dados.get("geojson")
+            latitude=dados.get(
+                "latitude"
+            ),
+
+            longitude=dados.get(
+                "longitude"
+            ),
+
+            geojson=dados.get(
+                "geojson"
+            )
         )
 
         propriedade.salvar()

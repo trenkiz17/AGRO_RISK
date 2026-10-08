@@ -1,462 +1,589 @@
-// ==========================================
-// USUÁRIO LOGADO
-// ==========================================
 
-const usuarioSalvo = localStorage.getItem("usuario");
+document.addEventListener("DOMContentLoaded", () => {
 
-if (!usuarioSalvo) {
+    // ==========================================
+    // USUÁRIO LOGADO
+    // ==========================================
 
-    alert("Nenhum usuário está logado.");
+    const usuario = obterUsuarioLogado();
 
-    window.location.href = "login.html";
+    if (!usuario || !usuario.id) {
+        alert("Faça login para acessar seu perfil.");
+        window.location.href = "login.html";
+        return;
+    }
 
-}
-
-const usuario = JSON.parse(usuarioSalvo);
+    const usuarioId = usuario.id;
 
 
-// ==========================================
-// CAMPOS DO PERFIL
-// ==========================================
+    // ==========================================
+    // CAMPOS DO PERFIL
+    // ==========================================
 
-const campos =
-    document.querySelectorAll(
-        ".profile-right .form-control"
+    // Compatível com o HTML original, que não
+    // tinha ID em todos os campos.
+
+    const grupoCampos = document.querySelector(
+        ".profile-right .profile-card:first-child .profile-grid"
     );
 
-const nome = campos[0];
-const email = campos[1];
-const telefone = campos[2];
-const cpf = campos[3];
-const dataNascimento = campos[4];
-const estado = campos[5];
-const cidade = campos[6];
-const idioma = campos[7];
+    const campos = Array.from(
+        grupoCampos?.querySelectorAll(".form-control") || []
+    );
+
+    function buscarCampo(id, posicao) {
+        return document.getElementById(id) || campos[posicao];
+    }
+
+    const nome = buscarCampo("nome", 0);
+    const email = buscarCampo("email", 1);
+    const telefone = buscarCampo("telefonefield", 2);
+    const cpf = buscarCampo("cpffield", 3);
+    const dataNascimento = buscarCampo("dataNascimento", 4);
+    const estado = buscarCampo("estado", 5);
+    const cidade = buscarCampo("cidade", 6);
+    const idioma = buscarCampo("idioma", 7);
+
+    const botaoSalvar = document.querySelector(".btn-profile-save");
+    const botaoCancelar = document.querySelector(".btn-profile-cancel");
+    const formulario = document.getElementById("perfilForm");
+
+    if (
+        !nome || !email || !telefone || !cpf ||
+        !dataNascimento || !estado || !cidade || !idioma
+    ) {
+        console.error("Os campos do perfil não foram encontrados.");
+        alert("Erro na estrutura da tela de perfil.");
+        return;
+    }
+
+    let ultimoPerfil = null;
 
 
-// ==========================================
-// PREENCHER PERFIL
-// ==========================================
+    // ==========================================
+    // MENSAGENS NA PRÓPRIA PÁGINA
+    // ==========================================
 
-async function carregarPerfil() {
+    const mensagem = document.createElement("div");
 
-    try {
+    mensagem.setAttribute("role", "status");
+    mensagem.className = "alert mt-3";
+    mensagem.hidden = true;
 
-        const perfil =
-            await buscarPerfil(usuario.id);
+    const areaAcoes = document.querySelector(".profile-actions");
 
-        if (!perfil) {
+    if (areaAcoes) {
+        areaAcoes.insertAdjacentElement("afterend", mensagem);
+    }
 
-            alert(
-                "Não foi possível carregar o perfil."
-            );
+    function mostrarMensagem(texto, sucesso = false) {
+        mensagem.textContent = texto;
+        mensagem.className = sucesso
+            ? "alert alert-success mt-3"
+            : "alert alert-danger mt-3";
 
-            return;
+        mensagem.hidden = false;
+    }
 
+
+    // ==========================================
+    // FORMATAR CPF
+    // ==========================================
+
+    function formatarCPF(valor) {
+        const numeros = String(valor || "")
+            .replace(/\D/g, "")
+            .slice(0, 11);
+
+        return numeros
+            .replace(/^(\d{3})(\d)/, "$1.$2")
+            .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    }
+
+    cpf.addEventListener("input", function () {
+        this.value = formatarCPF(this.value);
+    });
+
+
+    // ==========================================
+    // FORMATAR TELEFONE
+    // ==========================================
+
+    function formatarTelefone(valor) {
+        const numeros = String(valor || "")
+            .replace(/\D/g, "")
+            .slice(0, 11);
+
+        if (numeros.length <= 2) {
+            return numeros;
         }
 
-        nome.value =
-            perfil.nome || "";
+        if (numeros.length <= 6) {
+            return `(${numeros.slice(0, 2)}) ${numeros.slice(2)}`;
+        }
 
-        email.value =
-            perfil.email || "";
+        if (numeros.length <= 10) {
+            return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 6)}-${numeros.slice(6)}`;
+        }
 
-        telefone.value =
-            perfil.telefone || "";
+        return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(7)}`;
+    }
 
-        cpf.value =
-            perfil.cpf || "";
-
-        dataNascimento.value =
-            perfil.data_nascimento || "";
-
-        estado.value =
-            perfil.estado || "Minas Gerais";
-
-        cidade.value =
-            perfil.cidade || "";
-
-        idioma.value =
-            perfil.idioma || "Português";
+    telefone.addEventListener("input", function () {
+        this.value = formatarTelefone(this.value);
+    });
 
 
-        // ======================================
-        // NOME NO TOPO
-        // ======================================
+    // ==========================================
+    // SELECIONAR VALOR
+    // ==========================================
 
-        const nomeTopo =
-            document.querySelector(
-                ".perfil-topo strong"
-            );
+    // Permite exibir um estado cadastrado no
+    // banco mesmo que não esteja nas opções
+    // do select antigo.
+
+    function definirValor(elemento, valor) {
+        const texto = valor == null ? "" : String(valor);
+
+        if (
+            elemento.tagName === "SELECT" &&
+            texto &&
+            !Array.from(elemento.options).some(
+                opcao => opcao.value === texto
+            )
+        ) {
+            elemento.add(new Option(texto, texto));
+        }
+
+        elemento.value = texto;
+    }
+
+
+    // ==========================================
+    // ATUALIZAR NOME E CONTA NA TELA
+    // ==========================================
+
+    function atualizarIdentificacao(perfil) {
+
+        const nomeTopo = document.querySelector(
+            ".perfil-topo strong"
+        );
 
         if (nomeTopo) {
-
-            nomeTopo.textContent =
-                perfil.nome || "";
-
+            nomeTopo.textContent = perfil.nome || "Usuário";
         }
 
-    }
-
-    catch (erro) {
-
-        console.error(
-            "Erro ao carregar perfil:",
-            erro
+        const tipoTopo = document.querySelector(
+            ".perfil-topo small"
         );
 
-        alert(
-            "Erro ao carregar os dados do perfil."
-        );
+        if (tipoTopo) {
+            tipoTopo.textContent = "Conta AgroRisk";
+        }
 
+        const nomeCartao = document.getElementById("nomeCartao");
+
+        if (nomeCartao) {
+            nomeCartao.textContent = perfil.nome || "Usuário";
+        }
+
+        const emailCartao = document.getElementById("emailCartao");
+
+        if (emailCartao) {
+            emailCartao.textContent = perfil.email || "";
+        }
+
+        const contaId = document.getElementById("contaId");
+
+        if (contaId) {
+            contaId.textContent = "#" + perfil.id;
+        }
+
+        const contaEmail = document.getElementById("contaEmail");
+
+        if (contaEmail) {
+            contaEmail.textContent = perfil.email || "";
+        }
+
+        const avatar = document.getElementById("avatarPerfil");
+
+        if (avatar) {
+            const partes = (perfil.nome || "AgroRisk")
+                .trim()
+                .split(/\s+/);
+
+            avatar.textContent = partes
+                .slice(0, 2)
+                .map(parte => parte[0].toUpperCase())
+                .join("");
+        }
     }
 
-}
+
+    // ==========================================
+    // PREENCHER TODOS OS CAMPOS
+    // ==========================================
+
+    function preencherPerfil(perfil) {
+
+        nome.value = perfil.nome || "";
+        email.value = perfil.email || "";
+        telefone.value = formatarTelefone(perfil.telefone);
+        cpf.value = formatarCPF(perfil.cpf);
+
+        dataNascimento.value = perfil.data_nascimento
+            ? String(perfil.data_nascimento).slice(0, 10)
+            : "";
+
+        definirValor(estado, perfil.estado || "");
+        cidade.value = perfil.cidade || "";
+        definirValor(idioma, perfil.idioma || "Português");
+
+        atualizarIdentificacao(perfil);
+    }
 
 
-// ==========================================
-// FOTO DE PERFIL
-// ==========================================
+    // ==========================================
+    // CARREGAR PERFIL PELO BANCO
+    // ==========================================
 
-const inputFoto =
-    document.getElementById("fotoPerfil");
+    async function carregarPerfil() {
 
-const previewFoto =
-    document.getElementById("previewFoto");
+        if (botaoSalvar) {
+            botaoSalvar.disabled = true;
+        }
 
-const previewFotoTopo =
-    document.getElementById(
-        "previewFotoTopo"
-    );
+        try {
 
-const fotoSalva =
-    localStorage.getItem("fotoPerfil");
+            const perfil = await buscarPerfil(usuarioId);
 
-if (fotoSalva) {
+            if (!perfil || !perfil.id) {
+                mostrarMensagem(
+                    "Não foi possível carregar o perfil. Verifique a API."
+                );
+                return;
+            }
 
-    previewFoto.src =
-        fotoSalva;
+            ultimoPerfil = perfil;
+            preencherPerfil(perfil);
 
-    previewFotoTopo.src =
-        fotoSalva;
+        } catch (erro) {
 
-}
+            console.error("Erro ao carregar perfil:", erro);
+
+            mostrarMensagem(
+                "Erro ao consultar os dados do seu perfil."
+            );
+
+        } finally {
+
+            if (botaoSalvar) {
+                botaoSalvar.disabled = false;
+            }
+        }
+    }
 
 
-if (inputFoto) {
+    // ==========================================
+    // FOTO DE PERFIL
+    // ==========================================
 
-    inputFoto.addEventListener(
-        "change",
-        function () {
+    const inputFoto = document.getElementById("fotoPerfil");
+    const previewFoto = document.getElementById("previewFoto");
+    const previewFotoTopo = document.getElementById("previewFotoTopo");
 
-            const arquivo =
-                this.files[0];
+    // Cada conta tem sua própria foto neste navegador.
+    const chaveFoto = `fotoPerfil_${usuarioId}`;
+
+    function mostrarFoto(caminho) {
+
+        if (previewFoto) {
+            previewFoto.src = caminho;
+        }
+
+        if (previewFotoTopo) {
+            previewFotoTopo.src = caminho;
+        }
+    }
+
+    // Imagem padrão sem depender de arquivos externos.
+    const imagemPadrao =
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="300" height="300"
+                 viewBox="0 0 300 300">
+                <rect width="300" height="300" fill="#166534"/>
+                <circle cx="150" cy="115" r="55" fill="#dcfce7"/>
+                <path d="M55 285c0-80 45-110 95-110s95 30 95 110"
+                      fill="#dcfce7"/>
+            </svg>
+        `);
+
+    const fotoArmazenada = localStorage.getItem(chaveFoto);
+
+    mostrarFoto(fotoArmazenada || imagemPadrao);
+
+    if (inputFoto) {
+
+        inputFoto.accept = "image/*";
+
+        inputFoto.addEventListener("change", function () {
+
+            const arquivo = this.files[0];
 
             if (!arquivo) return;
 
-            const leitor =
-                new FileReader();
+            if (!arquivo.type.startsWith("image/")) {
+                mostrarMensagem("Selecione um arquivo de imagem.");
+                return;
+            }
 
-            leitor.onload =
-                function (e) {
+            // Limite para não ultrapassar a capacidade
+            // de armazenamento do navegador.
+            if (arquivo.size > 2 * 1024 * 1024) {
+                mostrarMensagem(
+                    "Escolha uma imagem com até 2 MB."
+                );
+                return;
+            }
 
-                    previewFoto.src =
-                        e.target.result;
+            const leitor = new FileReader();
 
-                    previewFotoTopo.src =
-                        e.target.result;
+            leitor.onload = function (evento) {
 
-                    localStorage.setItem(
-                        "fotoPerfil",
-                        e.target.result
+                try {
+
+                    const imagem = evento.target.result;
+
+                    localStorage.setItem(chaveFoto, imagem);
+
+                    mostrarFoto(imagem);
+
+                    mostrarMensagem(
+                        "Foto atualizada neste navegador. O envio da foto ao banco será implementado depois.",
+                        true
                     );
 
-                };
+                } catch (erro) {
 
-            leitor.readAsDataURL(
-                arquivo
+                    console.error("Erro ao armazenar foto:", erro);
+
+                    mostrarMensagem(
+                        "Não foi possível salvar a foto no navegador."
+                    );
+                }
+            };
+
+            leitor.readAsDataURL(arquivo);
+        });
+    }
+
+
+    // ==========================================
+    // SALVAR TODAS AS INFORMAÇÕES
+    // ==========================================
+
+    async function salvarPerfil(evento) {
+
+        evento.preventDefault();
+
+        if (!ultimoPerfil) {
+            mostrarMensagem("Aguarde o carregamento do perfil.");
+            return;
+        }
+
+        const dados = {
+
+            nome: nome.value.trim(),
+
+            email: email.value.trim(),
+
+            telefone: telefone.value.trim() || null,
+
+            cpf: cpf.value.trim() || null,
+
+            data_nascimento: dataNascimento.value || null,
+
+            estado: estado.value.trim() || null,
+
+            cidade: cidade.value.trim() || null,
+
+            idioma: idioma.value || "Português"
+
+        };
+
+        // ======================================
+        // VALIDAÇÕES
+        // ======================================
+
+        if (!dados.nome || !dados.email) {
+
+            mostrarMensagem("Nome e e-mail são obrigatórios.");
+            return;
+        }
+
+        if (!email.checkValidity()) {
+
+            mostrarMensagem("Digite um e-mail válido.");
+            return;
+        }
+
+        const numerosCPF = (dados.cpf || "").replace(/\D/g, "");
+
+        if (dados.cpf && numerosCPF.length !== 11) {
+
+            mostrarMensagem("O CPF precisa ter 11 dígitos.");
+            return;
+        }
+
+        const numerosTelefone = (dados.telefone || "")
+            .replace(/\D/g, "");
+
+        if (
+            dados.telefone &&
+            ![10, 11].includes(numerosTelefone.length)
+        ) {
+
+            mostrarMensagem("Informe um telefone com DDD.");
+            return;
+        }
+
+        // ======================================
+        // ENVIAR DADOS PARA A API
+        // ======================================
+
+        const textoOriginal = botaoSalvar?.innerHTML;
+
+        if (botaoSalvar) {
+            botaoSalvar.disabled = true;
+            botaoSalvar.textContent = "Salvando...";
+        }
+
+        mensagem.hidden = true;
+
+        try {
+
+            const resposta = await atualizarUsuario(
+                usuarioId,
+                dados
             );
 
-        }
-    );
+            if (!resposta || !resposta.id) {
 
-}
-
-
-// ==========================================
-// MÁSCARA CPF
-// ==========================================
-
-if (cpf) {
-
-    cpf.addEventListener(
-        "input",
-        function () {
-
-            let valor =
-                this.value.replace(
-                    /\D/g,
-                    ""
-                );
-
-            valor =
-                valor.replace(
-                    /(\d{3})(\d)/,
-                    "$1.$2"
-                );
-
-            valor =
-                valor.replace(
-                    /(\d{3})(\d)/,
-                    "$1.$2"
-                );
-
-            valor =
-                valor.replace(
-                    /(\d{3})(\d{1,2})$/,
-                    "$1-$2"
-                );
-
-            this.value =
-                valor.substring(
-                    0,
-                    14
-                );
-
-        }
-    );
-
-}
-
-
-// ==========================================
-// MÁSCARA TELEFONE
-// ==========================================
-
-if (telefone) {
-
-    telefone.addEventListener(
-        "input",
-        function () {
-
-            let valor =
-                this.value.replace(
-                    /\D/g,
-                    ""
-                );
-
-            valor =
-                valor.replace(
-                    /^(\d{2})(\d)/g,
-                    "($1) $2"
-                );
-
-            valor =
-                valor.replace(
-                    /(\d)(\d{4})$/,
-                    "$1-$2"
-                );
-
-            this.value =
-                valor.substring(
-                    0,
-                    15
-                );
-
-        }
-    );
-
-}
-
-
-// ==========================================
-// SALVAR PERFIL
-// ==========================================
-
-const botaoSalvar =
-    document.querySelector(
-        ".btn-profile-save"
-    );
-
-if (botaoSalvar) {
-
-    botaoSalvar.addEventListener(
-        "click",
-        async function (e) {
-
-            e.preventDefault();
-
-            // ==================================
-            // VERIFICA USUÁRIO
-            // ==================================
-
-            const usuarioAtual =
-                localStorage.getItem(
-                    "usuario"
-                );
-
-            if (!usuarioAtual) {
-
-                alert(
-                    "Usuário não encontrado. Faça login novamente."
+                mostrarMensagem(
+                    "Não foi possível atualizar o perfil."
                 );
 
                 return;
-
             }
 
-            const usuarioLogado =
-                JSON.parse(
-                    usuarioAtual
-                );
-
-
             // ==================================
-            // VALIDA NOME E E-MAIL
+            // CONFIRMAR DADOS SALVOS NA API
             // ==================================
 
-            const novoNome =
-                nome.value.trim();
+            const perfilConfirmado = await buscarPerfil(usuarioId);
 
-            const novoEmail =
-                email.value.trim();
+            if (!perfilConfirmado || !perfilConfirmado.id) {
 
-            if (
-                !novoNome ||
-                !novoEmail
-            ) {
-
-                alert(
-                    "Nome e e-mail são obrigatórios."
+                mostrarMensagem(
+                    "A atualização foi enviada, mas não foi possível confirmar os dados."
                 );
 
                 return;
-
             }
 
+            ultimoPerfil = perfilConfirmado;
+
+            preencherPerfil(perfilConfirmado);
 
             // ==================================
-            // ENVIA PARA A API
+            // ATUALIZAR USUÁRIO LOGADO
             // ==================================
 
-            try {
+            const usuarioAtual = obterUsuarioLogado() || {};
 
-                const resposta =
-                    await atualizarUsuario(
-                        usuarioLogado.id,
-                        {
-                            nome: novoNome,
-                            email: novoEmail
-                        }
-                    );
+            localStorage.setItem(
+                "usuario",
+                JSON.stringify({
+                    ...usuarioAtual,
+                    id: perfilConfirmado.id,
+                    nome: perfilConfirmado.nome,
+                    email: perfilConfirmado.email
+                })
+            );
 
+            // ==================================
+            // MENSAGEM DE SUCESSO
+            // ==================================
 
-                // ==================================
-                // ERRO
-                // ==================================
+            mostrarMensagem(
+                "Perfil atualizado com sucesso! Dados confirmados pela API.",
+                true
+            );
 
-                if (!resposta) {
+            // Permanece na página do perfil.
+            // Não existe redirecionamento aqui.
 
-                    alert(
-                        "Erro ao atualizar o perfil."
-                    );
+        } catch (erro) {
 
-                    return;
+            console.error("Erro ao salvar perfil:", erro);
 
-                }
+            mostrarMensagem(
+                "Ocorreu um erro ao atualizar o perfil."
+            );
 
+        } finally {
 
-                // ==================================
-                // ATUALIZA LOCALSTORAGE
-                // ==================================
-
-                localStorage.setItem(
-                    "usuario",
-                    JSON.stringify(
-                        resposta
-                    )
-                );
-
-
-                // ==================================
-                // ATUALIZA NOME NO TOPO
-                // ==================================
-
-                const nomeTopo =
-                    document.querySelector(
-                        ".perfil-topo strong"
-                    );
-
-                if (nomeTopo) {
-
-                    nomeTopo.textContent =
-                        resposta.nome;
-
-                }
-
-
-                // ==================================
-                // SUCESSO
-                // ==================================
-
-                alert(
-                    "Perfil atualizado com sucesso!"
-                );
-
+            if (botaoSalvar) {
+                botaoSalvar.disabled = false;
+                botaoSalvar.innerHTML = textoOriginal;
             }
-
-            catch (erro) {
-
-                console.error(
-                    "Erro ao atualizar perfil:",
-                    erro
-                );
-
-                alert(
-                    "Erro ao atualizar o perfil."
-                );
-
-            }
-
         }
-    );
-
-}
+    }
 
 
-// ==========================================
-// BOTÃO CANCELAR
-// ==========================================
+    // ==========================================
+    // SALVAR: HTML ANTIGO OU NOVO
+    // ==========================================
 
-const cancelar =
-    document.querySelector(
-        ".btn-profile-cancel"
-    );
+    if (formulario) {
 
-if (cancelar) {
+        formulario.addEventListener("submit", salvarPerfil);
 
-    cancelar.addEventListener(
-        "click",
-        function () {
+    } else if (botaoSalvar) {
 
-            if (
-                confirm(
-                    "Deseja cancelar as alterações?"
-                )
-            ) {
+        botaoSalvar.addEventListener("click", salvarPerfil);
+    }
 
-                carregarPerfil();
 
+    // ==========================================
+    // CANCELAR ALTERAÇÕES
+    // ==========================================
+
+    if (botaoCancelar) {
+
+        botaoCancelar.addEventListener("click", function (evento) {
+
+            evento.preventDefault();
+
+            if (!confirm("Deseja desfazer as alterações?")) {
+                return;
             }
 
-        }
-    );
+            if (ultimoPerfil) {
+                preencherPerfil(ultimoPerfil);
+                mensagem.hidden = true;
+            }
+        });
+    }
 
-}
 
+    // ==========================================
+    // INICIAR
+    // ==========================================
 
-// ==========================================
-// INICIAR
-// ==========================================
+    carregarPerfil();
 
-carregarPerfil();
+});

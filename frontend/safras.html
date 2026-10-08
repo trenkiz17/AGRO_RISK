@@ -5,273 +5,216 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AgroRisk | Safras</title>
 
     <!-- Bootstrap -->
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <link rel="stylesheet"
-        href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 <body class="safras-body">
 
-<!-- ================= SIDEBAR ================= -->
+    <!-- ================= SIDEBAR ================= -->
 
-<aside class="sidebar">
+    <aside class="sidebar">
 
-    <div class="logo">
+        <div class="logo">
 
-        <i class="fa-solid fa-seedling"></i>
+            <i class="fa-solid fa-seedling"></i>
 
-        <span>AgroRisk</span>
+            <span>AgroRisk</span>
 
-    </div>
+        </div>
 
-    <ul>
+        <ul>
 
-        <li>
+            <li>
 
-            <a href="dashboard.html">
+                <a href="dashboard.html">
 
-                <i class="fa-solid fa-house"></i>
+                    <i class="fa-solid fa-house"></i>
 
-                Dashboard
+                    Dashboard
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="propriedades.html">
+
+                    <i class="fa-solid fa-map-location-dot"></i>
+
+                   Minhas Propriedades
+
+                </a>
+
+            </li>
+
+            <li class="active">
+
+                <a href="safras.html">
+
+                    <i class="fa-solid fa-wheat-awn"></i>
+
+                    Safras
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="relatorios.html">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    Relatórios
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="perfil.html">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Perfil
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <div class="sidebar-footer">
+
+            <a href="index.html">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Sair
 
             </a>
 
-        </li>
+        </div>
 
-        <li>
+    </aside>
 
-            <a href="cadastro_propriedade.html">
+    <!-- ================= CONTEÚDO ================= -->
 
-                <i class="fa-solid fa-map-location-dot"></i>
+    <main class="main-content">
 
-                Propriedades
+        <header class="topbar">
 
+            <div>
+
+                <h2>Safras</h2>
+
+                <span>Gerencie todas as safras da propriedade</span>
+
+            </div>
+
+
+            <a id="linkNovaSafraLista" href="cadastro_safras.html" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i>
+                Nova Safra
             </a>
 
-        </li>
 
-        <li class="active">
+        </header>
 
-            <a href="safras.html">
+        <!-- ================= HERO ================= -->
+
+        <section class="hero-dashboard">
+
+            <div>
+
+
+                <h1 id="tituloSafras">
+                    Minhas Safras
+                </h1>
+
+
+                <p>
+
+                    Visualize todas as safras cadastradas,
+                    acompanhe o andamento e acesse rapidamente
+                    o monitoramento de cada uma delas.
+
+                </p>
+
+            </div>
+
+            <div class="hero-icon">
 
                 <i class="fa-solid fa-wheat-awn"></i>
 
-                Safras
+            </div>
 
-            </a>
+        </section>
 
-        </li>
+        <!-- ================= CARDS ================= -->
 
-        <li>
+        
+<!-- FILTRAR SAFRAS POR PROPRIEDADE -->
 
-            <a href="relatorios.html">
+<section class="my-4">
 
-                <i class="fa-solid fa-chart-column"></i>
+    <div class="d-flex flex-wrap align-items-center gap-3">
 
-                Relatórios
+        <label
+            for="filtroPropriedadeSafras"
+            class="fw-semibold"
+        >
+            <i class="fa-solid fa-map-location-dot"></i>
+            Selecione uma propriedade:
+        </label>
 
-            </a>
-
-        </li>
-
-        <li>
-
-            <a href="perfil.html">
-
-                <i class="fa-solid fa-user"></i>
-
-                Perfil
-
-            </a>
-
-        </li>
-
-    </ul>
-
-    <div class="sidebar-footer">
-
-        <a href="index.html">
-
-            <i class="fa-solid fa-right-from-bracket"></i>
-
-            Sair
-
-        </a>
-
-    </div>
-
-</aside>
-
-<!-- ================= CONTEÚDO ================= -->
-
-<main class="main-content">
-
-<header class="topbar">
-
-    <div>
-
-        <h2>Safras</h2>
-
-        <span>Gerencie todas as safras da propriedade</span>
-
-    </div>
-
-    <a href="cadastro_safras.html"
-        class="btn btn-success">
-
-        <i class="fa-solid fa-plus"></i>
-
-        Nova Safra
-
-    </a>
-
-</header>
-
-<!-- ================= HERO ================= -->
-
-<section class="hero-dashboard">
-
-    <div>
-
-        <h1>
-
-            Fazenda
-
-            <span id="nomePropriedade">
-
-                Boa Vista
-
-            </span>
-
-        </h1>
-
-        <p>
-
-            Visualize todas as safras cadastradas,
-            acompanhe o andamento e acesse rapidamente
-            o monitoramento de cada uma delas.
-
-        </p>
-
-    </div>
-
-    <div class="hero-icon">
-
-        <i class="fa-solid fa-wheat-awn"></i>
+        <select
+            id="filtroPropriedadeSafras"
+            class="form-select"
+            style="max-width: 350px;"
+        >
+            <option value="">
+                Todas as propriedades
+            </option>
+        </select>
 
     </div>
 
 </section>
 
-<!-- ================= CARDS ================= -->
 
-<section class="cards-dashboard">
+        <!-- ================= LISTA DAS SAFRAS ================= -->
 
-    <div class="card-info">
+        <section class="lista-safras">
 
-        <div>
+            <div class="titulo-secao">
 
-            <small>Safras</small>
+                <h3>
 
-            <h2 id="totalSafras">
+                    <i class="fa-solid fa-leaf"></i>
 
-                0
+                    Safras cadastradas
 
-            </h2>
+                </h3>
 
-        </div>
+            </div>
 
-        <i class="fa-solid fa-seedling"></i>
-
-    </div>
-
-    <div class="card-info">
-
-        <div>
-
-            <small>Em andamento</small>
-            <h2 id="totalAndamento">
-
-                0
-
-            </h2>
-
-        </div>
-
-        <i class="fa-solid fa-clock"></i>
-
-    </div>
-
-    <div class="card-info">
-
-        <div>
-
-            <small>Finalizadas</small>
-
-            <h2 id="totalFinalizadas">
-
-                0
-
-            </h2>
-
-        </div>
-
-        <i class="fa-solid fa-circle-check"></i>
-
-    </div>
-
-    <div class="card-info">
-
-        <div>
-
-            <small>Área Plantada</small>
-
-            <h2 id="totalArea">
-
-                0 ha
-
-            </h2>
-
-        </div>
-
-        <i class="fa-solid fa-vector-square"></i>
-
-    </div>
-
-</section>
-
-<!-- ================= LISTA DAS SAFRAS ================= -->
-
-<section class="lista-safras">
-
-    <div class="titulo-secao">
-
-        <h3>
-
-            <i class="fa-solid fa-leaf"></i>
-
-            Safras cadastradas
-
-        </h3>
-
-    </div>
-
-    <!--
+            <!--
 
         IMPORTANTE:
 
@@ -282,27 +225,27 @@
         ela aparecerá aqui no mesmo padrão visual.
     -->
 
-    <div id="listaSafras">
+            <div id="listaSafras">
 
-        <!-- CARDS GERADOS PELO JAVASCRIPT -->
+                <!-- CARDS GERADOS PELO JAVASCRIPT -->
 
-    </div>
+            </div>
 
-</section>
+        </section>
 
-<footer class="dashboard-footer">
+        <footer class="dashboard-footer">
 
-    © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
+            © 2026 AgroRisk • Sistema Inteligente de Monitoramento Agrícola
 
-</footer>
+        </footer>
 
-</main>
+    </main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="js/api.js"></script>
+    <script src="js/api.js"></script>
 
-<script src="js/safras.js"></script>
+    <script src="js/safras.js"></script>
 
 </body>
 

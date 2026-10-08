@@ -1,328 +1,601 @@
-// ===================================================
-// MONITORAMENTO
-// ===================================================
 
-let map;
+// ==========================================
+// AGRORISK - MONITORAMENTO DA PROPRIEDADE
+// ==========================================
 
-// ======================================
-// INICIAR
-// ======================================
+let mapaMonitoramento = null;
 
-document.addEventListener("DOMContentLoaded", async () => {
 
-    carregarPropriedade();
+// ==========================================
+// FUNÇÕES AUXILIARES
+// ==========================================
 
-    carregarSafra();
+function textoMonitor(id, valor) {
 
-    iniciarMapa();
+    const elemento = document.getElementById(id);
 
-    carregarClima();
+    if (elemento) {
+        elemento.textContent = valor;
+    }
+}
 
-    carregarGrafico();
 
-});
+function mostrarErroMonitoramento(mensagem) {
 
-// ======================================
-// PROPRIEDADE
-// ======================================
+    let aviso = document.getElementById("avisoMonitoramento");
 
-async function carregarPropriedade() {
+    if (!aviso) {
 
-    const params =
-        new URLSearchParams(
-            window.location.search
+        aviso = document.createElement("div");
+
+        aviso.id = "avisoMonitoramento";
+
+        aviso.className = "alert alert-warning mb-4";
+
+        aviso.setAttribute("role", "alert");
+
+        document.querySelector(
+            ".monitor-section .container"
+        )?.prepend(aviso);
+    }
+
+    aviso.textContent = mensagem;
+}
+
+
+function numeroFormatado(valor, sufixo = "") {
+
+    if (
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ) {
+        return "—";
+    }
+
+    const numero = Number(valor);
+
+    if (!Number.isFinite(numero)) {
+        return "—";
+    }
+
+    return numero.toLocaleString("pt-BR", {
+        maximumFractionDigits: 2
+    }) + sufixo;
+}
+
+
+function formatarDataMonitor(valor) {
+
+    if (!valor) {
+        return "Não informado";
+    }
+
+    const data = String(valor);
+
+    if (/^\d{4}-\d{2}-\d{2}/.test(data)) {
+
+        const [ano, mes, dia] = data
+            .slice(0, 10)
+            .split("-");
+
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    return data;
+}
+
+
+// ==========================================
+// CRIAR MAPA
+// ==========================================
+
+function iniciarMapaMonitoramento() {
+
+    if (typeof L === "undefined") {
+
+        mostrarErroMonitoramento(
+            "O mapa não carregou. Verifique a conexão com o Leaflet."
         );
-
-    const id = params.get("id");
-
-    if (!id) {
-
-        alert("Propriedade não encontrada.");
 
         return;
-
     }
 
-    const propriedade =
-        await buscarPropriedade(id);
+    // Visão inicial do Brasil.
+    // Depois o mapa será centralizado na propriedade.
 
-    if (!propriedade) {
-
-        alert("Erro ao carregar propriedade.");
-
-        return;
-
-    }
-
-    // ======================================
-    // PREENCHER INFORMAÇÕES
-    // ======================================
-
-    document.getElementById(
-        "nomePropriedade"
-    ).textContent =
-        propriedade.nome || "-";
-
-    document.getElementById(
-        "cidade"
-    ).textContent =
-        propriedade.cidade || "-";
-
-    document.getElementById(
-        "estado"
-    ).textContent =
-        propriedade.estado || "-";
-
-    document.getElementById(
-        "area"
-    ).textContent =
-        propriedade.area || "-";
-
-    document.getElementById(
-        "cultura"
-    ).textContent =
-        propriedade.cultura || "-";
-
-    // ======================================
-    // DESENHAR PROPRIEDADE NO MAPA
-    // ======================================
-
-    desenharPropriedade(
-        propriedade.geojson
-    );
-
-    // ======================================
-    // BOTÃO EDITAR
-    // ======================================
-
-    const btnEditar =
-        document.getElementById("btnEditar");
-
-    if (btnEditar) {
-
-        btnEditar.onclick = function () {
-
-            window.location.href =
-                "cadastro_Propriedade.html?id=" +
-                propriedade.id;
-
-        };
-
-    }
-
-}
-
-// ======================================
-// DESENHAR PROPRIEDADE
-// ======================================
-
-function desenharPropriedade(geojson) {
-
-    if (!geojson) return;
-
-    try {
-
-        const camada =
-            L.geoJSON(
-                JSON.parse(geojson)
-            ).addTo(map);
-
-        map.fitBounds(
-            camada.getBounds()
-        );
-
-    }
-
-    catch (erro) {
-
-        console.error(
-            "Erro ao desenhar propriedade:",
-            erro
-        );
-
-    }
-
-}
-
-// ======================================
-// SAFRA
-// ======================================
-
-function carregarSafra() {
-
-    document.getElementById(
-        "safra"
-    ).textContent = "--";
-
-    document.getElementById(
-        "produtividade"
-    ).textContent = "--";
-
-    document.getElementById(
-        "plantio"
-    ).textContent = "--";
-
-    document.getElementById(
-        "colheita"
-    ).textContent = "--";
-
-}
-
-// ======================================
-// MAPA
-// ======================================
-
-function iniciarMapa() {
-
-    map = L.map("map").setView(
-        [-19.9167, -43.9345],
-        12
+    mapaMonitoramento = L.map("map").setView(
+        [-14.235, -51.925],
+        4
     );
 
     L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
-            attribution:
-                "&copy; OpenStreetMap"
+            maxZoom: 19,
+            attribution: "&copy; OpenStreetMap contributors"
         }
-    ).addTo(map);
-
+    ).addTo(mapaMonitoramento);
 }
 
-// ======================================
-// CLIMA
-// ======================================
 
-async function carregarClima() {
+// ==========================================
+// LOCALIZAR A PROPRIEDADE NO MAPA
+// ==========================================
 
-    try {
+function localizarPropriedadeNoMapa(propriedade) {
 
-        document.getElementById(
-            "temperatura"
-        ).textContent = "--";
-
-        document.getElementById(
-            "umidade"
-        ).textContent = "--";
-
-        document.getElementById(
-            "vento"
-        ).textContent = "--";
-
-        document.getElementById(
-            "chuva"
-        ).textContent = "--";
-
-        document.getElementById(
-            "hojeTemp"
-        ).textContent = "--";
-
-        document.getElementById(
-            "amanhaTemp"
-        ).textContent = "--";
-
-        document.getElementById(
-            "dia2Temp"
-        ).textContent = "--";
-
-        document.getElementById(
-            "dia3Temp"
-        ).textContent = "--";
-
+    if (!mapaMonitoramento) {
+        return;
     }
 
-    catch (erro) {
+    let areaDesenhada = false;
 
-        console.error(erro);
 
-    }
+    // DESENHAR A ÁREA DEMARCADA
 
-}
+    if (propriedade.geojson) {
 
-// ======================================
-// GRÁFICO
-// ======================================
+        try {
 
-function carregarGrafico() {
+            const dados =
+                typeof propriedade.geojson === "string"
+                    ? JSON.parse(propriedade.geojson)
+                    : propriedade.geojson;
 
-    const canvas =
-        document.getElementById(
-            "graficoSafra"
-        );
+            const camada = L.geoJSON(dados)
+                .addTo(mapaMonitoramento);
 
-    if (!canvas) return;
+            const limites = camada.getBounds();
 
-    new Chart(canvas, {
+            if (limites.isValid()) {
 
-        type: "line",
+                mapaMonitoramento.fitBounds(
+                    limites,
+                    {
+                        padding: [30, 30]
+                    }
+                );
 
-        data: {
-
-            labels: [
-                "Jan",
-                "Fev",
-                "Mar",
-                "Abr",
-                "Mai",
-                "Jun"
-            ],
-
-            datasets: [
-
-                {
-
-                    label: "Produtividade",
-
-                    data: [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-
-                    borderColor: "#2E7D32",
-
-                    backgroundColor:
-                        "rgba(46,125,50,.15)",
-
-                    fill: true,
-
-                    tension: .4
-
-                }
-
-            ]
-
-        },
-
-        options: {
-
-            responsive: true,
-
-            plugins: {
-
-                legend: {
-
-                    display: false
-
-                }
-
-            },
-
-            scales: {
-
-                y: {
-
-                    beginAtZero: true
-
-                }
-
+                areaDesenhada = true;
             }
 
+        } catch (erro) {
+
+            console.error(
+                "Erro ao desenhar GeoJSON:",
+                erro
+            );
         }
+    }
+
+
+    // SE NÃO EXISTIR POLÍGONO, USAR LAT/LON
+
+    if (
+        !areaDesenhada &&
+        propriedade.latitude != null &&
+        propriedade.longitude != null
+    ) {
+
+        const latitude = Number(propriedade.latitude);
+        const longitude = Number(propriedade.longitude);
+
+        if (
+            Number.isFinite(latitude) &&
+            Number.isFinite(longitude) &&
+            latitude >= -90 &&
+            latitude <= 90 &&
+            longitude >= -180 &&
+            longitude <= 180
+        ) {
+
+            mapaMonitoramento.setView(
+                [latitude, longitude],
+                14
+            );
+
+            L.marker([latitude, longitude])
+                .addTo(mapaMonitoramento);
+        }
+    }
+
+
+    // REAJUSTAR O TAMANHO DO MAPA
+
+    setTimeout(() => {
+
+        mapaMonitoramento?.invalidateSize();
+
+    }, 100);
+}
+
+
+// ==========================================
+// PREENCHER INFORMAÇÕES DA PROPRIEDADE
+// ==========================================
+
+function exibirPropriedadeMonitor(propriedade) {
+
+    textoMonitor(
+        "nomePropriedade",
+        propriedade.nome || "Propriedade sem nome"
+    );
+
+    textoMonitor(
+        "cidade",
+        propriedade.cidade || "Cidade não informada"
+    );
+
+    textoMonitor(
+        "estado",
+        propriedade.estado || "UF não informada"
+    );
+
+
+    // ÁREA EM HECTARES
+
+    textoMonitor(
+        "area",
+        numeroFormatado(propriedade.area, " ha")
+    );
+
+
+    // PERÍMETRO EM METROS
+
+    const perimetro = Number(propriedade.perimetro);
+
+    textoMonitor(
+        "perimetro",
+        Number.isFinite(perimetro) && perimetro > 0
+            ? numeroFormatado(perimetro, " m")
+            : "—"
+    );
+
+
+    // BOTÃO EDITAR PROPRIEDADE
+
+    const id = encodeURIComponent(propriedade.id);
+
+    const editar = document.getElementById("btnEditar");
+
+    if (editar) {
+
+        editar.href =
+            `cadastro_propriedade.html?id=${id}`;
+    }
+
+
+    // BOTÃO NOVA SAFRA
+
+    
+    // ==========================================
+    // BOTÃO NOVA SAFRA
+    // ==========================================
+
+    const criarSafra = document.getElementById(
+        "linkNovaSafra"
+    );
+
+    if (criarSafra) {
+
+        criarSafra.href =
+            `cadastro_safras.html?propriedade_id=${id}`;
+    }
+
+
+    // ==========================================
+    // BOTÃO VER SAFRAS DA PROPRIEDADE
+    // ==========================================
+
+    const linkVerSafras = document.getElementById(
+        "linkVerSafras"
+    );
+
+    if (linkVerSafras) {
+
+        linkVerSafras.href =
+            `safras.html?propriedade_id=${id}`;
+    }
+
+
+    // ==========================================
+    // MAPA
+    // ==========================================
+
+    localizarPropriedadeNoMapa(propriedade);
+}
+
+
+
+// ==========================================
+// CRIAR ITEM DE SAFRA
+// ==========================================
+
+function adicionarSafraNaLista(container, safra) {
+
+    const item = document.createElement("li");
+
+    const ponto = document.createElement("span");
+
+    ponto.className = "dot";
+
+
+    const conteudo = document.createElement("div");
+
+    conteudo.className = "monitor-safra-conteudo";
+
+
+    // NOME
+
+    const titulo = document.createElement("strong");
+
+    titulo.textContent =
+        safra.nome ||
+        safra.cultura ||
+        `Safra #${safra.id}`;
+
+
+    // INFORMAÇÕES
+
+    const detalhe = document.createElement("small");
+
+    detalhe.textContent = [
+
+        safra.cultura
+            ? `Cultura: ${safra.cultura}`
+            : null,
+
+        `Plantio: ${formatarDataMonitor(safra.data_plantio)}`,
+
+        safra.status
+            ? `Status: ${safra.status}`
+            : null
+
+    ].filter(Boolean).join(" • ");
+
+
+    // EDITAR SAFRA
+
+    const editar = document.createElement("a");
+
+    editar.className = "monitor-link-safra";
+
+    editar.href =
+        `cadastro_safras.html?id=${encodeURIComponent(safra.id)}`;
+
+    editar.textContent = "Editar safra";
+
+
+    conteudo.append(titulo, detalhe, editar);
+
+    item.append(ponto, conteudo);
+
+    container.appendChild(item);
+}
+
+
+// ==========================================
+// CARREGAR SAFRAS DA PROPRIEDADE
+// ==========================================
+
+async function carregarSafrasMonitoramento(propriedadeId) {
+
+    const lista = document.getElementById(
+        "historicoSafras"
+    );
+
+    if (!lista) {
+        return;
+    }
+
+
+    // CONSULTA REAL À API
+
+    const resultado = await listarSafrasDaPropriedade(
+        propriedadeId
+    );
+
+
+    if (!Array.isArray(resultado)) {
+
+        lista.replaceChildren();
+
+        lista.classList.add("sem-registros");
+
+        const erro = document.createElement("li");
+
+        erro.textContent =
+            "Não foi possível consultar as safras desta propriedade.";
+
+        lista.appendChild(erro);
+
+        mostrarErroMonitoramento(
+            "As informações da propriedade carregaram, mas a consulta de safras falhou."
+        );
+
+        return;
+    }
+
+
+    // GARANTIR QUE AS SAFRAS PERTENCEM
+    // À PROPRIEDADE SELECIONADA
+
+    const safras = resultado
+        .filter(
+            safra =>
+                String(safra.propriedade_id) ===
+                String(propriedadeId)
+        )
+        .sort(
+            (a, b) => Number(b.id) - Number(a.id)
+        );
+
+
+    // CONTADOR DE SAFRAS
+
+    textoMonitor(
+        "totalSafrasPropriedade",
+        String(safras.length)
+    );
+
+
+    // LIMPAR HISTÓRICO ANTERIOR
+
+    lista.replaceChildren();
+
+    lista.classList.toggle(
+        "sem-registros",
+        safras.length === 0
+    );
+
+
+    // NENHUMA SAFRA
+
+    if (!safras.length) {
+
+        textoMonitor(
+            "ultimaSafraNome",
+            "Nenhuma safra cadastrada"
+        );
+
+        textoMonitor("plantio", "—");
+
+        textoMonitor("statusSafra", "—");
+
+
+        const vazio = document.createElement("li");
+
+        vazio.textContent =
+            "Nenhuma safra cadastrada nesta propriedade.";
+
+        lista.appendChild(vazio);
+
+        return;
+    }
+
+
+    // ======================================
+    // SAFRA MAIS RECENTE
+    // ======================================
+
+    const recente = safras[0];
+
+    textoMonitor(
+        "ultimaSafraNome",
+        recente.nome ||
+        recente.cultura ||
+        `Safra #${recente.id}`
+    );
+
+    textoMonitor(
+        "plantio",
+        formatarDataMonitor(recente.data_plantio)
+    );
+
+    textoMonitor(
+        "statusSafra",
+        recente.status || "Não informado"
+    );
+
+
+    // ======================================
+    // HISTÓRICO REAL DE SAFRAS
+    // ======================================
+
+    safras.forEach(safra => {
+
+        adicionarSafraNaLista(
+            lista,
+            safra
+        );
 
     });
-
 }
+
+
+// ==========================================
+// INICIAR MONITORAMENTO
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    // VERIFICAR USUÁRIO LOGADO
+
+    const usuario = obterUsuarioLogado();
+
+    if (!usuario?.id) {
+
+        window.location.href = "login.html";
+
+        return;
+    }
+
+
+    // OBTER ID DA PROPRIEDADE
+
+    const propriedadeId = new URLSearchParams(
+        window.location.search
+    ).get("id");
+
+
+    if (
+        !propriedadeId ||
+        !/^\d+$/.test(propriedadeId)
+    ) {
+
+        textoMonitor(
+            "nomePropriedade",
+            "Propriedade não selecionada"
+        );
+
+        mostrarErroMonitoramento(
+            "Escolha uma propriedade em Minhas Propriedades para acessar o monitoramento."
+        );
+
+        return;
+    }
+
+
+    // INICIAR MAPA
+
+    iniciarMapaMonitoramento();
+
+
+    // BUSCAR PROPRIEDADE PELA API
+
+    const propriedade = await buscarPropriedade(
+        propriedadeId
+    );
+
+
+    if (
+        !propriedade ||
+        String(propriedade.usuario_id) !== String(usuario.id)
+    ) {
+
+        textoMonitor(
+            "nomePropriedade",
+            "Propriedade indisponível"
+        );
+
+        mostrarErroMonitoramento(
+            "Não foi possível carregar essa propriedade."
+        );
+
+        return;
+    }
+
+
+    // EXIBIR PROPRIEDADE E MAPA
+
+    exibirPropriedadeMonitor(propriedade);
+
+
+    // CARREGAR SAFRAS
+
+    await carregarSafrasMonitoramento(
+        propriedadeId
+    );
+
+})

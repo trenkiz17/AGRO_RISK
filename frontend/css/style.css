@@ -45,8 +45,8 @@ img{
     --azul:#2563EB;
     --azulEscuro:#1E40AF;
 
-    --verde:#2563EB;
-    --verdeEscuro:#1E40AF;
+    --verde:#22C55E;
+    --verdeEscuro:#16A34A;
 
     --amarelo:#FACC15;
 
@@ -72,7 +72,7 @@ img{
 
     padding:18px 0;
 
-    transition:.2s;
+    transition:.4s;
 
     position:fixed;
 
@@ -106,7 +106,7 @@ img{
 
     font-weight:500;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
@@ -126,7 +126,7 @@ img{
 
     padding:10px 24px;
 
-    transition:.2s;
+    transition:.3s;
 
     margin-right:15px;
 
@@ -142,7 +142,7 @@ img{
 
 .btn-conta{
 
-    background:var(--azul);
+    background:linear-gradient(90deg,var(--azul),var(--verde));
 
     color:white;
 
@@ -152,7 +152,7 @@ img{
 
     font-weight:600;
 
-    transition:.2s;
+    transition:.4s;
 
 }
 
@@ -160,9 +160,9 @@ img{
 
     color:white;
 
-    transform:none;
+    transform:translateY(-3px);
 
-    box-shadow:none;
+    box-shadow:0 10px 30px rgba(37,99,235,.35);
 
 }
 
@@ -222,11 +222,11 @@ img{
 
 .hero-badge{
 
-    background:rgba(37,99,235,.12);
+    background:rgba(34,197,94,.15);
 
-    color:#DBEAFE;
+    color:#A7F3D0;
 
-    border:1px solid rgba(37,99,235,.35);
+    border:1px solid rgba(34,197,94,.4);
 
     padding:10px 22px;
 
@@ -280,7 +280,7 @@ img{
 
     font-weight:600;
 
-    transition:.2s;
+    transition:.35s;
 
 }
 
@@ -296,13 +296,13 @@ img{
 
     background:var(--verdeEscuro);
 
-    transform:none;
+    transform:translateY(-4px);
 
 }
 
 .hero-buttons .btn-outline-light:hover{
 
-    transform:none;
+    transform:translateY(-4px);
 
 }
 
@@ -322,7 +322,7 @@ img{
 
     50%{
 
-        transform:none;
+        transform:translateY(-12px);
 
     }
 
@@ -404,7 +404,7 @@ section h2{
 
 section p{
 
-    color:var(--cinza);
+    color: #b5b5b5;
 
     font-size:18px;
 
@@ -457,13 +457,13 @@ section p{
 
 .stats .col-md-3{
 
-    transition:.2s;
+    transition:.35s;
 
 }
 
 .stats .col-md-3:hover{
 
-    transform:none;
+    transform:translateY(-8px);
 
 }
 
@@ -483,13 +483,13 @@ section p{
 
     box-shadow:0 25px 50px rgba(0,0,0,.12);
 
-    transition:.2s;
+    transition:.4s;
 
 }
 
 .sobre img:hover{
 
-    transform:none;
+    transform:scale(1.02);
 
 }
 
@@ -505,7 +505,7 @@ section p{
 
     font-weight:500;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
@@ -523,7 +523,7 @@ section p{
 
     color:white;
 
-    transform:none;
+    transform:translateX(8px);
 
 }
 
@@ -555,7 +555,7 @@ section p{
 
     text-align:center;
 
-    transition:.2s;
+    transition:.4s;
 
     border:1px solid #E2E8F0;
 
@@ -563,7 +563,7 @@ section p{
 
 .card-funcao:hover{
 
-    transform:none;
+    transform:translateY(-12px);
 
     box-shadow:0 20px 40px rgba(0,0,0,.12);
 
@@ -577,7 +577,7 @@ section p{
 
     height:80px;
 
-    background:var(--azul);
+    background:linear-gradient(135deg,var(--azul),var(--verde));
 
     border-radius:50%;
 
@@ -595,13 +595,13 @@ section p{
 
     margin-bottom:25px;
 
-    transition:.2s;
+    transition:.4s;
 
 }
 
 .card-funcao:hover i{
 
-    transform:none;
+    transform:rotate(8deg) scale(1.1);
 
 }
 
@@ -627,7 +627,7 @@ section p{
 
 .passos{
 
-    background:#0F172A;
+    background:linear-gradient(135deg,#0F172A,#1E293B);
 
     color:white;
 
@@ -653,13 +653,13 @@ section p{
 
     height:100%;
 
-    transition:.2s;
+    transition:.4s;
 
 }
 
 .passo:hover{
 
-    transform:none;
+    transform:translateY(-10px);
 
 }
 
@@ -671,7 +671,7 @@ section p{
 
     border-radius:50%;
 
-    background:var(--azul);
+    background:linear-gradient(135deg,var(--azul),var(--verde));
 
     color:white;
 
@@ -719,7 +719,7 @@ section p{
 
 .dashboard-preview img:hover{
 
-    transform:none;
+    transform:scale(1.03);
 
 }
 
@@ -773,7 +773,7 @@ section p{
 
     height:100%;
 
-    transition:.2s;
+    transition:.35s;
 
     box-shadow:0 10px 30px rgba(0,0,0,.06);
 
@@ -781,7 +781,7 @@ section p{
 
 .card-beneficio:hover{
 
-    transform:none;
+    transform:translateY(-10px);
 
 }
 
@@ -834,7 +834,7 @@ section p{
 
     background:#F8FAFC;
 
-    transition:.2s;
+    transition:.35s;
 
     color:var(--escuro);
 
@@ -850,7 +850,7 @@ section p{
 
 .lista-diferenciais li:hover{
 
-    background:var(--azul);
+    background:linear-gradient(90deg,var(--azul),var(--verde));
 
     color:white;
 
@@ -912,7 +912,7 @@ section p{
 
 .accordion-button:not(.collapsed){
 
-    background:var(--azul);
+    background:linear-gradient(90deg,var(--azul),var(--verde));
 
     color:white;
 
@@ -940,7 +940,7 @@ section p{
 
 .cta{
 
-    background:var(--azul);
+    background:linear-gradient(135deg,var(--azul),var(--verde));
 
     color:white;
 
@@ -1038,7 +1038,7 @@ footer a{
 
     color:#CBD5E1;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
@@ -1096,7 +1096,7 @@ footer a:hover{
 
     box-shadow:0 15px 30px rgba(0,0,0,.25);
 
-    transition:.2s;
+    transition:.35s;
 
     z-index:999;
 
@@ -1106,7 +1106,7 @@ footer a:hover{
 
     background:var(--azul);
 
-    transform:none;
+    transform:translateY(-5px);
 
 }
 
@@ -1128,7 +1128,7 @@ footer a:hover{
 
 ::-webkit-scrollbar-thumb{
 
-    background:var(--azul);
+    background:linear-gradient(var(--azul),var(--verde));
 
     border-radius:20px;
 
@@ -1247,7 +1247,7 @@ footer{
 .card-beneficio:hover,
 .passo:hover{
 
-    transform:none;
+    transform:translateY(-8px);
 
 }
 
@@ -1303,7 +1303,7 @@ footer{
     padding:14px;
     border-radius:12px;
     border:1px solid #E2E8F0;
-    transition:.2s;
+    transition:.3s;
 }
 
 .login-card .form-control:focus{
@@ -1316,12 +1316,12 @@ footer{
     border-radius:12px;
     font-weight:600;
     margin-top:10px;
-    transition:.2s;
+    transition:.3s;
 }
 
 .login-card .btn-success:hover{
     background:var(--verdeEscuro);
-    transform:none;
+    transform:translateY(-3px);
 }
 
 .login-footer{
@@ -1383,7 +1383,7 @@ body{
 
     font-weight:700;
 
-    color:#2563EB;
+    color:#22C55E;
 
     display:flex;
 
@@ -1423,7 +1423,7 @@ body{
 
     border-radius:15px;
 
-    transition:.2s;
+    transition:.35s;
 
     font-weight:500;
 
@@ -1435,13 +1435,13 @@ body{
 
     color:white;
 
-    transform:none;
+    transform:translateX(8px);
 
 }
 
 .sidebar .active a{
 
-    background:#2563EB;
+    background:#22C55E;
 
     color:white;
 
@@ -1531,7 +1531,7 @@ body{
 
     object-fit:cover;
 
-    border:3px solid #2563EB;
+    border:3px solid #22C55E;
 
 }
 
@@ -1549,6 +1549,111 @@ body{
 
 }
 
+/* =====================================
+   PERFIL AG RORISK - MELHORIAS
+===================================== */
+
+.perfil-identidade {
+    text-align: center;
+}
+
+.perfil-identidade h3 {
+    margin: 15px 0 5px;
+    font-size: 22px;
+    overflow-wrap: anywhere;
+}
+
+.perfil-identidade p {
+    color: #64748b;
+    overflow-wrap: anywhere;
+}
+
+.avatar-iniciais {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #166534, #22c55e);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 46px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: 5px solid #dcfce7;
+    box-shadow: 0 12px 28px rgba(34, 197, 94, 0.18);
+}
+
+.mensagem-perfil {
+    margin-top: 25px;
+    padding: 15px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.mensagem-perfil[hidden] {
+    display: none;
+}
+
+.mensagem-perfil.sucesso {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.mensagem-perfil.erro {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.btn-profile-save:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
+}
+
+@media (max-width: 768px) {
+    .avatar-iniciais {
+        width: 115px;
+        height: 115px;
+        font-size: 36px;
+    }
+}
+
+
+
+
+/* ===================================
+   FOTO DO USUÁRIO NO DASHBOARD
+=================================== */
+
+#fotoUsuarioDashboard {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #22c55e;
+    background: #dcfce7;
+}
+
+#iconeUsuarioDashboard {
+    font-size: 52px;
+    color: #16a34a;
+    line-height: 1;
+}
+
+.perfil-topo strong {
+    overflow-wrap: anywhere;
+}
+
+
+
+
+
+
 /*==========================
         HERO
 ===========================*/
@@ -1557,7 +1662,7 @@ body{
 
     margin-top:30px;
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#22C55E);
 
     border-radius:25px;
 
@@ -1653,13 +1758,13 @@ body{
 
     box-shadow:0 12px 30px rgba(0,0,0,.06);
 
-    transition:.2s;
+    transition:.35s;
 
 }
 
 .card-info:hover{
 
-    transform:none;
+    transform:translateY(-10px);
 
 }
 
@@ -1687,7 +1792,7 @@ body{
 
     height:70px;
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#22C55E);
 
     border-radius:20px;
 
@@ -1702,6 +1807,197 @@ body{
     font-size:30px;
 
 }
+
+
+/* ==========================================
+   AGRORISK - DASHBOARD ORGANIZADO
+========================================== */
+
+/* ACESSO RÁPIDO */
+
+.acoes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* PAINÉIS DE RESUMO */
+
+.dashboard-paineis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+}
+
+.dashboard-painel-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.dashboard-painel-cabecalho h4 {
+    margin: 0;
+    font-size: 21px;
+}
+
+.dashboard-painel-descricao {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+.dashboard-ver-todos {
+    text-decoration: none;
+    color: #16a34a;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.dashboard-ver-todos:hover {
+    color: #15803d;
+    text-decoration: underline;
+}
+
+/* LISTA DE PROPRIEDADES E SAFRAS */
+
+.dashboard-lista {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.dashboard-registro {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-registro:last-child {
+    border-bottom: none;
+}
+
+.dashboard-registro > i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    background: #dcfce7;
+    color: #15803d;
+    border-radius: 13px;
+    font-size: 18px;
+}
+
+.dashboard-registro-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.dashboard-registro-conteudo strong {
+    color: #0f172a;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-registro-conteudo small {
+    color: #64748b;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-vazio {
+    padding: 20px 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* ORIENTAÇÃO AO USUÁRIO */
+
+.dashboard-orientacao {
+    margin-top: 25px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 18px;
+    padding: 22px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.dashboard-orientacao > i {
+    color: #2563eb;
+    font-size: 23px;
+    margin-top: 3px;
+}
+
+.dashboard-orientacao strong {
+    display: block;
+    color: #1e40af;
+    margin-bottom: 6px;
+}
+
+.dashboard-orientacao p {
+    color: #475569;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* EVITAR TEXTO FORA DOS CARDS */
+
+.card-info h2 {
+    overflow-wrap: anywhere;
+}
+
+/* PRESERVAR A FOTO DO PERFIL */
+
+#fotoUsuarioDashboard:not([hidden]) {
+    display: block !important;
+}
+
+#fotoUsuarioDashboard[hidden],
+#iconeUsuarioDashboard[hidden] {
+    display: none !important;
+}
+
+#iconeUsuarioDashboard:not([hidden]) {
+    display: block !important;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 1200px) {
+    .acoes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1000px) {
+    .dashboard-paineis {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-painel-cabecalho {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .dashboard-orientacao {
+        padding: 16px;
+    }
+
+    .dashboard-painel-cabecalho h4 {
+        font-size: 19px;
+    }
+}
+
 
 
 /*==================================================
@@ -1749,7 +2045,7 @@ body{
 
     box-shadow:0 12px 30px rgba(0,0,0,.06);
 
-    transition:.2s;
+    transition:.35s;
 
     position:relative;
 
@@ -1767,7 +2063,7 @@ body{
 
     height:180px;
 
-    background:rgba(37,99,235,.04);
+    background:rgba(34,197,94,.05);
 
     border-radius:50%;
 
@@ -1779,9 +2075,9 @@ body{
 
 .acao-card:hover{
 
-    transform:none;
+    transform:translateY(-12px);
 
-    box-shadow:0 12px 30px rgba(0,0,0,.06);
+    box-shadow:0 20px 45px rgba(37,99,235,.18);
 
 }
 
@@ -1791,7 +2087,7 @@ body{
 
     height:70px;
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#22C55E);
 
     border-radius:18px;
 
@@ -1831,7 +2127,7 @@ body{
 
 .acao-card span{
 
-    color:#2563EB;
+    color:#22C55E;
 
     font-weight:600;
 
@@ -1883,7 +2179,7 @@ body{
 
 .painel h4 i{
 
-    color:#2563EB;
+    color:#22C55E;
 
     margin-right:10px;
 
@@ -1989,7 +2285,7 @@ body{
 
 .timeline i{
 
-    color:#2563EB;
+    color:#22C55E;
 
     font-size:18px;
 
@@ -2169,7 +2465,7 @@ body{
 
 .property-body{
 
-    background:#F4F8FC;
+    background:#EEF5F3;
 
     min-height:100vh;
 
@@ -2179,7 +2475,7 @@ body{
 
 .property-header{
 
-    background:linear-gradient(135deg,#0F2F5F,#1E40AF);
+    background:linear-gradient(135deg,#123D2F,#1D6B4E);
 
     padding:45px 0;
 
@@ -2215,7 +2511,7 @@ body{
 
 .property-header p{
 
-    color:#DBEAFE;
+    color:#DDEFE8;
 
     margin:0;
 
@@ -2227,7 +2523,7 @@ body{
 
     background:white;
 
-    color:#1E40AF;
+    color:#14532D;
 
     padding:14px 24px;
 
@@ -2235,15 +2531,15 @@ body{
 
     font-weight:600;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
 .btn-voltar:hover{
 
-    transform:none;
+    transform:translateY(-3px);
 
-    color:#1E40AF;
+    color:#14532D;
 
     box-shadow:0 10px 25px rgba(0,0,0,.15);
 
@@ -2291,7 +2587,7 @@ body{
 
 .map-top h3{
 
-    color:#1E40AF;
+    color:#14532D;
 
     font-size:28px;
 
@@ -2315,7 +2611,7 @@ body{
 
     overflow:hidden;
 
-    border:3px solid #E5E7EB;
+    border:3px solid #EDF2EF;
 
 }
 
@@ -2323,7 +2619,7 @@ body{
 
 .btn-search{
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#198754,#34C759);
 
     color:white;
 
@@ -2335,15 +2631,15 @@ body{
 
     font-weight:600;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
 .btn-search:hover{
 
-    transform:none;
+    transform:translateY(-3px);
 
-    box-shadow:0 10px 25px rgba(37,99,235,.25);
+    box-shadow:0 10px 25px rgba(25,135,84,.35);
 
 }
 
@@ -2367,7 +2663,7 @@ body{
 
 .side-panel h3{
 
-    color:#1E40AF;
+    color:#14532D;
 
     margin-bottom:25px;
 
@@ -2395,7 +2691,7 @@ body{
 
     border:2px solid #E8ECEF;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
@@ -2449,7 +2745,7 @@ body{
 
     margin-bottom:10px;
 
-    color:#1E40AF;
+    color:#14532D;
 
 }
 
@@ -2487,13 +2783,13 @@ body{
 
     box-shadow:0 12px 30px rgba(0,0,0,.08);
 
-    transition:.2s;
+    transition:.35s;
 
 }
 
 .metric-card:hover{
 
-    transform:none;
+    transform:translateY(-8px);
 
 }
 
@@ -2525,7 +2821,7 @@ body{
 
 .metric-card h5{
 
-    color:#1E40AF;
+    color:#14532D;
 
     font-weight:700;
 
@@ -2623,13 +2919,13 @@ body{
 
     font-weight:600;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
 .btn-limpar:hover{
 
-    transform:none;
+    transform:translateY(-4px);
 
     background:#DC2626;
 
@@ -2643,19 +2939,19 @@ body{
 
     border-radius:15px;
 
-    background:linear-gradient(135deg,#1E40AF,#2563EB);
+    background:linear-gradient(135deg,#16A34A,#22C55E);
 
     color:white;
 
     font-weight:700;
 
-    transition:.2s;
+    transition:.35s;
 
 }
 
 .btn-salvar:hover{
 
-    transform:none;
+    transform:translateY(-4px);
 
     box-shadow:0 15px 35px rgba(34,197,94,.35);
 
@@ -2774,6 +3070,377 @@ textarea.form-control{
             MONITORAMENTO
 ==================================================*/
 
+/* =========================================
+   MONITORAMENTO - AJUSTES DE VISUAL
+========================================= */
+
+/* TOPO MAIS FINO */
+
+.monitoramento-body .monitor-nav {
+    position: relative;
+    top: auto;
+    padding: 9px 0;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, .12);
+}
+
+.monitoramento-body .monitor-nav .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.monitoramento-body .monitor-nav .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin: 0;
+    font-size: 23px;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.monitoramento-body .monitor-nav .logo i {
+    margin-right: 6px;
+}
+
+.monitoramento-body .monitor-nav .logo span {
+    display: inline !important;
+}
+
+.monitoramento-body .monitor-nav .menu {
+    gap: 5px;
+}
+
+.monitoramento-body .monitor-nav .menu a {
+    padding: 8px 11px;
+    font-size: 13px;
+    border-radius: 9px;
+}
+
+/* CABEÇALHO MAIS COMPACTO */
+
+.monitoramento-body .monitor-header {
+    padding: 26px 0 41px;
+}
+
+.monitoramento-body .monitor-header .header-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.monitoramento-body .badge-monitor {
+    padding: 6px 11px;
+    margin-bottom: 9px;
+    font-size: 12px;
+}
+
+.monitoramento-body .monitor-header h1 {
+    margin: 0;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.monitoramento-body .monitor-header p {
+    margin: 9px 0 0;
+    font-size: 14px;
+}
+
+/* BOTÃO EDITAR DISCRETO */
+
+.monitor-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, .55);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .16);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s, transform .2s;
+}
+
+.monitor-edit-btn:hover {
+    background: #fff;
+    color: #166534;
+    transform: translateY(-1px);
+}
+
+/* INDICADORES COMPACTOS */
+
+.monitoramento-body .monitor-section {
+    margin-top: -19px;
+    padding-bottom: 45px;
+}
+
+.monitoramento-body .monitor-card {
+    padding: 20px 15px;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, .06);
+}
+
+.monitoramento-body .monitor-card:hover {
+    transform: translateY(-3px);
+}
+
+.monitoramento-body .monitor-card i {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.monitoramento-body .monitor-card h2 {
+    margin: 0 0 5px;
+    font-size: clamp(20px, 2.4vw, 28px);
+    overflow-wrap: anywhere;
+}
+
+.monitoramento-body .monitor-card p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* MAPA E PAINÉIS */
+
+.monitoramento-body .monitor-map,
+.monitoramento-body .weather-panel,
+.monitoramento-body .grafico-box,
+.monitoramento-body .previsao-box,
+.monitoramento-body .historico-box {
+    border-radius: 18px;
+    padding: 24px;
+}
+
+.monitoramento-body .monitor-map {
+    margin-top: 6px;
+}
+
+.monitoramento-body #map {
+    height: 430px;
+    border-radius: 14px;
+}
+
+.monitoramento-body .titulo-box {
+    margin-bottom: 18px;
+}
+
+.monitoramento-body .titulo-box h3 {
+    font-size: 22px;
+}
+
+/* AÇÕES */
+
+.monitoramento-body .acoes-monitor {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.monitoramento-body .acoes-monitor .acao-card {
+    padding: 22px;
+    border-radius: 16px;
+}
+
+.monitoramento-body .acoes-monitor .acao-card i {
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.monitoramento-body .acoes-monitor .acao-card h5 {
+    font-size: 18px;
+}
+
+.monitoramento-body .acoes-monitor .acao-card p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* PAINEL CLIMÁTICO */
+
+.monitoramento-body .weather-card {
+    padding: 18px 8px;
+}
+
+.monitoramento-body .weather-card i {
+    font-size: 26px;
+    margin-bottom: 9px;
+}
+
+.monitoramento-body .weather-card h2 {
+    font-size: 23px;
+}
+
+.monitoramento-body .weather-card span {
+    font-size: 12px;
+}
+
+.monitor-pendente {
+    display: inline-block;
+    margin-top: 14px;
+    color: #64748b;
+}
+
+/* SITUAÇÃO DA SAFRA */
+
+.monitoramento-body .status-panel {
+    border-radius: 18px;
+    padding: 24px;
+    margin: 0;
+}
+
+.monitoramento-body .status-panel h3 {
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.monitoramento-body .status-item {
+    gap: 12px;
+    font-size: 13px;
+}
+
+.monitoramento-body .status-item strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.monitor-status-nota {
+    margin: 20px 0 0;
+    font-size: 12px;
+    opacity: .92;
+    line-height: 1.5;
+}
+
+/* GRÁFICO AINDA SEM HISTÓRICO */
+
+.monitor-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    border: 1px dashed #a7c9b2;
+    border-radius: 14px;
+    background: #f1faf4;
+    color: #14532d;
+}
+
+.monitor-placeholder > i {
+    font-size: 30px;
+}
+
+.monitor-placeholder strong {
+    display: block;
+}
+
+.monitor-placeholder span {
+    display: block;
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* PREVISÃO */
+
+.monitoramento-body .forecast-card {
+    padding: 20px 10px;
+}
+
+.monitoramento-body .forecast-card h3 {
+    font-size: 23px;
+}
+
+/* LISTAGEM DE SAFRAS */
+
+.monitor-safra-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.monitor-safra-conteudo strong {
+    font-size: 15px;
+    color: #0f172a;
+}
+
+.monitor-safra-conteudo small {
+    color: #64748b;
+}
+
+.monitor-link-safra {
+    font-size: 13px;
+    color: #15803d;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.monitor-link-safra:hover {
+    text-decoration: underline;
+}
+
+#historicoSafras.sem-registros::before {
+    display: none;
+}
+
+#historicoSafras.sem-registros li {
+    padding-left: 0;
+}
+
+/* RODAPÉ */
+
+.monitoramento-body .monitor-footer {
+    margin-top: 5px;
+    padding: 20px 0;
+}
+
+/* CELULAR */
+
+@media (max-width: 768px) {
+
+    .monitoramento-body .monitor-nav .container {
+        flex-wrap: wrap;
+    }
+
+    .monitoramento-body .monitor-nav .menu {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .monitoramento-body .monitor-nav .menu a {
+        padding: 7px 8px;
+    }
+
+    .monitoramento-body .monitor-header {
+        text-align: left;
+    }
+
+    .monitoramento-body .monitor-header .header-content {
+        align-items: flex-start;
+    }
+
+    .monitoramento-body .acoes-monitor {
+        grid-template-columns: 1fr;
+    }
+
+    .monitoramento-body #map {
+        height: 330px;
+    }
+
+    .monitoramento-body .monitor-card,
+    .monitoramento-body .weather-card {
+        margin-bottom: 0;
+    }
+}
+
+
 .monitoramento-body{
     background:#F4F7FB;
     min-height:100vh;
@@ -2799,7 +3466,7 @@ textarea.form-control{
 .logo{
     font-size:30px;
     font-weight:700;
-    color:#2563EB;
+    color:#22C55E;
 }
 
 .logo span{
@@ -2820,7 +3487,7 @@ textarea.form-control{
     text-decoration:none;
     padding:10px 18px;
     border-radius:12px;
-    transition:.2s;
+    transition:.3s;
 }
 
 .menu a:hover{
@@ -2833,7 +3500,7 @@ textarea.form-control{
 
     padding:60px 0;
 
-    background:linear-gradient(135deg,#2563EB,#1E40AF);
+    background:linear-gradient(135deg,#2563EB,#16A34A);
 
     color:#FFF;
 
@@ -2931,7 +3598,7 @@ textarea.form-control{
 
     box-shadow:0 10px 35px rgba(0,0,0,.08);
 
-    transition:.2s;
+    transition:.35s;
 
     height:100%;
 
@@ -2939,7 +3606,7 @@ textarea.form-control{
 
 .monitor-card:hover{
 
-    transform:none;
+    transform:translateY(-8px);
 
     box-shadow:0 20px 40px rgba(0,0,0,.12);
 
@@ -2949,7 +3616,7 @@ textarea.form-control{
 
     font-size:42px;
 
-    color:#1E40AF;
+    color:#16A34A;
 
     margin-bottom:18px;
 
@@ -3023,7 +3690,7 @@ textarea.form-control{
 
     color:#1E293B;
 
-    transition:.2s;
+    transition:.35s;
 
     box-shadow:0 10px 25px rgba(0,0,0,.08);
 
@@ -3031,7 +3698,7 @@ textarea.form-control{
 
 .acao-card:hover{
 
-    transform:none;
+    transform:translateY(-8px);
 
     color:#1E293B;
 
@@ -3045,7 +3712,7 @@ textarea.form-control{
 
     border-radius:50%;
 
-    background:linear-gradient(135deg,#2563EB,#1E40AF);
+    background:linear-gradient(135deg,#2563EB,#16A34A);
 
     display:flex;
 
@@ -3105,7 +3772,7 @@ textarea.form-control{
 
     border-radius:18px;
 
-    transition:.2s;
+    transition:.35s;
 
     border:1px solid #E2E8F0;
 
@@ -3135,7 +3802,7 @@ textarea.form-control{
 
     font-size:30px;
 
-    color:#1E40AF;
+    color:#16A34A;
 
     font-weight:700;
 
@@ -3153,7 +3820,7 @@ textarea.form-control{
 
 .status-panel{
 
-    background:linear-gradient(135deg,#1E40AF,#2563EB);
+    background:linear-gradient(135deg,#16A34A,#2563EB);
 
     color:white;
 
@@ -3245,7 +3912,7 @@ textarea.form-control{
 
     padding:25px;
 
-    transition:.2s;
+    transition:.35s;
 
     border:1px solid #E2E8F0;
 
@@ -3253,7 +3920,7 @@ textarea.form-control{
 
 .forecast-card:hover{
 
-    transform:none;
+    transform:translateY(-8px);
 
     background:white;
 
@@ -3271,7 +3938,7 @@ textarea.form-control{
 
     margin-top:15px;
 
-    color:#1E40AF;
+    color:#16A34A;
 
 }
 
@@ -3325,7 +3992,7 @@ textarea.form-control{
 
     height:100%;
 
-    background:#1E40AF;
+    background:#16A34A;
 
 }
 
@@ -3359,13 +4026,13 @@ textarea.form-control{
 
     height:18px;
 
-    background:#1E40AF;
+    background:#16A34A;
 
     border-radius:50%;
 
     border:4px solid white;
 
-    box-shadow:0 0 0 3px #1E40AF;
+    box-shadow:0 0 0 3px #16A34A;
 
 }
 
@@ -3545,7 +4212,7 @@ textarea.form-control{
 
     box-shadow:0 15px 40px rgba(0,0,0,.08);
 
-    transition:.2s;
+    transition:.35s;
 
     border:1px solid #edf2f7;
 
@@ -3553,7 +4220,7 @@ textarea.form-control{
 
 .safra-card:hover{
 
-    transform:none;
+    transform:translateY(-8px);
 
     box-shadow:0 25px 60px rgba(0,0,0,.12);
 
@@ -3683,7 +4350,7 @@ textarea.form-control{
 
     text-align:center;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
@@ -3739,7 +4406,7 @@ textarea.form-control{
 
     font-weight:600;
 
-    transition:.2s;
+    transition:.35s;
 
     display:flex;
 
@@ -3753,7 +4420,7 @@ textarea.form-control{
 
 .btn-monitorar{
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#22C55E);
 
     color:white;
 
@@ -3763,7 +4430,7 @@ textarea.form-control{
 
     color:white;
 
-    transform:none;
+    transform:translateY(-5px);
 
     box-shadow:0 15px 35px rgba(37,99,235,.35);
 
@@ -3811,7 +4478,7 @@ textarea.form-control{
 
 .safras-body .hero-dashboard{
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#22C55E);
 
     border-radius:25px;
 
@@ -4071,7 +4738,7 @@ textarea.form-control{
 
 .safra-navbar .logo i{
 
-    color:#2563EB;
+    color:#22C55E;
 
     margin-right:8px;
 
@@ -4079,7 +4746,7 @@ textarea.form-control{
 
 .safra-navbar .logo span{
 
-    color:#2563EB;
+    color:#22C55E;
 
 }
 
@@ -4099,13 +4766,13 @@ textarea.form-control{
 
     font-weight:500;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
 .safra-navbar .menu a:hover{
 
-    color:#2563EB;
+    color:#22C55E;
 
 }
 
@@ -4237,7 +4904,7 @@ textarea.form-control{
 
     border:2px solid #E2E8F0;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
@@ -4245,7 +4912,7 @@ textarea.form-control{
 
 .form-safra .form-select:focus{
 
-    border-color:#2563EB;
+    border-color:#22C55E;
 
     box-shadow:none;
 
@@ -4277,7 +4944,7 @@ textarea.form-control{
 
     text-decoration:none;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
@@ -4293,7 +4960,7 @@ textarea.form-control{
 
     border:none;
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#22C55E);
 
     color:white;
 
@@ -4303,13 +4970,13 @@ textarea.form-control{
 
     font-weight:600;
 
-    transition:.2s;
+    transition:.3s;
 
 }
 
 .btn-salvar:hover{
 
-    transform:none;
+    transform:translateY(-3px);
 
     box-shadow:0 15px 35px rgba(37,99,235,.30);
 
@@ -4354,7 +5021,7 @@ textarea.form-control{
 
     height:55px;
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#22C55E);
 
     color:white;
 
@@ -4412,7 +5079,7 @@ textarea.form-control{
 
 .status-box i{
 
-    color:#2563EB;
+    color:#22C55E;
 
     font-size:30px;
 
@@ -4426,7 +5093,7 @@ textarea.form-control{
 
     border-radius:18px;
 
-    background:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#22C55E);
 
     color:white;
 
@@ -4620,18 +5287,18 @@ textarea.form-control{
 }
 
 .btn-profile-photo{
-    background:var(--azul);
+    background:linear-gradient(90deg,var(--azul),var(--verde));
     color:#fff;
     border:none;
     border-radius:12px;
     padding:14px 22px;
     font-weight:600;
     cursor:pointer;
-    transition:.2s;
+    transition:.35s;
 }
 
 .btn-profile-photo:hover{
-    transform:none;
+    transform:translateY(-3px);
     box-shadow:0 10px 25px rgba(37,99,235,.25);
 }
 
@@ -4705,7 +5372,7 @@ textarea.form-control{
     color:var(--escuro);
     padding:0 16px;
     font-size:15px;
-    transition:.2s;
+    transition:.3s;
     box-shadow:none;
 }
 
@@ -4717,7 +5384,7 @@ textarea.form-control{
 
 .profile-card .form-control:focus{
     border-color:var(--verde);
-    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    box-shadow:0 0 0 4px rgba(34,197,94,.15);
 }
 
 .profile-card select.form-control{
@@ -4743,7 +5410,7 @@ textarea.form-control{
     cursor:pointer;
     padding:14px 18px;
     border-radius:12px;
-    transition:.2s;
+    transition:.3s;
     background:#F8FAFC;
 }
 
@@ -4777,7 +5444,7 @@ textarea.form-control{
     border-radius:12px;
     font-weight:600;
     cursor:pointer;
-    transition:.2s;
+    transition:.3s;
 }
 
 .btn-profile-cancel:hover{
@@ -4787,13 +5454,13 @@ textarea.form-control{
 
 .btn-profile-save{
     border:none;
-    background:var(--azul);
+    background:linear-gradient(90deg,var(--azul),var(--verde));
     color:#fff;
     padding:14px 28px;
     border-radius:12px;
     font-weight:600;
     cursor:pointer;
-    transition:.2s;
+    transition:.35s;
 }
 
 .btn-profile-save i{
@@ -4801,7 +5468,7 @@ textarea.form-control{
 }
 
 .btn-profile-save:hover{
-    transform:none;
+    transform:translateY(-3px);
     box-shadow:0 12px 25px rgba(37,99,235,.25);
 }
 
@@ -4810,11 +5477,11 @@ textarea.form-control{
 ===========================*/
 
 .profile-card{
-    transition:.2s;
+    transition:.35s;
 }
 
 .profile-card:hover{
-    transform:none;
+    transform:translateY(-4px);
     box-shadow:0 18px 35px rgba(0,0,0,.08);
 }
 
@@ -5154,4 +5821,99 @@ textarea.form-control{
 
 .btn-excluir:hover {
     background: #bb2d3b;
+}
+
+
+/* ==========================================
+   AGRORISK - CADASTRO DE SAFRAS
+========================================== */
+
+.safra-body .safra-navbar {
+    position: relative;
+    top: auto;
+    padding: 11px 0;
+}
+
+.safra-body .safra-navbar .logo {
+    font-size: 23px;
+    line-height: 1.2;
+}
+
+.safra-body .hero-safra {
+    padding: 40px 0;
+}
+
+.safra-body .hero-safra h1 {
+    font-size: clamp(28px, 3vw, 38px);
+}
+
+.safra-body .hero-icon {
+    width: 105px;
+    height: 105px;
+    font-size: 45px;
+}
+
+.safra-body .cadastro-safra {
+    padding: 40px 0;
+}
+
+.safra-body .form-safra {
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.safra-body .form-safra h3 {
+    margin-bottom: 25px;
+}
+
+.safra-body #colheita {
+    background: #f0fdf4;
+    color: #166534;
+    font-weight: 700;
+    cursor: default;
+}
+
+.safra-body #avisoEstimativa {
+    line-height: 1.6;
+    border-radius: 12px;
+}
+
+.safra-body .form-safra details {
+    padding: 17px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.safra-body .form-safra summary {
+    cursor: pointer;
+    color: #334155;
+}
+
+.safra-body #mensagemSafra[hidden] {
+    display: none;
+}
+
+.safra-body .resumo-safra {
+    border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+
+    .safra-body .safra-navbar .container {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .safra-body .safra-navbar .menu {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .safra-body .hero-icon {
+        display: none;
+    }
+
+    .safra-body .form-safra {
+        padding: 22px;
+    }
 }

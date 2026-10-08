@@ -5,10 +5,24 @@ class Propriedade(db.Model):
 
     __tablename__ = "propriedades"
 
+    # ==========================================
+    # IDENTIFICAÇÃO
+    # ==========================================
+
     id = db.Column(
         db.Integer,
         primary_key=True
     )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    # ==========================================
+    # DADOS DA PROPRIEDADE
+    # ==========================================
 
     nome = db.Column(
         db.String(100),
@@ -37,7 +51,8 @@ class Propriedade(db.Model):
 
     perimetro = db.Column(
         db.Float,
-        nullable=False
+        nullable=False,
+        default=0
     )
 
     latitude = db.Column(
@@ -55,11 +70,19 @@ class Propriedade(db.Model):
         nullable=True
     )
 
+    # ==========================================
+    # CREATE
+    # ==========================================
+
     def salvar(self):
 
         db.session.add(self)
 
         db.session.commit()
+
+    # ==========================================
+    # UPDATE
+    # ==========================================
 
     def atualizar(
         self,
@@ -103,33 +126,76 @@ class Propriedade(db.Model):
 
         db.session.commit()
 
+    # ==========================================
+    # DELETE
+    # ==========================================
+
     def deletar(self):
 
         db.session.delete(self)
 
         db.session.commit()
 
+    # ==========================================
+    # READ
+    # ==========================================
+
     @staticmethod
     def listar_todos():
 
-        return Propriedade.query.all()
+        return (
+            Propriedade.query
+            .order_by(Propriedade.id.asc())
+            .all()
+        )
 
     @staticmethod
     def buscar_por_id(id):
 
         return Propriedade.query.get(id)
 
+    # ==========================================
+    # JSON
+    # ==========================================
+
     def to_dict(self):
 
         return {
-            "id": self.id,
-            "nome": self.nome,
-            "cidade": self.cidade,
-            "estado": self.estado,
-            "observacao": self.observacao,
-            "area": self.area,
-            "perimetro": self.perimetro,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-            "geojson": self.geojson
+
+            "id":
+                self.id,
+
+            "usuario_id":
+                self.usuario_id,
+
+            "nome":
+                self.nome,
+
+            "cidade":
+                self.cidade,
+
+            "estado":
+                self.estado,
+
+            "observacao":
+                self.observacao,
+
+            "area":
+                float(self.area)
+                if self.area is not None
+                else 0,
+
+            "perimetro":
+                float(self.perimetro)
+                if self.perimetro is not None
+                else 0,
+
+            "latitude":
+                self.latitude,
+
+            "longitude":
+                self.longitude,
+
+            "geojson":
+                self.geojson
         }

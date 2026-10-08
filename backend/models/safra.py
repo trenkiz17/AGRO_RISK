@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from models.database import db
 
 
@@ -13,6 +15,11 @@ class Safra(db.Model):
     propriedade_id = db.Column(
         db.Integer,
         db.ForeignKey("propriedades.id"),
+        nullable=False
+    )
+
+    nome = db.Column(
+        db.String(100),
         nullable=False
     )
 
@@ -51,6 +58,11 @@ class Safra(db.Model):
         nullable=True
     )
 
+    observacoes = db.Column(
+        db.Text,
+        nullable=True
+    )
+
     status = db.Column(
         db.String(50),
         nullable=True,
@@ -59,7 +71,8 @@ class Safra(db.Model):
 
     created_at = db.Column(
         db.DateTime,
-        nullable=False
+        nullable=False,
+        default=datetime.utcnow
     )
 
     # ==========================================
@@ -69,7 +82,6 @@ class Safra(db.Model):
     def salvar(self):
 
         db.session.add(self)
-
         db.session.commit()
 
     # ==========================================
@@ -78,6 +90,7 @@ class Safra(db.Model):
 
     def atualizar(
         self,
+        nome=None,
         cultura=None,
         ano_safra=None,
         area_plantada=None,
@@ -85,8 +98,13 @@ class Safra(db.Model):
         data_colheita=None,
         produtividade=None,
         custo_total=None,
-        status=None
+        observacoes=None,
+        status=None,
+        propriedade_id=None
     ):
+
+        if nome is not None:
+            self.nome = nome
 
         if cultura is not None:
             self.cultura = cultura
@@ -109,8 +127,14 @@ class Safra(db.Model):
         if custo_total is not None:
             self.custo_total = custo_total
 
+        if observacoes is not None:
+            self.observacoes = observacoes
+
         if status is not None:
             self.status = status
+
+        if propriedade_id is not None:
+            self.propriedade_id = propriedade_id
 
         db.session.commit()
 
@@ -121,7 +145,6 @@ class Safra(db.Model):
     def deletar(self):
 
         db.session.delete(self)
-
         db.session.commit()
 
     # ==========================================
@@ -136,8 +159,6 @@ class Safra(db.Model):
             .order_by(Safra.id.asc())
             .all()
         )
-
-    # ==========================================
 
     @staticmethod
     def buscar_por_id(id):
@@ -154,34 +175,51 @@ class Safra(db.Model):
 
             "id": self.id,
 
-            "propriedade_id": self.propriedade_id,
+            "propriedade_id":
+                self.propriedade_id,
 
-            "cultura": self.cultura,
+            "nome":
+                self.nome,
 
-            "ano_safra": self.ano_safra,
+            "cultura":
+                self.cultura,
 
-            "area_plantada": float(self.area_plantada),
+            "ano_safra":
+                self.ano_safra,
+
+            "area_plantada":
+                float(self.area_plantada)
+                if self.area_plantada is not None
+                else None,
 
             "data_plantio":
                 self.data_plantio.isoformat()
-                if self.data_plantio else None,
+                if self.data_plantio
+                else None,
 
             "data_colheita":
                 self.data_colheita.isoformat()
-                if self.data_colheita else None,
+                if self.data_colheita
+                else None,
 
             "produtividade":
                 float(self.produtividade)
-                if self.produtividade is not None else None,
+                if self.produtividade is not None
+                else None,
 
             "custo_total":
                 float(self.custo_total)
-                if self.custo_total is not None else None,
+                if self.custo_total is not None
+                else None,
 
-            "status": self.status,
+            "observacoes":
+                self.observacoes,
+
+            "status":
+                self.status,
 
             "created_at":
                 self.created_at.isoformat()
-                if self.created_at else None
-
+                if self.created_at
+                else None
         }

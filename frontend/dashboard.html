@@ -101,19 +101,22 @@
 
             </div>
 
+
             <div class="perfil-topo">
 
-                <img src="img/user.png">
+                <!-- Foto cadastrada no Perfil -->
+                <img id="fotoUsuarioDashboard" alt="Foto do usuário" style="display: none;">
+
+                <!-- Ícone exibido enquanto não houver foto -->
+                <i id="iconeUsuarioDashboard" class="fa-solid fa-circle-user" aria-hidden="true"></i>
 
                 <div>
-
-                    <strong id="usuario">Leonardo</strong>
-
-                    <small>Administrador</small>
-
+                    <strong id="usuario">Usuário</strong>
+                    <small>Conta AgroRisk</small>
                 </div>
 
             </div>
+
 
         </header>
 
@@ -135,8 +138,9 @@
 
                 <p>
 
-                    Gerencie propriedades, acompanhe suas safras
-                    e visualize previsões climáticas em tempo real.
+                    Organize suas propriedades rurais,
+                    acompanhe suas safras e tenha uma visão geral
+                    dos seus registros agrícolas em um só lugar.
 
                 </p>
 
@@ -152,16 +156,18 @@
 
         <!-- CARDS -->
 
+
+        <!-- ==========================================
+     INDICADORES DO DASHBOARD
+========================================== -->
+
         <section class="cards-dashboard">
 
             <div class="card-info">
 
                 <div>
-
-                    <small>Propriedades</small>
-
-                    <h2 id="totalPropriedades">0</h2>
-
+                    <small>Propriedades cadastradas</small>
+                    <h2 id="totalPropriedades">--</h2>
                 </div>
 
                 <i class="fa-solid fa-map-location-dot"></i>
@@ -171,11 +177,8 @@
             <div class="card-info">
 
                 <div>
-
-                    <small>Safras</small>
-
-                    <h2 id="totalSafras">0</h2>
-
+                    <small>Safras cadastradas</small>
+                    <h2 id="totalSafras">--</h2>
                 </div>
 
                 <i class="fa-solid fa-wheat-awn"></i>
@@ -185,32 +188,27 @@
             <div class="card-info">
 
                 <div>
-
-                    <small>Temperatura</small>
-
-                    <h2 id="temperatura">--°</h2>
-
+                    <small>Área total das propriedades</small>
+                    <h2 id="areaTotal">--</h2>
                 </div>
 
-                <i class="fa-solid fa-cloud-sun"></i>
+                <i class="fa-solid fa-ruler-combined"></i>
 
             </div>
 
             <div class="card-info">
 
                 <div>
-
-                    <small>Produtividade</small>
-
-                    <h2>92%</h2>
-
+                    <small>Propriedades com safras</small>
+                    <h2 id="propriedadesComSafras">--</h2>
                 </div>
 
-                <i class="fa-solid fa-chart-line"></i>
+                <i class="fa-solid fa-seedling"></i>
 
             </div>
 
         </section>
+
 
         <!-- ACESSO RÁPIDO -->
 
@@ -220,32 +218,30 @@
 
         </h3>
 
+
+        <!-- ==========================================
+     ACESSO RÁPIDO
+========================================== -->
+
         <section class="acoes-grid">
 
             <a href="cadastro_propriedade.html" class="acao-card">
 
                 <div class="icone">
-
                     <i class="fa-solid fa-map-location-dot"></i>
-
                 </div>
 
-                <h4>Cadastro de Propriedades</h4>
+                <h4>Cadastrar Propriedade</h4>
 
                 <p>
-
-                    Cadastre novas propriedades,
-                    visualize todas e marque
-                    a área diretamente no mapa.
-
+                    Cadastre uma propriedade rural,
+                    informe sua localização e
+                    delimite a área diretamente no mapa.
                 </p>
 
                 <span>
-
-                    Entrar
-
+                    Cadastrar propriedade
                     <i class="fa-solid fa-arrow-right"></i>
-
                 </span>
 
             </a>
@@ -253,160 +249,129 @@
             <a href="propriedades.html" class="acao-card">
 
                 <div class="icone">
-
-                    <i class="fa-solid fa-wheat-awn"></i>
-
+                    <i class="fa-solid fa-tractor"></i>
                 </div>
 
-                <h4>Propriedades</h4>
+                <h4>Minhas Propriedades</h4>
 
                 <p>
-
-                    Consulte clima,
-                    previsão do tempo,
-                    produtividade e safras.
-
+                    Visualize suas propriedades cadastradas
+                    e escolha uma delas para consultar
+                    seus detalhes e suas safras.
                 </p>
 
                 <span>
-
-                    Entrar
-
+                    Visualizar propriedades
                     <i class="fa-solid fa-arrow-right"></i>
-
-                </span>
-
-            </a>
-
-            <a href="relatorios.html" class="acao-card">
-
-                <div class="icone">
-
-                    <i class="fa-solid fa-chart-column"></i>
-
-                </div>
-
-                <h4>Relatórios</h4>
-
-                <p>
-
-                    Gere análises completas
-                    sobre produção,
-                    produtividade e histórico.
-
-                </p>
-
-                <span>
-
-                    Entrar
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
                 </span>
 
             </a>
 
         </section>
+
 
         <!-- PAINÉIS -->
 
-        <section class="painel-grid">
 
-            <div class="painel">
+        <!-- ==========================================
+     RESUMO DOS REGISTROS
+========================================== -->
 
-                <h4>
+        <section class="painel-grid dashboard-paineis">
 
-                    <i class="fa-solid fa-cloud-sun"></i>
+            <!-- PROPRIEDADES RECENTES -->
 
-                    Clima Atual
+            <article class="painel">
 
-                </h4>
+                <div class="dashboard-painel-cabecalho">
 
-                <div class="weather">
+                    <h4>
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        Suas Propriedades
+                    </h4>
 
-                    <h1 id="tempGrande">--°</h1>
-
-                    <p id="descricao">
-
-                        Carregando...
-
-                    </p>
-
-                    <hr>
-
-                    <div class="weather-info">
-
-                        <div>
-
-                            <strong>Umidade</strong>
-
-                            <span id="umidade">--%</span>
-
-                        </div>
-
-                        <div>
-
-                            <strong>Vento</strong>
-
-                            <span id="vento">-- km/h</span>
-
-                        </div>
-
-                    </div>
+                    <a href="propriedades.html" class="dashboard-ver-todos">
+                        Ver todas
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
 
                 </div>
 
-            </div>
+                <p class="dashboard-painel-descricao">
+                    As últimas propriedades cadastradas
+                    na sua conta.
+                </p>
 
-            <div class="painel">
-
-                <h4>
-
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-
-                    Últimas Atividades
-
-                </h4>
-
-                <ul class="timeline">
-
-                    <li>
-
-                        <i class="fa-solid fa-circle-check"></i>
-
-                        Fazenda cadastrada
-
+                <ul id="resumoPropriedades" class="dashboard-lista">
+                    <li class="dashboard-vazio">
+                        Carregando propriedades...
                     </li>
-
-                    <li>
-
-                        <i class="fa-solid fa-circle-check"></i>
-
-                        Safra criada
-
-                    </li>
-
-                    <li>
-
-                        <i class="fa-solid fa-circle-check"></i>
-
-                        Relatório gerado
-
-                    </li>
-
-                    <li>
-
-                        <i class="fa-solid fa-circle-check"></i>
-
-                        Login realizado
-
-                    </li>
-
                 </ul>
+
+            </article>
+
+
+            <!-- SAFRAS RECENTES -->
+
+            <article class="painel">
+
+                <div class="dashboard-painel-cabecalho">
+
+                    <h4>
+                        <i class="fa-solid fa-wheat-awn"></i>
+                        Suas Safras
+                    </h4>
+
+                    <a href="safras.html" class="dashboard-ver-todos">
+                        Ver safras
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+                <p class="dashboard-painel-descricao">
+                    As últimas safras cadastradas
+                    nas suas propriedades.
+                </p>
+
+                <ul id="resumoSafras" class="dashboard-lista">
+                    <li class="dashboard-vazio">
+                        Carregando safras...
+                    </li>
+                </ul>
+
+            </article>
+
+        </section>
+
+
+        <!-- AVISO DE ERRO DA API -->
+
+        <div id="avisoDashboard" class="alert alert-warning mt-4" role="status" aria-live="polite" hidden></div>
+
+
+        <!-- ORIENTAÇÃO PARA O USUÁRIO -->
+
+        <section class="dashboard-orientacao">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>Como acompanhar sua produção?</strong>
+
+                <p>
+                    Primeiro cadastre uma propriedade.
+                    Depois, acesse suas propriedades
+                    para gerenciar as safras e,
+                    futuramente, acompanhar o clima
+                    e os riscos agrícolas da região.
+                </p>
 
             </div>
 
         </section>
+
 
         <!-- RODAPÉ -->
 

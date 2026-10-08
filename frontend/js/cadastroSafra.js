@@ -1,794 +1,553 @@
-// =======================================
-// CADASTRO DE SAFRA
-// =======================================
+
+let safraEditando = null;
+let estimativaAtual = null;
+let chaveEstimativa = "";
+let numeroConsulta = 0;
 
 
-// =======================================
-// INICIAR
-// =======================================
+// ==========================================
+// ELEMENTOS E MENSAGENS
+// ==========================================
+
+const $ = id => document.getElementById(id);
+
+function mensagemSafra(texto, sucesso = false) {
+
+    const elemento = $("mensagemSafra");
+
+    elemento.hidden = !texto;
+    elemento.textContent = texto;
+
+    elemento.className = sucesso
+        ? "alert alert-success mt-3"
+        : "alert alert-danger mt-3";
+}
+
+
+function formatarDataSafra(valor) {
+
+    if (!valor) return "—";
+
+    const [ano, mes, dia] = String(valor)
+        .slice(0, 10)
+        .split("-");
+
+    return `${dia}/${mes}/${ano}`;
+}
+
+
+// ==========================================
+// CARREGAR PROPRIEDADES
+// ==========================================
+
+async function carregarPropriedadesSafra() {
+
+    const propriedades = await listarPropriedades();
+    const select = $("propriedade");
+
+    select.replaceChildren(
+        new Option("Selecione a propriedade", "")
+    );
+
+    if (!Array.isArray(propriedades)) {
+
+        mensagemSafra(
+            "Não foi possível carregar suas propriedades. Verifique o Flask."
+        );
+
+        return false;
+    }
+
+    propriedades.forEach(propriedade => {
+
+        select.add(
+            new Option(
+                propriedade.nome,
+                String(propriedade.id)
+            )
+        );
+
+    });
+
+    if (!propriedades.length) {
+
+        mensagemSafra(
+            "Cadastre uma propriedade antes de cadastrar uma safra."
+        );
+    }
+
+    return true;
+}
+
+
+// ==========================================
+// CARREGAR SAFRA PARA EDIÇÃO
+// ==========================================
+
+async function carregarEdicaoSafra(id) {
+
+    const resposta = await buscarSafra(id);
+
+    const safra = resposta?.safra || resposta;
+
+    if (!safra?.id) {
+
+        mensagemSafra(
+            "Não foi possível carregar esta safra para edição."
+        );
+
+        return false;
+    }
+
+    const pertenceAoUsuario = [
+        ...$("propriedade").options
+    ].some(
+        opcao =>
+            opcao.value === String(safra.propriedade_id)
+    );
+
+    if (!pertenceAoUsuario) {
+
+        mensagemSafra(
+            "Esta safra pertence a uma propriedade não disponível na sua conta."
+        );
+
+        return false;
+    }
+
+    safraEditando = safra;
+
+    $("nomeSafra").value = safra.nome || "";
+
+    $("propriedade").value = String(
+        safra.propriedade_id
+    );
+
+    $("cultura").value = safra.cultura || "";
+
+    $("plantio").value = String(
+        safra.data_plantio || ""
+    ).slice(0, 10);
+
+    $("hectares").value = safra.area_plantada ?? "";
+
+    $("custo").value = safra.custo_total ?? "";
+
+    $("observacoes").value = safra.observacoes || "";
+
+    $("tituloSafra").textContent = "Editar Safra";
+
+    $("btnSalvarSafra").textContent = "Salvar alterações";
+
+    if (!$("cultura").value) {
+
+        mensagemSafra(
+            "Esta safra usa uma cultura antiga. Selecione Café, Milho ou Soja para continuar."
+        );
+    }
+
+    return true;
+}
+
+
+// ==========================================
+// RESUMO E ESTIMATIVA
+// ==========================================
+
+async function atualizarResumoSafra() {
+
+    const select = $("propriedade");
+
+    $("rPropriedade").textContent =
+        select.selectedOptions[0]?.value
+            ? select.selectedOptions[0].textContent
+            : "—";
+
+    $("rCultura").textContent =
+        $("cultura").value || "—";
+
+    $("rArea").textContent =
+        $("hectares").value
+            ? `${$("hectares").value} ha`
+            : "—";
+
+    $("rPlantio").textContent = formatarDataSafra(
+        $("plantio").value
+    );
+
+    $("rCusto").textContent = $("custo").value
+        ? Number($("custo").value).toLocaleString(
+            "pt-BR",
+            {
+                style: "currency",
+                currency: "BRL"
+            }
+        )
+        : "Não informado";
+
+
+    const cultura = $("cultura").value;
+    const plantio = $("plantio").value;
+
+    const chave = `${cultura}|${plantio}`;
+
+
+    // SEM OS DOIS CAMPOS, NÃO HÁ ESTIMATIVA
+
+    if (!cultura || !plantio) {
+
+        estimativaAtual = null;
+        chaveEstimativa = "";
+        numeroConsulta++;
+
+        $("rColheita").textContent = "—";
+        $("colheita").value = "";
+
+        $("avisoEstimativa").textContent =
+            "Selecione a cultura e informe o plantio.";
+
+        return;
+    }
+
+
+    // NÃO CONSULTAR DE NOVO SE NADA MUDOU
+
+    if (chave === chaveEstimativa) {
+        return;
+    }
+
+    chaveEstimativa = chave;
+
+    const consulta = ++numeroConsulta;
+
+    estimativaAtual = null;
+
+    $("rColheita").textContent = "Calculando...";
+    $("colheita").value = "Calculando...";
+
+
+    // CHAMADA PARA O FLASK
+
+    const estimativa = await estimarColheita(
+        cultura,
+        plantio
+    );
+
+    // EVITAR RESULTADOS DE CONSULTAS ANTIGAS
+
+    if (consulta !== numeroConsulta) {
+        return;
+    }
+
+
+    if (!estimativa?.data_colheita) {
+
+        chaveEstimativa = "";
+
+        $("rColheita").textContent = "Indisponível";
+        $("colheita").value = "";
+
+        $("avisoEstimativa").textContent =
+            "Falha ao consultar a estimativa no Flask.";
+
+        return;
+    }
+
+    
+    // ==========================================
+    // EXIBIR JANELA ESTIMADA DE COLHEITA
+    // ==========================================
+
+    estimativaAtual = estimativa;
+
+    const inicio = formatarDataSafra(
+        estimativa.inicio_janela
+    );
+
+    const fim = formatarDataSafra(
+        estimativa.fim_janela
+    );
+
+    // Verificar se a cultura é café
+
+    const ehCafe = cultura.trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase() === "cafe";
+
+    const rotulo = ehCafe
+        ? "Primeira colheita estimada"
+        : "Colheita estimada";
+
+    // Mostrar intervalo, não apenas um dia
+
+    const janela = `Entre ${inicio} e ${fim}`;
+
+    // Campo do formulário
+
+    $("colheita").value = janela;
+
+    // Resumo lateral
+
+    $("rColheita").textContent = janela;
+
+    // Atualizar o título do campo
+
+    const rotuloCampo = document.getElementById(
+        "rotuloEstimativaColheita"
+    );
+
+    if (rotuloCampo) {
+        rotuloCampo.textContent = rotulo;
+    }
+
+    // Atualizar o título no resumo
+
+    const rotuloResumo = document.getElementById(
+        "rotuloResumoColheita"
+    );
+
+    if (rotuloResumo) {
+        rotuloResumo.textContent = rotulo;
+    }
+
+    // Explicar o cálculo
+
+    $("avisoEstimativa").textContent =
+        (ehCafe
+            ? "Estimativa para a primeira colheita de uma lavoura nova de café. "
+            : "Janela preliminar de colheita. ") +
+        (estimativa.aviso || "");
+
+}
+
+
+// ==========================================
+// CADASTRAR OU ATUALIZAR SAFRA
+// ==========================================
+
+async function salvarSafraFormulario(evento) {
+
+    evento.preventDefault();
+
+    mensagemSafra("");
+
+    if (!$("formSafra").reportValidity()) {
+        return;
+    }
+
+    const propriedade_id = Number(
+        $("propriedade").value
+    );
+
+    const area = Number(
+        $("hectares").value
+    );
+
+    if (
+        !propriedade_id ||
+        !Number.isFinite(area) ||
+        area <= 0
+    ) {
+
+        mensagemSafra(
+            "Selecione uma propriedade e informe uma área cultivada maior que zero."
+        );
+
+        return;
+    }
+
+
+    if (!estimativaAtual) {
+
+        mensagemSafra(
+            "Aguarde o cálculo da estimativa de colheita."
+        );
+
+        await atualizarResumoSafra();
+
+        return;
+    }
+
+
+    // DADOS ENVIADOS PARA O BACKEND
+
+    const dados = {
+
+        propriedade_id,
+
+        nome: $("nomeSafra").value.trim(),
+
+        cultura: $("cultura").value,
+
+        data_plantio: $("plantio").value,
+
+        area_plantada: area,
+
+        custo_total: $("custo").value === ""
+            ? null
+            : Number($("custo").value),
+
+        observacoes: $("observacoes").value.trim(),
+
+        status: safraEditando?.status || "Planejamento"
+
+        // A data de colheita e o ano da safra
+        // serão calculados no backend.
+    };
+
+
+    const botao = $("btnSalvarSafra");
+
+    botao.disabled = true;
+    botao.textContent = "Salvando...";
+
+
+    try {
+
+        let resposta;
+
+        if (safraEditando) {
+
+            resposta = await atualizarSafra(
+                safraEditando.id,
+                dados
+            );
+
+        } else {
+
+            resposta = await cadastrarSafra(
+                dados
+            );
+        }
+
+
+        const salvo = resposta?.safra || resposta;
+
+        if (!salvo?.id) {
+
+            mensagemSafra(
+                "Não foi possível salvar a safra. Confira os dados e a API."
+            );
+
+            return;
+        }
+
+
+        // ABRIR LISTAGEM DE SAFRAS APÓS SALVAR
+
+        window.location.href = "safras.html";
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        mensagemSafra(
+            "Ocorreu um erro ao salvar a safra."
+        );
+
+    } finally {
+
+        botao.disabled = false;
+
+        botao.textContent = safraEditando
+            ? "Salvar alterações"
+            : "Cadastrar safra";
+    }
+}
+
+
+// ==========================================
+// INICIALIZAR
+// ==========================================
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-    await carregarPropriedades();
+    if (!obterUsuarioId()) {
 
-    iniciarEventos();
-
-    iniciarResumo();
-
-});
-
-
-// =======================================
-// EVENTOS
-// =======================================
-
-function iniciarEventos() {
-
-    const form = document.getElementById("formSafra");
-
-    if (!form) {
-
-        console.error("Formulário de safra não encontrado.");
+        window.location.href = "login.html";
 
         return;
-
     }
 
-    form.addEventListener("submit", async function (event) {
 
-        event.preventDefault();
+    $("formSafra").addEventListener(
+        "submit",
+        salvarSafraFormulario
+    );
 
-        await salvarSafra();
+
+    // CAMPOS QUE ATUALIZAM O RESUMO
+
+    const campos = [
+        "nomeSafra",
+        "propriedade",
+        "cultura",
+        "plantio",
+        "hectares",
+        "custo"
+    ];
+
+    campos.forEach(id => {
+
+        $(id).addEventListener(
+            "input",
+            atualizarResumoSafra
+        );
+
+        $(id).addEventListener(
+            "change",
+            atualizarResumoSafra
+        );
 
     });
 
 
-    // Atualiza o resumo enquanto o usuário preenche
+    // CARREGAR PROPRIEDADES PRIMEIRO
 
-    const propriedade =
-        document.getElementById("propriedade");
+    const ok = await carregarPropriedadesSafra();
 
-    const cultura =
-        document.getElementById("cultura");
-
-    const hectares =
-        document.getElementById("hectares");
-
-    const plantio =
-        document.getElementById("plantio");
-
-    const colheita =
-        document.getElementById("colheita");
-
-    const custo =
-        document.getElementById("custo");
-
-
-    if (propriedade) {
-
-        propriedade.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
+    if (!ok) {
+        return;
     }
 
 
-    if (cultura) {
+    // VERIFICAR PARÂMETROS DA URL
 
-        cultura.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
-    }
-
-
-    if (hectares) {
-
-        hectares.addEventListener(
-            "input",
-            atualizarResumo
-        );
-
-    }
-
-
-    if (plantio) {
-
-        plantio.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
-    }
-
-
-    if (colheita) {
-
-        colheita.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
-    }
-
-
-    if (custo) {
-
-        custo.addEventListener(
-            "input",
-            atualizarResumo
-        );
-
-    }
-
-}
-
-
-// =======================================
-// CARREGAR PROPRIEDADES
-// =======================================
-
-async function carregarPropriedades() {
-
-    try {
-
-        const select =
-            document.getElementById("propriedade");
-
-
-        if (!select) {
-
-            return;
-
-        }
-
-
-        /*
-            Primeiro tenta carregar pela API.
-        */
-
-        if (typeof listarPropriedades === "function") {
-
-            const propriedades =
-                await listarPropriedades();
-
-
-            select.innerHTML =
-                '<option value="">Selecione...</option>';
-
-
-            if (propriedades &&
-                propriedades.length > 0) {
-
-
-                propriedades.forEach(prop => {
-
-                    const option =
-                        document.createElement("option");
-
-
-                    option.value = prop.id;
-
-                    option.textContent =
-                        prop.nome;
-
-
-                    select.appendChild(option);
-
-                });
-
-
-            }
-
-        }
-
-
-        /*
-            Se não existir propriedade pela API,
-            verifica se existe alguma salva localmente.
-        */
-
-        if (select.options.length <= 1) {
-
-            const propriedadesLocais =
-                JSON.parse(
-                    localStorage.getItem("propriedades")
-                ) || [];
-
-
-            propriedadesLocais.forEach(prop => {
-
-                const option =
-                    document.createElement("option");
-
-
-                option.value = prop.id;
-
-                option.textContent =
-                    prop.nome;
-
-
-                select.appendChild(option);
-
-            });
-
-        }
-
-    }
-
-    catch (erro) {
-
-        console.error(
-            "Erro ao carregar propriedades:",
-            erro
-        );
-
-    }
-
-}
-
-
-// =======================================
-// INICIAR RESUMO
-// =======================================
-
-function iniciarResumo() {
-
-    atualizarResumo();
-
-}
-
-
-// =======================================
-// ATUALIZAR RESUMO
-// =======================================
-
-function atualizarResumo() {
-
-    const propriedade =
-        document.getElementById("propriedade");
-
-    const cultura =
-        document.getElementById("cultura");
-
-    const hectares =
-        document.getElementById("hectares");
-
-    const plantio =
-        document.getElementById("plantio");
-
-    const colheita =
-        document.getElementById("colheita");
-
-    const custo =
-        document.getElementById("custo");
-
-
-    const rPropriedade =
-        document.getElementById("rPropriedade");
-
-    const rCultura =
-        document.getElementById("rCultura");
-
-    const rArea =
-        document.getElementById("rArea");
-
-    const rPlantio =
-        document.getElementById("rPlantio");
-
-    const rColheita =
-        document.getElementById("rColheita");
-
-    const rCusto =
-        document.getElementById("rCusto");
-
-
-    if (rPropriedade && propriedade) {
-
-        const option =
-            propriedade.options[
-                propriedade.selectedIndex
-            ];
-
-
-        if (option &&
-            option.value !== "") {
-
-            rPropriedade.textContent =
-                option.textContent;
-
-        }
-        else {
-
-            rPropriedade.textContent =
-                "--";
-
-        }
-
-    }
-
-
-    if (rCultura && cultura) {
-
-        rCultura.textContent =
-            cultura.value || "--";
-
-    }
-
-
-    if (rArea && hectares) {
-
-        rArea.textContent =
-            hectares.value
-                ? hectares.value + " ha"
-                : "--";
-
-    }
-
-
-    if (rPlantio && plantio) {
-
-        rPlantio.textContent =
-            formatarData(plantio.value);
-
-    }
-
-
-    if (rColheita && colheita) {
-
-        rColheita.textContent =
-            formatarData(colheita.value);
-
-    }
-
-
-    if (rCusto && custo) {
-
-        const valor =
-            Number(custo.value);
-
-
-        if (valor > 0) {
-
-            rCusto.textContent =
-                formatarMoeda(valor);
-
-        }
-        else {
-
-            rCusto.textContent =
-                "R$ 0,00";
-
-        }
-
-    }
-
-}
-
-
-// =======================================
-// SALVAR SAFRA
-// =======================================
-
-async function salvarSafra() {
-
-    try {
-
-        const propriedadeElement =
-            document.getElementById("propriedade");
-
-        const nomeElement =
-            document.getElementById("nomeSafra");
-
-        const culturaElement =
-            document.getElementById("cultura");
-
-        const plantioElement =
-            document.getElementById("plantio");
-
-        const colheitaElement =
-            document.getElementById("colheita");
-
-        const hectaresElement =
-            document.getElementById("hectares");
-
-        const custoElement =
-            document.getElementById("custo");
-
-        const observacoesElement =
-            document.getElementById("observacoes");
-
-
-        const propriedadeId =
-            Number(
-                propriedadeElement
-                    ? propriedadeElement.value
-                    : 0
-            );
-
-
-        const nome =
-            nomeElement
-                ? nomeElement.value.trim()
-                : "";
-
-
-        const cultura =
-            culturaElement
-                ? culturaElement.value
-                : "";
-
-
-        const dataPlantio =
-            plantioElement
-                ? plantioElement.value
-                : "";
-
-
-        const dataColheita =
-            colheitaElement
-                ? colheitaElement.value
-                : "";
-
-
-        const areaPlantada =
-            hectaresElement
-                ? Number(hectaresElement.value)
-                : 0;
-
-
-        const custo =
-            custoElement
-                ? Number(custoElement.value)
-                : 0;
-
-
-        const observacoes =
-            observacoesElement
-                ? observacoesElement.value.trim()
-                : "";
-
-
-        const safra = {
-
-            propriedade_id:
-                propriedadeId,
-
-            nome:
-                nome,
-
-            cultura:
-                cultura,
-
-            data_plantio:
-                dataPlantio,
-
-            data_colheita:
-                dataColheita,
-
-            area_plantada:
-                areaPlantada,
-
-            custo_estimado:
-                custo,
-
-            observacoes:
-                observacoes
-
-        };
-
-
-        // =======================================
-        // VALIDAR
-        // =======================================
-
-        if (!validarSafra(safra)) {
-
-            return;
-
-        }
-
-
-        // =======================================
-        // CADASTRAR NA API
-        // =======================================
-
-        let resposta = null;
-
-
-        if (typeof cadastrarSafra === "function") {
-
-            resposta =
-                await cadastrarSafra(safra);
-
-        }
-
-
-        /*
-            Guardamos também no localStorage.
-
-            Isso garante que a safra recém-cadastrada
-            apareça imediatamente na tela de Safras.
-        */
-
-        const safrasLocais =
-            JSON.parse(
-                localStorage.getItem("safras")
-            ) || [];
-
-
-        const safraLocal = {
-
-            id:
-                resposta?.id ||
-                resposta?.data?.id ||
-                Date.now(),
-
-            propriedade_id:
-                safra.propriedade_id,
-
-            propriedade_nome:
-                obterNomePropriedade(),
-
-            nome:
-                safra.nome,
-
-            cultura:
-                safra.cultura,
-
-            data_plantio:
-                safra.data_plantio,
-
-            data_colheita:
-                safra.data_colheita,
-
-            area_plantada:
-                safra.area_plantada,
-
-            custo_estimado:
-                safra.custo_estimado,
-
-            observacoes:
-                safra.observacoes,
-
-            status:
-                "Em andamento"
-
-        };
-
-
-        /*
-            Evita duplicar caso a API tenha retornado
-            a mesma safra.
-        */
-
-        const indiceExistente =
-            safrasLocais.findIndex(
-                item =>
-                    String(item.id) ===
-                    String(safraLocal.id)
-            );
-
-
-        if (indiceExistente >= 0) {
-
-            safrasLocais[indiceExistente] =
-                safraLocal;
-
-        }
-        else {
-
-            safrasLocais.push(
-                safraLocal
-            );
-
-        }
-
-
-        localStorage.setItem(
-            "safras",
-            JSON.stringify(safrasLocais)
-        );
-
-
-        // =======================================
-        // SUCESSO
-        // =======================================
-
-        alert(
-            "Safra cadastrada com sucesso!"
-        );
-
-
-        /*
-            AGORA VAI PARA A TELA DE SAFRAS.
-
-            NÃO vai mais para monitoramento.html.
-        */
-
-        window.location.href =
-            "safras.html";
-
-    }
-
-    catch (erro) {
-
-        console.error(
-            "Erro ao salvar safra:",
-            erro
-        );
-
-
-        alert(
-            "Erro ao salvar a safra. Verifique os dados e tente novamente."
-        );
-
-    }
-
-}
-
-
-// =======================================
-// PEGAR NOME DA PROPRIEDADE
-// =======================================
-
-function obterNomePropriedade() {
-
-    const select =
-        document.getElementById("propriedade");
-
-
-    if (!select) {
-
-        return "Propriedade";
-
-    }
-
-
-    const option =
-        select.options[
-            select.selectedIndex
-        ];
-
-
-    if (!option) {
-
-        return "Propriedade";
-
-    }
-
-
-    return option.textContent.trim();
-
-}
-
-
-// =======================================
-// VALIDAÇÃO
-// =======================================
-
-function validarSafra(safra) {
-
-    if (!safra.propriedade_id) {
-
-        alert(
-            "Selecione uma propriedade."
-        );
-
-        return false;
-
-    }
-
-
-    if (safra.nome === "") {
-
-        alert(
-            "Informe o nome da safra."
-        );
-
-        return false;
-
-    }
-
-
-    if (safra.cultura === "") {
-
-        alert(
-            "Informe a cultura."
-        );
-
-        return false;
-
-    }
-
-
-    if (safra.data_plantio === "") {
-
-        alert(
-            "Informe a data do plantio."
-        );
-
-        return false;
-
-    }
-
-
-    if (safra.data_colheita === "") {
-
-        alert(
-            "Informe a data da colheita."
-        );
-
-        return false;
-
-    }
-
-
-    if (safra.area_plantada <= 0) {
-
-        alert(
-            "Informe uma área plantada válida."
-        );
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-// =======================================
-// FORMATAR DATA
-// =======================================
-
-function formatarData(data) {
-
-    if (!data) {
-
-        return "--";
-
-    }
-
-
-    const partes =
-        data.split("-");
-
-
-    if (partes.length !== 3) {
-
-        return data;
-
-    }
-
-
-    return (
-        partes[2] +
-        "/" +
-        partes[1] +
-        "/" +
-        partes[0]
+    const params = new URLSearchParams(
+        window.location.search
     );
 
-}
+    const id = params.get("id");
 
 
-// =======================================
-// FORMATAR MOEDA
-// =======================================
+    if (id) {
 
-function formatarMoeda(valor) {
+        const edicaoOk = await carregarEdicaoSafra(id);
 
-    return Number(valor).toLocaleString(
-        "pt-BR",
-        {
-            style: "currency",
-            currency: "BRL"
+        if (!edicaoOk) {
+            return;
         }
-    );
 
-}
+    } else if (params.get("propriedade_id")) {
+
+        const selecionada = params.get(
+            "propriedade_id"
+        );
+
+        const existe = [
+            ...$("propriedade").options
+        ].some(
+            opcao => opcao.value === selecionada
+        );
+
+        if (existe) {
+
+            $("propriedade").value = selecionada;
+        }
+    }
+
+
+    await atualizarResumoSafra();
+
+});

@@ -102,9 +102,16 @@ class PropriedadeController:
 
     def listar_propriedades(self):
 
+        usuario_id = request.args.get(
+            "usuario_id",
+            type=int
+        )
+
         service = ListarPropriedadesService()
 
-        propriedades = service.executar()
+        propriedades = service.executar(
+            usuario_id
+        )
 
         return jsonify(propriedades), 200
 
@@ -175,9 +182,15 @@ class PropriedadeController:
 
             service = DeletarPropriedadeService()
 
-            propriedade_deletada = service.executar(
-                propriedade_id
+            usuario_id = request.args.get(
+                "usuario_id",
+                type=int
             )
+
+            propriedade_deletada = service.executar(
+                propriedade_id,
+                usuario_id
+)
 
             if propriedade_deletada is False:
 

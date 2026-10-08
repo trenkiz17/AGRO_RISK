@@ -2,11 +2,77 @@
 // MINHAS PROPRIEDADES
 // ======================================
 
+
 document.addEventListener("DOMContentLoaded", () => {
 
+    const usuario = obterUsuarioLogado();
+
+    if (!usuario?.id) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    // Mostrar nome e foto do usuário
+    carregarPerfilTopoPropriedades(usuario);
+
+    // Manter o carregamento das propriedades
     carregarPropriedades();
 
 });
+
+
+
+// ==========================================
+// FOTO E NOME DO USUÁRIO - MINHAS PROPRIEDADES
+// ==========================================
+
+function carregarPerfilTopoPropriedades(usuario) {
+
+    const nome = document.getElementById(
+        "nomeUsuarioPropriedades"
+    );
+
+    const imagem = document.getElementById(
+        "fotoUsuarioPropriedades"
+    );
+
+    const icone = document.getElementById(
+        "iconeUsuarioPropriedades"
+    );
+
+    // Mostrar o nome do usuário logado
+    if (nome) {
+        nome.textContent = usuario.nome || "Usuário";
+    }
+
+    if (!imagem || !icone) {
+        return;
+    }
+
+    // Buscar a mesma foto usada no Dashboard
+    const foto = localStorage.getItem(
+        `fotoPerfil_${usuario.id}`
+    );
+
+    // Sem foto: mostrar o ícone padrão
+    if (!foto) {
+        imagem.hidden = true;
+        icone.hidden = false;
+        return;
+    }
+
+    // Se a imagem não carregar, mostrar o ícone
+    imagem.onerror = () => {
+        imagem.hidden = true;
+        icone.hidden = false;
+    };
+
+    // Mostrar foto cadastrada
+    imagem.src = foto;
+    imagem.hidden = false;
+    icone.hidden = true;
+}
+
 
 
 // ======================================

@@ -1,6 +1,7 @@
 import os
 
 from dotenv import load_dotenv
+
 from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 
@@ -9,6 +10,7 @@ from models.database import db
 from controllers.usuario_controller import usuario_controller
 from controllers.propriedade_controller import propriedade_controller
 from controllers.safra_controller import safra_controller
+from controllers.clima_controller import clima_controller
 
 
 def create_app():
@@ -36,16 +38,29 @@ def create_app():
     # CONTROLLERS
     # ==========================================
 
-    app.register_blueprint(usuario_controller.blueprint)
-    app.register_blueprint(propriedade_controller.blueprint)
-    app.register_blueprint(safra_controller.blueprint)
+    app.register_blueprint(
+        usuario_controller.blueprint
+    )
+
+    app.register_blueprint(
+        propriedade_controller.blueprint
+    )
+
+    app.register_blueprint(
+        safra_controller.blueprint
+    )
+
+    app.register_blueprint(
+        clima_controller.blueprint
+    )
 
     # ==========================================
-    # FRONT-END
+    # FRONTEND / ROTA INICIAL
     # ==========================================
 
     @app.get("/")
     def home():
+
         return render_template("index.html")
 
     # ==========================================
@@ -56,41 +71,13 @@ def create_app():
     def api_info():
 
         return jsonify({
-            "mensagem": "API AgroRisk funcionando.",
-            "rotas": {
-                "usuarios": {
-                    "listar": "GET /usuarios",
-                    "buscar": "GET /usuarios/<id>",
-                    "criar": "POST /usuarios",
-                    "atualizar": "PUT /usuarios/<id>",
-                    "deletar": "DELETE /usuarios/<id>",
-                    "login": "POST /login"
-                },
-
-                "propriedades": {
-                    "listar": "GET /propriedades",
-                    "buscar": "GET /propriedades/<id>",
-                    "criar": "POST /propriedades",
-                    "atualizar": "PUT /propriedades/<id>",
-                    "deletar": "DELETE /propriedades/<id>",
-                    "buscar_localizacao":
-                        "GET /propriedades/buscar?localizacao=..."
-                },
-
-                "safras": {
-                    "listar": "GET /safras",
-                    "buscar": "GET /safras/<id>",
-                    "criar": "POST /safras",
-                    "atualizar": "PUT /safras/<id>",
-                    "deletar": "DELETE /safras/<id>",
-                    "buscar_cultura":
-                        "GET /safras/buscar?cultura=..."
-                }
-            }
+            "nome": "AgroRisk API",
+            "status": "online",
+            "versao": "1.0"
         })
 
     # ==========================================
-    # BANCO
+    # BANCO DE DADOS
     # ==========================================
 
     with app.app_context():
@@ -104,7 +91,10 @@ app = create_app()
 
 if __name__ == "__main__":
 
-    debug = os.getenv("FLASK_DEBUG", "True") == "True"
+    debug = os.getenv(
+        "FLASK_DEBUG",
+        "True"
+    ) == "True"
 
     app.run(
         debug=debug,
